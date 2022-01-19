@@ -1,27 +1,26 @@
 const express = require("express")
 const dotenv = require("dotenv")
-const { MongoClient } = require('mongodb');
+const { connect } = require('mongoose');
+const { Citizen } = require("./models")
+const routes = require("./routes/route")
 dotenv.config({ encoding: false })
 
 const PORT = process.env.PORT || 8080
-const uri = procee.env.URI 
-export const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const uri = process.env.URI 
 
 async function main(){
-    const app = express()
     try {
-        client.connect()
-    
+        const app = express()
+        await connect(uri)
+
+        app.use("/api/", routes)
+
+        app.listen(PORT, () => {
+            console.log(`http://localhost:${PORT}`)
+        })
     } catch (error) {
-    
+        console.error(error)
     }
-    app.get("/", (req,res) => {
-        res.send("Hello, world")
-    })
-    
-    app.listen(PORT, () => {
-        console.log(`http://localhost:${PORT}`)
-    })
     
 }
 
