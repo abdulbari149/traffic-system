@@ -6,7 +6,7 @@ class WardenController {
   response = { message: "", status: 0, data: null };
 
   async authLogin(req, res) {
-    const { warden } = req.params;
+    const { warden } = req.body;
     login: try {
       const dbWarden = await Warden.findOne({ wardenId: warden.wardenId });
       if (!dbWarden) {
@@ -31,7 +31,7 @@ class WardenController {
   }
 
   async registerWarden(req, res) {
-    const { warden } = req.params;
+    const { warden } = req.body
     try {
       const hashedPassword = await hash(warden.password, 10)
       const wardenDoc = new Warden({
