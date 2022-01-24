@@ -19,13 +19,27 @@
 const { Schema, model } =require("mongoose")
 
 const VechileSchema = new Schema({
-    vechileType: {
+    vehicleType: String,
+    vehicle_identification_numbeer: {
+        type: String,
+        alias: "vin",
+    },
+    vehicle_category: {
         type: String,
     },
-    registrationNumber: {
-        type: String,
-        validate: () => {
-            
-        }
-    }
+    vechile_model: String,
+    vechile_model_year: String,
+    vechile_body: String,
+    reg_no: String,
+    reg_date: Date,
+    owner_name: String,
+    owner_cnic:String,
+    engine_no: Number,
+    chasis_no: Number,
+    color: String,
+    horse_power:Number,
+    seating_capacity: Number,
+    company: String,
 })
+
+module.exports = model("vechile", VechileSchema)
