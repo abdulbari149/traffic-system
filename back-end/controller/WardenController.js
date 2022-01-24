@@ -1,46 +1,65 @@
 const { Warden } = require("../models");
 const { compare, hash } = require("bcrypt");
-const { sendSMS } = require("../lib/twilioSMS");
+const { sendSMS } = require("../lib/twilioSMS"),
+  jwt = require("jsonwebtoken");
 // Authorized --> 100
 // Ok --> 200
 // Error --> 404
+const JWTSecret = process.env.JWTSecret;
 class WardenController {
   response = { message: "", status: 0, data: null };
 
-  async authLogin(req, res) {
+  authLogin = async (req, res) => {
     const { warden } = req.body;
+    let wardenDoc;
     login: try {
-      const wardenDoc = await Warden.findOne({ wardenId: warden.wardenId });
+      wardenDoc = await Warden.findOne({ wardenId: warden.wardenId });
+
       if (!wardenDoc) {
         this.response.message = "You have passed the wrong id";
         this.response.status = 0;
+        this.response.data = null;
         break login;
       }
       const isAuthorized = await compare(warden.password, wardenDoc.password);
       if (!isAuthorized) {
         this.response.message = "You have entered a wrong password";
         this.response.status = 0;
+        this.response.data = null;
         break login;
       }
+
       this.response.message = "Warden is authorized to access the application";
-      this.response.message = 100;
-      this.response.data = dbWarden;
+      this.response.status = 100;
+      this.response.data = wardenDoc;
     } catch (error) {
       console.error(error);
     } finally {
+      const token = jwt.sign(
+        {
+          ...wardenDoc
+        },
+        JWTSecret,
+        {
+          expiresIn: 12 * 60 * 60,
+        }
+      );
+      res.setHeader("Authorization-Token", `Bearer ${token}`);
       res.send(this.response);
     }
-  }
+  };
 
-  async verifySMS(req, res) {
-    const { authStatus } = req.query
-    try {
-      const wardenDoc = await Warden.findOne({ wardenId: req.body.wardenId });
+  verifySMS = async (req, res) => {
+    const { authStatus } = req.query;
+    const wardenData = res.locals.warden
+    sms: try {
+      const wardenDoc = await Warden.findById(wardenData._id);
       const random4DigitCode = Math.trunc(Math.random() * 1000);
       const data = await sendSMS(
         random4DigitCode,
         wardenDoc.verification_number
       );
+      console.log({ data })
       this.response.message = "code has been sent";
       this.response.status = 200;
       this.response.data = {
@@ -51,15 +70,15 @@ class WardenController {
       console.error(error);
     }
     res.send(this.response);
-  }
+  };
 
-  async registerWarden(req, res) {
+  registerWarden = async (req, res) => {
+    
     const { warden } = req.body;
     try {
       const hashedPassword = await hash(warden.password, 10);
       const wardenDoc = new Warden({
-        name: warden.name,
-        wardenId: warden.wardenId,
+        ...warden,
         password: hashedPassword,
       });
 
@@ -72,13 +91,12 @@ class WardenController {
       this.response.data = error;
     }
     res.send(this.response);
-  }
+  };
 
-  async getWardenData(req, res) {
-    const { id } = req.params;
-
+  getWardenData = async (req, res) => {
+    const { _id } = res.locals.warden
     try {
-      const wardenDoc = await Warden.findOne({ wardenId: id });
+      const wardenDoc = await Warden.findById(_id);
 
       if (!wardenDoc) {
         throw new Error("You have passed the wrong warden id");
@@ -88,11 +106,10 @@ class WardenController {
       this.response.data = wardenDoc;
       this.response.status = 200;
     } catch (error) {
-      console.error(error);
       this.response.message = error.message;
-      this.response.status = 400;
+      this.response.status = 404;
     }
-    res.send(this.response);
+    res.status(this.response.status).send(this.response);
   }
 }
 

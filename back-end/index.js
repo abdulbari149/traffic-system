@@ -7,14 +7,15 @@ dotenv.config({ encoding: false })
 
 const PORT = process.env.PORT || 8080
 const uri = process.env.URI 
-
 async function main(){
     try {
         const app = express()
         await connect(uri)
-
-        app.use("/api/", routes)
-
+        
+        app.set("jwt", process.env.JWTSecret)
+        
+        app.use(express.json());
+        app.use("/api", routes)
         app.listen(PORT, () => {
             console.log(`http://localhost:${PORT}`)
         })
@@ -23,7 +24,6 @@ async function main(){
     }
     
 }
-
 
 main()
 
