@@ -9,4 +9,5 @@ const WardenSchema = new Schema({
 
 const Warden = model("Warden", WardenSchema);
 
-module.exports = Warden
+module.exports = Warden;
+
