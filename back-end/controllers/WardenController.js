@@ -1,7 +1,7 @@
 const { Warden } = require("../models");
 const { compare, hash } = require("bcrypt");
-const { sendSMS } = require("../lib/twilioSMS"),
-  jwt = require("jsonwebtoken");
+const { sendSMS } = require("../lib/twilioSMS");
+const jwt = require("jsonwebtoken");
 // Authorized --> 100
 // Ok --> 200
 // Error --> 404
@@ -36,7 +36,7 @@ class WardenController {
     } finally {
       const token = jwt.sign(
         {
-          ...wardenDoc
+          ...wardenDoc,
         },
         JWTSecret,
         {
@@ -50,7 +50,7 @@ class WardenController {
 
   verifySMS = async (req, res) => {
     const { authStatus } = req.query;
-    const wardenData = res.locals.warden
+    const wardenData = res.locals.warden;
     sms: try {
       const wardenDoc = await Warden.findById(wardenData._id);
       const random4DigitCode = Math.trunc(Math.random() * 1000);
@@ -58,7 +58,7 @@ class WardenController {
         random4DigitCode,
         wardenDoc.verification_number
       );
-      console.log({ data })
+      console.log({ data });
       this.response.message = "code has been sent";
       this.response.status = 200;
       this.response.data = {
@@ -72,7 +72,6 @@ class WardenController {
   };
 
   registerWarden = async (req, res) => {
-    
     const { warden } = req.body;
     try {
       const hashedPassword = await hash(warden.password, 10);
@@ -86,14 +85,15 @@ class WardenController {
       this.response.status = 200;
       this.response.data = data;
     } catch (error) {
-      (this.response.message = "Error Occured!"), (this.response.status = 404);
+      this.response.message = "Error Occured!";
+      this.response.status = 404;
       this.response.data = error;
     }
     res.send(this.response);
   };
 
   getWardenData = async (req, res) => {
-    const { _id } = res.locals.warden
+    const { _id } = res.locals.warden;
     try {
       const wardenDoc = await Warden.findById(_id);
 
@@ -109,7 +109,7 @@ class WardenController {
       this.response.status = 404;
     }
     res.status(this.response.status).send(this.response);
-  }
+  };
 }
 
 module.exports = new WardenController();
