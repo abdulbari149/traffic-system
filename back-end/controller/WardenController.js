@@ -5,7 +5,6 @@ const { sendSMS } = require("../lib/twilioSMS"),
 // Authorized --> 100
 // Ok --> 200
 // Error --> 404
-const JWTSecret = process.env.JWTSecret;
 class WardenController {
   response = { message: "", status: 0, data: null };
 
