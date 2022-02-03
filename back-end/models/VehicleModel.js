@@ -33,13 +33,15 @@ const VechileSchema = new Schema({
         body: String,
     },
     reg: {
-        // number plate 
-        no: String,
+        no: {
+            type: String,
+            index: true
+        },
         data: Date
     },
-    owner: {
-        name: String,
-        cnic: String,
+    owner_cnic: {
+        type: String,
+        index: true
     },
     engine_no: Number,
     chasis_no: Number,
