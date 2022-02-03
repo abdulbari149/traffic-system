@@ -50,7 +50,7 @@ class WardenController {
 
   verifySMS = async (req, res) => {
     const { authStatus } = req.query;
-    const wardenData = res.locals.warden;
+    const wardenData = res.locals.data;
     sms: try {
       const wardenDoc = await Warden.findById(wardenData._id);
       const random4DigitCode = Math.trunc(Math.random() * 1000);
@@ -89,11 +89,11 @@ class WardenController {
       this.response.status = 404;
       this.response.data = error;
     }
-    res.send(this.response);
+    res.status(this.response.status).json(this.response);
   };
 
   getWardenData = async (req, res) => {
-    const { _id } = res.locals.warden;
+    const { _id } = res.locals.data;
     try {
       const wardenDoc = await Warden.findById(_id);
 
