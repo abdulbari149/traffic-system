@@ -1,25 +1,32 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
-
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 
 export default function Button(props) {
-  const { onPress, title = 'Save' } = props;
+  const {onPress, title = 'Save'} = props;
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={.8}>
       <Text style={styles.text}>{title}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
+    zIndex: 1,
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
     paddingHorizontal: 32,
-    borderRadius: 1000,
-    elevation: 3,
     backgroundColor: '#0038ff',
+    elevation: 3,
+    borderRadius: 1000,
   },
   text: {
     fontSize: 16,
