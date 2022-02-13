@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import IllustrationChallanFormHome from '../../assets/challan-screen-img.png';
+import IllustrationChallanFormHome from '../../cdn/challan-screen-img.png';
 import BottomNav from '../../components/BottomNav';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
-
+import {} from ""
 const ChallanFormHome = () => {
   return (
     <View style={styles.sreenContainer}>
