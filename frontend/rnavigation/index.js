@@ -7,6 +7,9 @@ import LoginIntroScreen from '../screens/Auth/LoginIntroScreen';
 import ChallanFormHome from '../screens/ChallanForm/Home';
 import WardenProfile from '../screens/Profile/WardenProfile';
 
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const Stack = () => {
 
     const Stack = createNativeStackNavigator();
@@ -30,19 +33,21 @@ const Stack = () => {
                 close: config
             }
         }}>
-            <Stack.Screen name="Login Intro" options={{
+            <Stack.Screen name='Login Intro' options={{
                 headerTransparent: true,
                 headerShown: false
             }} component={LoginIntroScreen} />
-            <Stack.Screen name="Login" component={LogInScreen} options={({ navigation }) => ({
+            <Stack.Screen name='Login' component={LogInScreen} options={({ navigation }) => ({
                 headerTransparent: true,
                 headerTitle: () => <></>,
                 headerTintColor: 'white'
             })} />
-            <Stack.Screen name="Challan Form Home" component={ChallanFormHome} />
-            <Stack.Screen name="Warden Profile" component={WardenProfile} options={{
+            <Stack.Screen name='Challan Form Home' component={ChallanFormHome} />
+            <Stack.Screen name='Warden Profile' component={WardenProfile} options={{
                 headerTransparent: true,
-                headerShown: false
+                headerTintColor: 'white',
+                headerTitle: () => <></>,
+                headerRight: () => <Icon name='logout' size={24} color='white' />
             }} />
         </Stack.Navigator>
     );
