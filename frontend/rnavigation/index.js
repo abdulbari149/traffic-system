@@ -1,56 +1,125 @@
-import React from 'react';
+import React, { useState } from "react";
+import {
+	ChallanFormHomeScreen,
+	ChallanFormScreen,
+	LoginIntroScreen,
+	VerificationScreen,
+	WardenProfileScreen,
+	RecordListScreen,
+	VoilationScreenTabs,
+	FullChallanFormScreen,
+} from "../screens";
+import LoginScreen from "../screens/Auth/LoginScreen"
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
-import LogInScreen from '../screens/Auth/LogInScreen';
-import LoginIntroScreen from '../screens/Auth/LoginIntroScreen';
-import ChallanFormHome from '../screens/ChallanForm/Home';
-import WardenProfile from '../screens/Profile/WardenProfile';
+const TabScreens = () => {
+	const Tabs = createMaterialBottomTabNavigator();
+	return (
+		<Tabs.Navigator
+			screenOptions={({ route }) => ({
+				tabBarIcon: ({ focused, color, size }) => {
+					let iconName;
+					size = "20px";
+					if (route.name === "Form") {
+						iconName = "form";
+					} else if (route.name === "Profile") {
+						iconName = "user";
+					} else if (route.name === "Record") {
+						iconName = focused ? "ios-list" : "ios-list-outline";
+						return <Ionicons name={iconName} size={size} color={color} />;
+					}
+					return <AntDesign name={iconName} size={size} color={color} />;
+				},
+				tabBarActiveTintColor: "white",
+				tabBarInactiveTintColor: "gray",
+			})}
+		>
+			<Tabs.Screen name="Form" component={ChallanFormHomeScreen} />
+			<Tabs.Screen name="Record" component={RecordListScreen} />
+			<Tabs.Screen name="Profile" component={WardenProfileScreen} />
+		</Tabs.Navigator>
+	);
+};
 
+const Routes = () => {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const AppStack = createNativeStackNavigator();
+	const AuthStack = createNativeStackNavigator();
+	const config = {
+		animation: "timing",
+		config: {
+			stiffness: 1000,
+			damping: 500,
+			mass: 3,
+			overshootClamping: true,
+			restDisplacementThreshold: 0.01,
+			restSpeedThreshold: 0.01,
+		},
+	};
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+	const headerOptions = {
+		headerTitle: () => <></>,
+		headerShadowVisible: false,
+		headerBackImageSource: require("../cdn/BackArrow.png"),
+	};
 
-const Stack = () => {
+	return !isLoggedIn ? (
+		<AuthStack.Navigator>
+			<AuthStack.Screen
+				name="Login Intro"
+				options={{
+					headerTransparent: true,
+					headerShown: false,
+				}}
+				component={LoginIntroScreen}
+			/>
+			<AuthStack.Screen
+				name="Login"
+				component={LoginScreen}
+				options={{
+					...headerOptions,
+				}}
+			/>
+			<AuthStack.Screen
+				name="Verification Screen"
+				component={VerificationScreen}
+				options={{
+					...headerOptions,
+				}}
+			/>
+		</AuthStack.Navigator>
+	) : (
+		<AppStack.Navigator
+			screenOptions={{
+				transitionSpec: {
+					open: config,
+					close: config,
+				},
+			}}
+		>
+			<AppStack.Screen
+				name="Home"
+				component={TabScreens}
+				options={{ headerShown: false }}
+			/>
+			<AppStack.Group
+				screenOptions={{
+					...headerOptions
+				}}
+			>
+				<AppStack.Screen name="Challan Form" component={ChallanFormScreen} />
+				<AppStack.Screen name="Voilation" component={VoilationScreenTabs} />
+				<AppStack.Screen
+					name="Full Challan Form"
+					component={FullChallanFormScreen}
+				/>
+			</AppStack.Group>
+		</AppStack.Navigator>
+	);
+};
 
-    const Stack = createNativeStackNavigator();
-
-    const config = {
-        animation: 'timing',
-        config: {
-            stiffness: 1000,
-            damping: 500,
-            mass: 3,
-            overshootClamping: true,
-            restDisplacementThreshold: 0.01,
-            restSpeedThreshold: 0.01,
-        },
-    };
-
-    return (
-        <Stack.Navigator screenOptions={{
-            transitionSpec: {
-                open: config,
-                close: config
-            }
-        }}>
-            <Stack.Screen name='Login Intro' options={{
-                headerTransparent: true,
-                headerShown: false
-            }} component={LoginIntroScreen} />
-            <Stack.Screen name='Login' component={LogInScreen} options={({ navigation }) => ({
-                headerTransparent: true,
-                headerTitle: () => <></>,
-                headerTintColor: 'white'
-            })} />
-            <Stack.Screen name='Challan Form Home' component={ChallanFormHome} />
-            <Stack.Screen name='Warden Profile' component={WardenProfile} options={{
-                headerTransparent: true,
-                headerTintColor: 'white',
-                headerTitle: () => <></>,
-                headerRight: () => <Icon name='logout' size={24} color='white' />
-            }} />
-        </Stack.Navigator>
-    );
-}
-
-export default Stack;
+export default Routes;
