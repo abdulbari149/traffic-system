@@ -42,3 +42,6 @@ const LogInScreen = ({ navigation }) => {
 }
 
 export default LogInScreen;
+
+
+
