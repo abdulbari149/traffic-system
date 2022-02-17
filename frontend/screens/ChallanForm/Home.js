@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import IllustrationChallanFormHome from '../../cdn/challan-screen-img.png';
 import BottomNav from '../../components/BottomNav';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
-import {} from ""
 const ChallanFormHome = () => {
   return (
     <View style={styles.sreenContainer}>
@@ -18,7 +17,7 @@ const ChallanFormHome = () => {
           numberOfLines={2}>
           Best place to write life stories and share your journey experiences.
         </Text>
-        <Button title="Challan Form" onPress={() => console.log('hello')} />
+        <Button title='Challan Form' onPress={() => console.log('hello')} />
       </View>
       <BottomNav />
     </View>

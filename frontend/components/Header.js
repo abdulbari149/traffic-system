@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
-const Header = ({screenName}) => {
+const Header = ({ screenName }) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.logo}>Logo</Text>
@@ -12,7 +12,7 @@ const Header = ({screenName}) => {
         {screenName}
       </Text>
       <View style={styles.profile}>
-        <Image  source={require("../assets/warden's-profile.png")} />
+        <Image source={require("../cdn/warden's-profile.png")} />
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Pressable} from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const BottomNav = () => {
@@ -8,7 +8,7 @@ const BottomNav = () => {
     <View style={styles.container}>
       {menu.map((item, idx) => (
         <Pressable onPress={() => console.log(item)}>
-          <Icon name="form-outlined" type="antdesign"/>
+          <Icon name="form-outlined" type="antdesign" />
           <Text key={idx} style={styles.text}>
             {item}
           </Text>
