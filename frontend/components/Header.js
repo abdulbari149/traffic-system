@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 const Header = ({ screenName }) => {
   return (
@@ -8,7 +8,8 @@ const Header = ({ screenName }) => {
       <Text
         numberOfLines={1}
         adjustsFontSizeToFit
-        style={styles.pageNavigationText}>
+        style={styles.pageNavigationText}
+      >
         {screenName}
       </Text>
       <View style={styles.profile}>
@@ -22,23 +23,22 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: 15,
     paddingVertical: 20,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   pageNavigationText: {
     fontSize: 26,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
-  logo: {},
   profile: {
-    borderColor: '#0038FF',
-    borderStyle: 'solid',
+    borderColor: "#0038FF",
+    borderStyle: "solid",
     borderWidth: 2,
-    borderRadius: 25
+    borderRadius: 25,
   },
 });
 

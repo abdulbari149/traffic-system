@@ -1,38 +1,49 @@
-import React from 'react';
+import React from "react";
 import {
   Text,
-  View,
   StyleSheet,
   Pressable,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 
-export default function Button(props) {
-  const {onPress, title = 'Save'} = props;
+const Button = ({ onPress, title="Next" }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={.8}>
+    <Pressable
+      style={styles.button}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
       <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+    </Pressable>
+  );
+}
+
+export const TextBtn = ({ text }) => {
+  return (
+    <Pressable style={styles.textBtn}>
+      <Text style={[styles.text, { color: "#0038ff" }]}>{props.text}</Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
     zIndex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    backgroundColor: '#0038ff',
+    backgroundColor: "#0038ff",
     elevation: 3,
     borderRadius: 1000,
   },
   text: {
     fontSize: 16,
     lineHeight: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     letterSpacing: 0.25,
-    color: 'white',
+    color: "white",
   },
+  textBtn: { width: "50%", alignSelf: "center", textAlign: "center" },
 });
