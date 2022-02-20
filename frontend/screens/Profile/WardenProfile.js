@@ -38,12 +38,12 @@ const WardenProfile = () => {
             </View>
             <View style={styles.profileChallanContainer}>
                 <View style={{ ...styles.profileChallanCard, marginRight: 10 }}>
-                    <Icon name='calender' style={styles.calendarIcon} />
+                    <Icon name='calendar' style={styles.calendarIcon} size={55} />
                     <Text fontSize='3xl' style={styles.challanCount}>24</Text>
                     <Text style={styles.challanCountHeading}>Yearly Challan Count</Text>
                 </View>
                 <View style={styles.profileChallanCard}>
-                    <Icon name='calendar' style={styles.calendarIcon} />
+                    <Icon name='calendar' style={styles.calendarIcon} size={55} />
                     <Text fontSize='3xl' style={styles.challanCount}>24</Text>
                     <Text style={styles.challanCountHeading}>Yearly Challan Count</Text>
                 </View>

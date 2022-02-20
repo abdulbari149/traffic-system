@@ -6,6 +6,9 @@ const styles = StyleSheet.create({
         width: null,
         height: null,
     },
+    inputIcon: {
+        margin: 10
+    },
     logo: {
         alignSelf: 'center',
         marginBottom: 35,
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
         margin: 20
     },
     loginButtonText: {
-        fontSize: 20,
+        fontSize: 15,
         color: 'white'
     },
     ghostButton: {
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     ghostButtonText: {
-        fontSize: 15,
+        fontSize: 13,
         color: '#0038FF',
         fontWeight: 'bold'
     },

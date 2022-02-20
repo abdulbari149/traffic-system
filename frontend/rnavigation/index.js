@@ -9,6 +9,7 @@ import WardenProfile from '../screens/Profile/WardenProfile';
 
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import RecordDetails from '../screens/Record/RecordDetails';
 
 const Stack = () => {
 
@@ -38,6 +39,11 @@ const Stack = () => {
                 headerShown: false
             }} component={LoginIntroScreen} />
             <Stack.Screen name='Login' component={LogInScreen} options={({ navigation }) => ({
+                headerTransparent: true,
+                headerTitle: () => <></>,
+                headerTintColor: 'white'
+            })} />
+            <Stack.Screen name='Record Details' component={RecordDetails} options={({ navigation }) => ({
                 headerTransparent: true,
                 headerTitle: () => <></>,
                 headerTintColor: 'white'

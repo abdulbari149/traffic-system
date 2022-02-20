@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Image, View, Text, Button } from 'native-base';
-import { ImageBackground } from 'react-native';
 
 import styles from '../../styles/Login.styles';
 
