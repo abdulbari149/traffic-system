@@ -29,4 +29,3 @@ const LoginIntroScreen = ({ navigation }) => {
 }
 
 export default LoginIntroScreen;
-export default LoginIntroScreen;

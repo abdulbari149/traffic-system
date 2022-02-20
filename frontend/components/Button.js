@@ -47,3 +47,5 @@ const styles = StyleSheet.create({
   },
   textBtn: { width: "50%", alignSelf: "center", textAlign: "center" },
 });
+
+export default Button

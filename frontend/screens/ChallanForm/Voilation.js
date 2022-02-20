@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import { ScreenTabs, Steps } from "../../components";
+import { ScreenTabs, Steps, VoilationBox } from "../../components";
 
 const Voilation = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -63,7 +63,10 @@ const styles = StyleSheet.create({
 const ParkingVoilation = () => {
   return (
     <View>
-      <Text> ParkingVoilation </Text>
+      <VoilationBox
+        text="Driving at night without proper lights and other stuff."
+        value="1"
+      />
     </View>
   );
 };
