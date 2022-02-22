@@ -23,7 +23,7 @@ const TabScreens = () => {
 			screenOptions={({ route }) => ({
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
-					size = "20px";
+					size = 20;
 					if (route.name === "Form") {
 						iconName = "form";
 					} else if (route.name === "Profile") {
@@ -46,7 +46,7 @@ const TabScreens = () => {
 };
 
 const Routes = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(true);
 	const AppStack = createNativeStackNavigator();
 	const AuthStack = createNativeStackNavigator();
 	const config = {

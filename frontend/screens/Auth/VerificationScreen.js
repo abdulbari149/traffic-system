@@ -1,20 +1,13 @@
 import React from 'react';
-import {Text} from 'native-base';
-import {} from ""
+import {Text,View} from 'native-base';
+import { KeyPad } from "../../components"
+import { StyleSheet } from "react-native"
 const VerificationScreen = () => {
   return (
-    <View styles={styles.container}>
+    <View flex={1} >
       <KeyPad onEnteredPincode={(code) => console.log(code)} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    flex: 1,
-    height: "100%",
-  },
-});
 
 export default VerificationScreen;
