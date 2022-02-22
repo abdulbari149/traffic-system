@@ -14,12 +14,15 @@ const Field = ({ label, ...props }) => {
         </FormControl.Label>
         <Input
           {...field}
+          placeholder={props.placeholder}
+          type={props.type}
           backgroundColor="#F2F5FF"
           borderRadius={20}
           paddingLeft={5}
           outline={null}
           marginBottom={5}
           color="#000000"
+          maxWidth="300px"
         />
         {meta.touched && meta.error ? (
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>

@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     scrollView: {
-        paddingBottom: '100%'
+        overflow: 'scroll',
     },
     coverphoto: {
         width: '100%',
-        height: '30%'
+        height: 200
     },
     profilepic: {
         height: 130,
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     profileChallanContainer: {
+        flex: 1,
         flexDirection: 'row',
         marginLeft: 10,
         marginRight: 10
@@ -60,7 +61,9 @@ const styles = StyleSheet.create({
         padding: 15,
         paddingTop: 18,
         borderRadius: 10,
-        backgroundColor: '#296BFF'
+        marginBottom: 10,
+        backgroundColor: '#296BFF',
+        height: 140
     },
     calendarIcon: {
         color: 'white',

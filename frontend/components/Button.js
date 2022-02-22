@@ -18,10 +18,10 @@ const Button = ({ onPress, title="Next" }) => {
   );
 }
 
-export const TextBtn = ({ text }) => {
+export const TextBtn = ({ text, onPress }) => {
   return (
-    <Pressable style={styles.textBtn}>
-      <Text style={[styles.text, { color: "#0038ff" }]}>{props.text}</Text>
+    <Pressable onPress={onPress} style={styles.textBtn}>
+      <Text style={[styles.text, { color: "#0038ff" }]}>{text}</Text>
     </Pressable>
   );
 }

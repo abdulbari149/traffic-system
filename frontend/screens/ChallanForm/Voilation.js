@@ -1,6 +1,11 @@
 import React, { useLayoutEffect } from "react";
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import { ScreenTabs, Steps, VoilationBox } from "../../components";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  ScreenTabs,
+  Steps,
+  VoilationBox,
+  VoilationList,
+} from "../../components";
 
 const Voilation = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -24,7 +29,16 @@ const Voilation = ({ navigation }) => {
       </View>
       <ScreenTabs
         tabs={["Parking Voilation", "Moving Voilation"]}
-        screens={[ParkingVoilation, MovingVoilation]}
+        screen={VoilationList}
+        screenProps={{
+          navigation,
+          one: {
+            query: "parking",
+          },
+          two: {
+            query: "moving",
+          },
+        }}
       />
     </View>
   );
@@ -36,6 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     height: "100%",
+    padding: 12,
   },
   heading: {
     textAlign: "center",
@@ -59,24 +74,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-const ParkingVoilation = () => {
-  return (
-    <View>
-      <VoilationBox
-        text="Driving at night without proper lights and other stuff."
-        value="1"
-      />
-    </View>
-  );
-};
-
-const MovingVoilation = () => {
-  return (
-    <View>
-      <Text> MovingVoilation </Text>
-    </View>
-  );
-};
 
 export default Voilation;

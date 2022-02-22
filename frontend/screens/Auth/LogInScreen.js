@@ -1,70 +1,68 @@
-import React from "react";
-import { View, ImageBackground } from "react-native";
-import { Text, Image, Button } from "native-base";
-import styles from "../../styles/Login.styles";
-import { Formik } from "formik";
-import { Field } from "../../components"
-const LogInScreen = ({ navigation }) => {
+import React from 'react';
+import { ImageBackground } from 'react-native';
+import { Flex, Box, VStack, Text, Image } from 'native-base';
+import styles from '../../styles/Login.styles';
+import { Formik } from 'formik';
+import { Field, TextBtn, Button, Dots } from '../../components';
+const LoginScreen = ({ navigation }) => {
   const imagebg = {
-    uri: "https://res.cloudinary.com/saadfarhan/image/upload/v1643909305/loginBg_rcsqrv.png",
+    uri: 'https://res.cloudinary.com/saadfarhan/image/upload/v1643909305/loginBg_rcsqrv.png',
   };
 
   return (
-    <View>
-    <ImageBackground source={imagebg} style={styles.bgimage}>
-      <Image
-        source={{
-          uri: "https://res.cloudinary.com/saadfarhan/image/upload/v1643998001/317501_l0lfzi.jpg",
-        }}
-        alt="Alternate Text"
-        size="xl"
-        style={styles.logo}
-      />
+    <Flex flex={1} bgColor="#6497F7">
+      <Box pos="absolute" top="0" w="100%" h="35%">
+        <Image
+          source={{ url: '../../assets/bubbles/Vector-B.png' }}
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+          }}
+        />
+      </Box>
+
       <Formik
-        initialValues={{ wardenId: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
-      >
-        {({ initialValues, errors, handleChange, handleBlur, values  }) => {
+        initialValues={{ wardenId: '', password: '' }}
+        onSubmit={(values) => console.log(values)}>
+        {({ initialValues, errors, handleChange, handleBlur, values }) => {
           return (
-            <View style={styles.loginContainer}>
+            <VStack flex={1} style={styles.loginContainer}>
               <Text fontSize="3xl" style={styles.loginHeading}>
                 Login
               </Text>
               <Field
                 name="wardenId"
-								type="text"
-								placeholder="Enter warden's Id"
-								label="Warden's Id"
+                type="text"
+                placeholder="Enter warden's Id"
+                label="Warden's Id"
               />
               <Field
                 name="password"
-								type="password"
-								placeholder="Enter your password"
-								label="Password"
+                type="password"
+                placeholder="Enter your password"
+                label="Password"
               />
               <Button
-                size="sm"
-                shadow="9"
-                style={styles.loginButton}
-                onPress={() => navigation.navigate("Verification Screen")}
-              >
-                <Text style={styles.loginButtonText} padding="0">
-                  Login
-                </Text>
-              </Button>
-              <Button size="sm" variant="ghost" style={styles.ghostButton}>
-                <Text style={styles.ghostButtonText} padding="0">
-                  Forgot password?
-                </Text>
-              </Button>
-            </View>
+                title="Login"
+                w="200px"
+                shadow={9}
+                onPress={() => navigation.navigate('Verification Screen')}
+              />
+              <TextBtn
+                style={{ marginTop: '12px' }}
+                text="Forgot Password?"
+                onPress={() => console.log('Forgot Password')}
+              />
+              <Dots activeScreen={2} />
+            </VStack>
           );
         }}
       </Formik>
-    </ImageBackground>
-    </View>
+    </Flex>
   );
 };
 
-export default LogInScreen;
-
+export default LoginScreen;

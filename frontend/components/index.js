@@ -7,3 +7,7 @@ export { default as Steps } from "./Steps";
 export { default as Field } from "./Field";
 export { TextBtn };
 export { default as VoilationBox } from "./VoilationBox";
+export { default as VoilationList } from "./VoilationList";
+export { default as HeaderText } from "./HeaderText"
+export { default as Dots } from "./Dots"
+export { default as RecordTable } from "./RecordTable"
