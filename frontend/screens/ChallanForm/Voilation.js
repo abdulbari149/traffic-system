@@ -6,6 +6,7 @@ import {
   VoilationBox,
   VoilationList,
 } from "../../components";
+import styles from "../../styles/ChallanForm.style"
 
 const Voilation = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -20,7 +21,7 @@ const Voilation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Steps />
+      <Steps activeStep={2} />
       <View style={styles.textContainer}>
         <Text style={styles.heading}> Voilation </Text>
         <Text style={styles.text}>
@@ -44,35 +45,6 @@ const Voilation = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "white",
-    height: "100%",
-    padding: 12,
-  },
-  heading: {
-    textAlign: "center",
-    fontSize: 26,
-    fontWeight: "bold",
-    lineHeight: 30,
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "400",
-    lineHeight: 30,
-  },
-  textContainer: {
-    marginVertical: 30,
-  },
-  proceedBtn: {
-    marginRight: 10,
-    fontSize: 16,
-    color: "#0038ff",
-    fontWeight: "bold",
-  },
-});
+
 
 export default Voilation;

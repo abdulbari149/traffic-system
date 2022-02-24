@@ -1,5 +1,6 @@
 export { default as LoginIntroScreen } from "./Auth/LoginIntroScreen"
 export { default as LoginScreen } from "./Auth/LoginScreen"
+export { default as SignUpScreen } from "./Auth/SignUp"
 export { default as VerificationScreen } from "./Auth/VerificationScreen"
 export { default as ChallanFormHomeScreen } from "./ChallanForm/Home"
 export { default as ChallanFormScreen } from "./ChallanForm/ChallanForm"

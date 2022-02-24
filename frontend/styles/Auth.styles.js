@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     inputLabel: {
-        marginBottom: 4
+        marginBottom: 5
     },
     inputLabelText: {
-        fontSize: 20
+        fontSize: 16,
+        paddingLeft: 10,
+        textTransform: "capitalize"
     },
     loginButton: {
         margin: 15,
@@ -67,8 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '170%',
         height: '60%',
-        marginBottom: -150,
-        marginTop: 0,
+        marginTop: -30,
         borderTopLeftRadius: 260,
         borderTopRightRadius: 260,
         paddingTop: 10
@@ -83,6 +84,18 @@ const styles = StyleSheet.create({
     },
     loginIntroSubtitle: {
         textAlign: 'center'
+    },
+
+    signUpContainer: {
+        flex: 1,
+        height: "100%",
+        overflow: "hidden",
+        backgroundColor: "#fff",
+        paddingHorizontal: 12,
+    },
+
+    fieldLabel: {
+        textTransform: "capitalize"
     }
 })
 

@@ -2,13 +2,14 @@ import React from "react";
 import { Text, Box, Checkbox, Flex } from "native-base";
 import { StyleSheet } from "react-native";
 
-const VoilationBox = ({ text, value }) => {
+const VoilationBox = ({ item }) => {
+  console.log(item)
   return (
     <Flex style={styles.voilationContainer} direction="row">
       <Text lineHeight="23px" w="85%" color="#0038FF">
-        {text}
+        {item.title}
       </Text>
-      <Checkbox value={value} ml="3" accessibilityLabel="check the voilation" />
+      <Checkbox value={item.id} ml="3" accessibilityLabel="check the voilation" />
     </Flex>
   );
 };

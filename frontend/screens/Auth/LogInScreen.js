@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 import { Flex, Box, VStack, Text, Image } from 'native-base';
-import styles from '../../styles/Login.styles';
+import styles from '../../styles/Auth.styles';
 import { Formik } from 'formik';
 import { Field, TextBtn, Button, Dots } from '../../components';
 const LoginScreen = ({ navigation }) => {
@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <Flex flex={1} bgColor="#6497F7">
+    <Flex flex={1} bgColor="#6497F7" >
       <Box pos="absolute" top="0" w="100%" h="35%">
         <Image
           source={{ url: '../../assets/bubbles/Vector-B.png' }}
@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
         onSubmit={(values) => console.log(values)}>
         {({ initialValues, errors, handleChange, handleBlur, values }) => {
           return (
-            <VStack flex={1} style={styles.loginContainer}>
+            <VStack flex={1} style={styles.loginContainer} px="12px">
               <Text fontSize="3xl" style={styles.loginHeading}>
                 Login
               </Text>
@@ -47,14 +47,17 @@ const LoginScreen = ({ navigation }) => {
               />
               <Button
                 title="Login"
-                w="200px"
-                shadow={9}
                 onPress={() => navigation.navigate('Verification Screen')}
+                style={{
+                  width: 200,
+                  
+                }}
               />
               <TextBtn
                 style={{ marginTop: '12px' }}
                 text="Forgot Password?"
                 onPress={() => console.log('Forgot Password')}
+
               />
               <Dots activeScreen={2} />
             </VStack>

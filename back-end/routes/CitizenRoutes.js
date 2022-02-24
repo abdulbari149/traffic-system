@@ -1,3 +1,4 @@
+
 const { Router } = require("express");
 const { CitizenController } = require("../controllers");
 const router = Router();

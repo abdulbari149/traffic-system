@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "native-base";
-import { HeaderText, KeyPad } from "../../components";
+import { HeaderText, KeyPad, Dots } from "../../components";
 
 const VerificationScreen = () => {
   return (
@@ -10,6 +10,7 @@ const VerificationScreen = () => {
         subTitle="We have send code at +92 333 3456789"
       />
       <KeyPad onEnteredPincode={(code) => console.log(code)} />
+      <Dots activeScreen={3} />
     </View>
   );
 };

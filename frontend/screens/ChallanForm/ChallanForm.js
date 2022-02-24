@@ -1,52 +1,37 @@
 import React from "react";
-import { View, VStack } from "native-base";
-import { Steps, Button, Field } from "../../components";
-import { Formik } from "formik";
-
+import { View } from "native-base";
+import { HeaderText, Steps, Form } from "../../components";
+import styles from "../../styles/ChallanForm.style"
 const ChallanForm = ({ navigation }) => {
-  return (
-    <View flex={1} width="100%" alignItems="center" bgColor="#fff" px="12px">
-      <Steps />
+  const data = {
+    names: ["driver_cnic", "vehicle_no", "province", "city", "district"],
+    placeholders: [
+      "Enter driver CNIC",
+      "Enter vehicle Registration Numbeer",
+      "Province",
+      "City",
+      "District",
+    ],
+    types: ["number", "text", "text", "text", "text"],
+  };
 
-      <Formik
-        initialValues={{
-          driver_name: "",
-          vehicle_no: "",
-          location: "",
-          date: "",
+  return (
+    <View style={styles.container}>
+      <Steps activeStep={1} />
+      <HeaderText title="Challan Form" my="20px" />
+      <Form
+        data={data}
+        handleSubmit={() => navigation.navigate("Voilation")}
+        _btn={{
+          text: "Next",
+          style: {
+            alignSelf: "flex-start",
+            width: 200
+          },
         }}
-        onSubmit={(values) => console.log(values)}
-      >
-        {({}) => (
-          <VStack width="100%">
-            <Field
-              name="driver_name"
-              placeholder="Enter Email"
-              label="Driver Name"
-              type="email"
-            />
-            <Field
-              name="vehicle_no"
-              placeholder="Enter Email"
-              label="Vehicle Number"
-              type="number"
-            />
-            <Field
-              name="location"
-              placeholder="Enter Email"
-              label="Location"
-              type="text"
-            />
-            <Field name="Date" label="Date" type="date" />
-          </VStack>
-        )}
-      </Formik>
-      <Button
-        title="Proceed"
-        onPress={() => navigation.navigate("Voilation")}
       />
     </View>
   );
-}
+};
 
 export default ChallanForm;

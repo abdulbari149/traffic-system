@@ -19,3 +19,5 @@ router.put("/updateVehicle/:reg_no",  VehicleController.updateVehicleByRegNo)
 
 
 router.delete("/deleteVehicle/:reg_no", VehicleController.deleteVehicleByRegNo )
+
+module.exports = router

@@ -1,5 +1,11 @@
 import React from "react";
-import { LoginIntroScreen, LoginScreen, VerificationScreen } from "../screens";
+import {
+  LoginIntroScreen,
+  LoginScreen,
+  VerificationScreen,
+  SignUpScreen,
+} from "../screens";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const AuthNavigation = () => {
   const AuthStack = createNativeStackNavigator();
@@ -13,6 +19,16 @@ const AuthNavigation = () => {
         }}
         component={LoginIntroScreen}
       />
+
+      <AuthStack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{
+          headerTitle: () => <></>,
+          headerShadowVisible: false,
+          headerBackImageSource: require("../cdn/BackArrow.png"),
+        }}
+      />
       <AuthStack.Screen
         name="Login"
         component={LoginScreen}
@@ -25,7 +41,7 @@ const AuthNavigation = () => {
       />
       <AuthStack.Screen
         name="Verification Screen"
-        component={VerificationScreenn}
+        component={VerificationScreen}
         options={{
           headerTitle: () => <></>,
           headerShadowVisible: false,

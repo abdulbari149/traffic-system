@@ -1,22 +1,39 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 
-const Button = ({ onPress, title="Next" }) => {
+const Button = ({ variant = "solid", onPress, title = "Next", style = {} }) => {
+  const outlinedStyles =
+    variant === "outlined"
+      ? {
+          borderWidth: 3,
+          borderStyle: "solid",
+          borderColor: "#0038FF",
+          backgroundColor: "#E7EBFD",
+          color: "#0038FF",
+        }
+      : {};
+
+  const solidStyles =
+    variant === "solid"
+      ? {
+          backgroundColor: "#0038FF",
+        }
+      : {};
   return (
     <Pressable
-      style={styles.button}
+      style={{
+        ...style,
+        ...styles.button,
+        ...outlinedStyles,
+        ...solidStyles,
+      }}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, { color: variant === "outlined" ? "#0038FF" : "#fff" }]}>{title}</Text>
     </Pressable>
   );
-}
+};
 
 export const TextBtn = ({ text, onPress }) => {
   return (
@@ -24,7 +41,7 @@ export const TextBtn = ({ text, onPress }) => {
       <Text style={[styles.text, { color: "#0038ff" }]}>{text}</Text>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -34,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    backgroundColor: "#0038ff",
+
     elevation: 3,
     borderRadius: 1000,
   },
@@ -48,4 +65,4 @@ const styles = StyleSheet.create({
   textBtn: { width: "50%", alignSelf: "center", textAlign: "center" },
 });
 
-export default Button
+export default Button;

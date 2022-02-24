@@ -1,28 +1,32 @@
-import React from "react";
-import { FormControl, Stack, Input, WarningOutlineIcon } from "native-base";
-import styles from "../styles/Login.styles";
+import React, { useState } from "react";
+import { FormControl, Stack, Input, WarningOutlineIcon, Text, Icon } from "native-base";
+import styles from "../styles/Auth.styles";
 import { useField } from "formik";
-import{ Text } from "react-native"
+
 const Field = ({ label, ...props }) => {
   const [form, meta, field] = useField(props);
+  const [visible, setVisible] = useState(false)
+
+  const passwordInput = props.type === "password" ?  {InputRightElement: <Icon name={visible ? "eye-off" : "eye"}  /> } : { }
 
   return (
     <FormControl>
-      <Stack mx="4">
+      <Stack my="3" >
         <FormControl.Label style={styles.inputLabel}>
-          <Text style={styles.inputLabelText}>{label}</Text>
+          <Text style={styles.inputLabelText} color="#000">{label}</Text>
         </FormControl.Label>
         <Input
           {...field}
-          placeholder={props.placeholder}
-          type={props.type}
+          placeholder={props?.placeholder ?? ""}
+          type={props.type !== "password" ? props.type : (visible ? "text" : "password")}
           backgroundColor="#F2F5FF"
+          border="none"
           borderRadius={20}
           paddingLeft={5}
           outline={null}
-          marginBottom={5}
           color="#000000"
-          maxWidth="300px"
+          maxWidth="700px"
+          {...passwordInput}
         />
         {meta.touched && meta.error ? (
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
