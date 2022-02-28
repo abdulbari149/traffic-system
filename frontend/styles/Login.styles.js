@@ -68,13 +68,30 @@ const styles = StyleSheet.create({
     },
     loginIntroHeaderContainer: {
         backgroundColor: 'white',
+        width: '150%',
+        height: '30%',
+        marginTop: 80,
+        borderTopLeftRadius: 900,
+        borderTopRightRadius: 900,
+        paddingTop: 20
+    },
+    forgotPasswordEmailVerifyIntroContainer: {
+        backgroundColor: 'white',
         width: '170%',
+<<<<<<< Updated upstream:frontend/styles/Login.styles.js
         height: '60%',
         marginBottom: -150,
         marginTop: 0,
         borderTopLeftRadius: 260,
         borderTopRightRadius: 260,
         paddingTop: 10
+=======
+        height: '50%',
+        marginTop: -60,
+        borderTopLeftRadius: 900,
+        borderTopRightRadius: 900,
+        paddingTop: 20
+>>>>>>> Stashed changes:frontend/styles/Auth.styles.js
     },
     loginIntroHeader: {
         fontFamily: 'Segoe UI',
@@ -86,6 +103,22 @@ const styles = StyleSheet.create({
     },
     loginIntroSubtitle: {
         textAlign: 'center'
+<<<<<<< Updated upstream:frontend/styles/Login.styles.js
+=======
+    },
+
+    signUpContainer: {
+        flex: 1,
+        height: "100%",
+        overflow: "hidden",
+        backgroundColor: "#fff",
+        paddingHorizontal: 12,
+        paddingBottom: '100%'
+    },
+
+    fieldLabel: {
+        textTransform: "capitalize"
+>>>>>>> Stashed changes:frontend/styles/Auth.styles.js
     }
 })
 
