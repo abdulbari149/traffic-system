@@ -9,7 +9,7 @@ const LoginScreen = ({ navigation }) => {
     return (<Flex flex={1} style={{ backgroundColor: 'white' }}>
         <Box pos="absolute" w="100%" h="35%">
             <View style={{ backgroundColor: '#B21B1B' }}>
-                <Text style={{ color: 'white', paddingVertical: 40, fontSize: 30, alignSelf: 'center', fontWeight: 'bold', fontFamily: 'Poppins-Light' }}>Logo Here</Text>
+                <Text style={{ color: 'white', paddingVertical: 40, fontSize: 30, alignSelf: 'center', fontWeight: 'bold' }}>Logo Here</Text>
                 <Image style={{ alignSelf: 'center', marginBottom: -35 }} size={170} source={require('../assets/images/login.png')} />
             </View>
         </Box>

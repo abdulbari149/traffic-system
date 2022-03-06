@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textTransform: "capitalize",
         paddingLeft: 5,
-        fontWeight: 'bold',
-        fontFamily: 'Poppins-Light'
+        fontWeight: 'bold'
     },
     formGroup: {
         width: "100%",
