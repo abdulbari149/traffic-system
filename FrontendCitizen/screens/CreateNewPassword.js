@@ -24,7 +24,7 @@ const CreateNewPassword = ({ navigation }) => {
 
     // const [modalOpen, isModalOpen] = useState(false);
 
-    return (<ScrollView flex={1} style={{ backgroundColor: 'white', margin: 10, paddingBottom: 'auto' }}>
+    return (<ScrollView flex={1} style={{ backgroundColor: 'white', paddingBottom: 'auto' }}>
         <Box pos="absolute" w="100%" marginTop={10}>
             <Text style={{ color: 'black', paddingVertical: 40, fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Create New Password</Text>
             <Image style={{ alignSelf: 'center' }} size={200} source={require('../assets/images/create-password.png')} />

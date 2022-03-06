@@ -1,12 +1,12 @@
 import React from 'react';
-import { Image, Text, View, Flex, VStack, Box, Button as NBButton } from 'native-base'
+import { Image, Text, View, Box, ScrollView } from 'native-base'
 import { Formik } from 'formik';
 import styles from '../styles/Auth.styles';
 import Field from '../components/Field';
 import Button from '../components/Button';
 
 const LoginScreen = ({ navigation }) => {
-    return (<Flex flex={1} style={{ backgroundColor: 'white' }}>
+    return (<ScrollView style={{ backgroundColor: 'white', paddingBottom: 'auto' }}>
         <Box pos="absolute" w="100%" h="35%">
             <View style={{ backgroundColor: '#B21B1B' }}>
                 <Text style={{ color: 'white', paddingVertical: 40, fontSize: 30, alignSelf: 'center', fontWeight: 'bold' }}>Logo Here</Text>
@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
                             placeholder="Enter your password"
                             label="Password"
                         />
-                        <Text style={{ color: '#444444', backgroundColor: 'transparent', fontWeight: 'bold', alignSelf: 'flex-end' }} maxWidth="200px" onPress={() => navigation.navigate('Forgot Password')}>
+                        <Text style={{ color: '#444444', backgroundColor: 'white', fontWeight: 'bold', alignSelf: 'flex-end' }} maxWidth="200px" onPress={() => navigation.navigate('Forgot Password')}>
                             Forgot password?
                         </Text>
 
@@ -49,14 +49,14 @@ const LoginScreen = ({ navigation }) => {
                                 marginVertical: 14
                             }}
                         />
-                        <Text style={{ color: '#444444', backgroundColor: 'transparent', fontWeight: 'bold', alignSelf: 'center' }} onPress={() => navigation.navigate('Signup Screen')} maxWidth="200px">
+                        <Text style={{ color: '#444444', backgroundColor: 'white', fontWeight: 'bold', alignSelf: 'center' }} onPress={() => navigation.navigate('Signup Screen')} maxWidth="200px">
                             Don't have an account? Signup
                         </Text>
                     </View>
                 );
             }}
         </Formik>
-    </Flex>)
+    </ScrollView>)
 }
 
 export default LoginScreen;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Flex, VStack, Box, Button as NBButton } from 'native-base'
+import { Image, Text, View, Flex, VStack, Box, Button as NBButton, ScrollView } from 'native-base'
 import { Formik } from 'formik';
 import styles from '../styles/Auth.styles';
 import Field from '../components/Field';
@@ -18,9 +18,9 @@ const ForgotPassword = ({ navigation }) => {
         types: ["text"],
     }
 
-    return (<View style={{ backgroundColor: 'white', flex: 1 }}>
-        <Box w="100%" h="55%" style={{ backgroundColor: '#B21B1B' }}>
-            <Image style={{ alignSelf: 'center', height: 170, width: 170, marginTop: 50 }} alt="hooman" size={170} source={require('../assets/images/human.png')} />
+    return (<ScrollView style={{ backgroundColor: 'white', flex: 1, paddingBottom: 'auto' }}>
+        <Box w="100%" style={{ backgroundColor: '#B21B1B' }}>
+            <Image style={{ alignSelf: 'center', height: 170, width: 170 }} alt="hooman" size={170} source={require('../assets/images/human.png')} />
             <Text style={{ color: 'white', paddingTop: 40, fontSize: 30, alignSelf: 'center', fontWeight: 'bold' }}>Forgot Password?</Text>
             <Text style={{ color: 'white', paddingVertical: 25, fontSize: 18, textAlign: 'center', marginLeft: 30, marginRight: 30, lineHeight: 27 }}>Please enter your email address to recieve the verification code.</Text>
         </Box>
@@ -36,7 +36,7 @@ const ForgotPassword = ({ navigation }) => {
             }}
             handleSubmit={() => navigation.navigate('Create New Password')}
         />
-    </View>)
+    </ScrollView>)
 }
 
 export default ForgotPassword;

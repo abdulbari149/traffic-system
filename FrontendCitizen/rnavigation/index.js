@@ -17,7 +17,7 @@ const Stack = () => {
             headerShadowVisible: false,
             headerBackVisible: false,
             headerTitle: () => <></>,
-            headerTransparent: true,
+            headerwhite: true,
         }}>
             <ScreensStack.Screen
                 name="Login Screen"
@@ -41,7 +41,10 @@ const Stack = () => {
                 options={({ navigation }) => ({
                     headerLeft: () => <View style={{ padding: 5, backgroundColor: 'white', marginTop: 8 }}>
                         <Icon name="ios-chevron-back-outline" size={24} color="black" onPress={() => navigation.goBack()} />
-                    </View>
+                    </View>,
+                    headerStyle: {
+                        backgroundColor: '#B21B1B'
+                    }
                 })}
             />
             <ScreensStack.Screen

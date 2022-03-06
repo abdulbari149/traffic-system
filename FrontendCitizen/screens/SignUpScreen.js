@@ -27,7 +27,7 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     return (<ScrollView style={{ backgroundColor: 'white', paddingBottom: 'auto', paddingLeft: -15 }}>
-        <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold', paddingTop: 100, paddingLeft: 15 }}>Create New Account</Text>
+        <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold', paddingTop: 30, paddingLeft: 15 }}>Create New Account</Text>
         <Form
             data={formData}
             handleSubmit={() => console.log('Submitted')}
