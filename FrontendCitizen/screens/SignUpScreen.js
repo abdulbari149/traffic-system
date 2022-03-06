@@ -18,7 +18,7 @@ const SignUpScreen = ({ navigation }) => {
             "Enter your First Name",
             "Enter your Last Name",
             "Enter CNIC Number",
-            "Enter Phone Number i.e. +12345 678 9000",
+            "Enter Phone Number i.e. +12 345 678900",
             "Enter your Email Address",
             "Enter your Password",
             "Retype the Password",
@@ -26,8 +26,8 @@ const SignUpScreen = ({ navigation }) => {
         types: ["text", "text", "number", "number", "email", "password", "password"],
     }
 
-    return (<ScrollView style={{ marginHorizontal: 15, backgroundColor: 'white', paddingBottom: 'auto' }}>
-        <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold', paddingTop: 100, paddingLeft: 5 }}>Create New Account</Text>
+    return (<ScrollView style={{ backgroundColor: 'white', paddingBottom: 'auto', paddingLeft: -15 }}>
+        <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold', paddingTop: 100, paddingLeft: 15 }}>Create New Account</Text>
         <Form
             data={formData}
             handleSubmit={() => console.log('Submitted')}

@@ -12,12 +12,6 @@ const ScreensStack = createNativeStackNavigator();
 
 const Stack = () => {
 
-    const BackButton = (buttonColor, iconColor, navigation) => (
-        <View style={{ padding: 5, backgroundColor: buttonColor, marginTop: 8 }}>
-            <Icon name="ios-chevron-back-outline" size={24} color={iconColor} onPress={() => navigation.goBack()} />
-        </View>
-    )
-
     return (<NavigationContainer>
         <ScreensStack.Navigator screenOptions={{
             headerShadowVisible: false,
@@ -36,21 +30,27 @@ const Stack = () => {
                 name="Signup Screen"
                 component={SignUpScreen}
                 options={({ navigation }) => ({
-                    headerLeft: () => <BackButton buttonColor='black' iconColor='white' navigation={navigation} />
+                    headerLeft: () => <View style={{ padding: 5, backgroundColor: 'black', marginTop: 8 }}>
+                        <Icon name="ios-chevron-back-outline" size={24} color="white" onPress={() => navigation.goBack()} />
+                    </View>
                 })}
             />
             <ScreensStack.Screen
                 name="Forgot Password"
                 component={ForgotPassword}
                 options={({ navigation }) => ({
-                    headerLeft: () => <BackButton buttonColor='white' iconColor='black' navigation={navigation} />
+                    headerLeft: () => <View style={{ padding: 5, backgroundColor: 'white', marginTop: 8 }}>
+                        <Icon name="ios-chevron-back-outline" size={24} color="black" onPress={() => navigation.goBack()} />
+                    </View>
                 })}
             />
             <ScreensStack.Screen
                 name="Create New Password"
                 component={CreateNewPassword}
                 options={({ navigation }) => ({
-                    headerLeft: () => <BackButton buttonColor='black' iconColor='white' navigation={navigation} />
+                    headerLeft: () => <View style={{ padding: 5, backgroundColor: 'black', marginTop: 8 }}>
+                        <Icon name="ios-chevron-back-outline" size={24} color="white" onPress={() => navigation.goBack()} />
+                    </View>
                 })}
             />
         </ScreensStack.Navigator>
