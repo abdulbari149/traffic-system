@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textTransform: "capitalize",
         paddingLeft: 5,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     formGroup: {
         width: "100%",
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     loginHeading: {
-        fontFamily: 'Segoe UI',
         color: '#000000',
         fontWeight: 'bold',
         marginBottom: 20,

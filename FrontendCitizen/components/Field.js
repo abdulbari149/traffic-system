@@ -13,7 +13,7 @@ const Field = ({ label, ...props }) => {
 
 
     return (
-        <FormControl>
+        <FormControl isRequired isInvalid={meta.touched && meta.error}>
             <Stack my="3" >
                 <FormControl.Label style={styles.inputLabel}>
                     <Text style={styles.inputLabelText} color="#000">{label}</Text>

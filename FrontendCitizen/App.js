@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeBaseProvider, View } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import Stack from './rnavigation';
 
 const App = () => {

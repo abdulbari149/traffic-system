@@ -19,7 +19,7 @@ const ForgotPassword = ({ navigation }) => {
     }
 
     return (<ScrollView style={{ backgroundColor: 'white', flex: 1, paddingBottom: 'auto' }}>
-        <Box w="100%" style={{ backgroundColor: '#B21B1B' }}>
+        <Box w="100%" style={{ backgroundColor: '#B21B1B', paddingTop: 30 }}>
             <Image style={{ alignSelf: 'center', height: 170, width: 170 }} alt="hooman" size={170} source={require('../assets/images/human.png')} />
             <Text style={{ color: 'white', paddingTop: 40, fontSize: 30, alignSelf: 'center', fontWeight: 'bold' }}>Forgot Password?</Text>
             <Text style={{ color: 'white', paddingVertical: 25, fontSize: 18, textAlign: 'center', marginLeft: 30, marginRight: 30, lineHeight: 27 }}>Please enter your email address to recieve the verification code.</Text>
@@ -34,7 +34,7 @@ const ForgotPassword = ({ navigation }) => {
                     marginBottom: 20
                 }
             }}
-            handleSubmit={() => navigation.navigate('Create New Password')}
+            handleSubmit={() => navigation.navigate('Verification Screen')}
         />
     </ScrollView>)
 }

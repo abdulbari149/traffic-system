@@ -1,15 +1,15 @@
 import React from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 
-const Button = ({ variant = "solid", onPress, title = "Next", style = {} }) => {
+const Button = ({ variant = "solid", onPress, title = "Next", style = {}, textDecoration }) => {
     const outlinedStyles =
         variant === "outlined"
             ? {
                 borderWidth: 3,
                 borderStyle: "solid",
-                borderColor: "#0038FF",
-                backgroundColor: "#E7EBFD",
-                color: "#0038FF",
+                borderColor: "white",
+                backgroundColor: "#B21B1B",
+                color: "white",
             }
             : {};
 
@@ -30,7 +30,7 @@ const Button = ({ variant = "solid", onPress, title = "Next", style = {} }) => {
             onPress={onPress}
             activeOpacity={0.8}
         >
-            <Text style={[styles.text, { color: variant === "outlined" ? "#0038FF" : "#fff" }]}>{title}</Text>
+            <Text style={[styles.text, { textDecorationLine: textDecoration === 'underline' ? 'underline' : 'none' }]}>{title}</Text>
         </Pressable>
     );
 };
