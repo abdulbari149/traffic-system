@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import Button from "./Button";
 import Field from "./Field";
-import { VStack, Box } from "native-base";
+import { VStack, Box, Text } from "native-base";
 import styles from "../styles/Auth.styles";
 
 const getFieldValues = (data) => {
@@ -40,8 +40,6 @@ const MultiGroupForm = ({ data, values, handleChange }) => {
 };
 
 const SingleForm = ({ data, values, handleChange }) => {
-
-
     return (
         <>
             {data.names.map((name, idx) => {
@@ -54,7 +52,6 @@ const SingleForm = ({ data, values, handleChange }) => {
                         placeholder={data.placeholders[idx]}
                         label={name.replace("_", " ")}
                         type={data.types[idx]}
-
                     />
                 );
             })}
@@ -62,21 +59,34 @@ const SingleForm = ({ data, values, handleChange }) => {
     );
 };
 
-const Form = ({ data, handleSubmit, multiple = false, _btn, containerStyles = {} }) => {
+const VerficationCode = () => {
+    return (
+        <View>
+            
+        </View>
+    )
+}
+
+const Form = ({ data, handleSubmit, variety = 'single', _btn, containerStyles = {} }) => {
     const fieldInitialValues = getFieldValues(data);
     return (
         <Formik initialValues={fieldInitialValues} onSubmit={handleSubmit}>
             {(formikProps) => (
                 <VStack style={{ ...containerStyles, padding: 10 }} alignItems='center' width="100%">
-                    {multiple ? (
-                        <MultiGroupForm data={data} {...formikProps} />
-                    ) : (
-                        <SingleForm data={data} {...formikProps} />
-                    )}
-                    <Button {..._btn} onPress={() => formikProps.handleSubmit()} />
-                </VStack>
-            )}
-        </Formik>
+                    {
+                        variety === 'multiple' ? (
+                            <MultiGroupForm data={data} {...formikProps} />
+                        ) : variety === 'single' ? (
+                            <SingleForm data={data} {...formikProps} />
+                        ) : variety === 'verfication' ? (
+                            <VerificationCode />
+                        ): <Text>Please provide variety prop</Text> 
+                    }
+            <Button {..._btn} onPress={() => formikProps.handleSubmit()} />
+        </VStack>
+    )
+}
+        </Formik >
     );
 };
 

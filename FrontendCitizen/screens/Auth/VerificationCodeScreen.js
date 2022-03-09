@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Text, View, Image } from 'native-base';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
-const VerificationCodeScreen = ({ heading = 'Some heading' }) => {
+const VerificationCodeScreen = ({ heading = 'Some heading', navigation }) => {
     return (<View style={{ backgroundColor: '#B21B1B', flex: 1 }}>
         <View style={{ padding: 20 }}>
             <Image source={require('../assets/images/verification-code-image.png')} alt='verification-code-image' style={{ alignSelf: 'center', marginVertical: 60 }} />
@@ -19,7 +19,9 @@ const VerificationCodeScreen = ({ heading = 'Some heading' }) => {
                 style={{
                     width: 200,
                     alignSelf: 'center'
-
+                }}
+                onPress={() => {
+                    navigation.navigate('Create New Password')
                 }}
             />
         </View>

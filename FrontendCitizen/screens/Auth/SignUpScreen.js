@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, Text, View } from 'native-base';
-import Form from '../components/Form';
+import Form from '../../components/Form';
+import styles from '../../styles/Auth.styles';
 
 const SignUpScreen = ({ navigation }) => {
 
@@ -26,8 +27,8 @@ const SignUpScreen = ({ navigation }) => {
         types: ["text", "text", "number", "number", "email", "password", "password"],
     }
 
-    return (<ScrollView style={{ backgroundColor: 'white', paddingBottom: 'auto', paddingLeft: -15 }}>
-        <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold', paddingTop: 30, paddingLeft: 15 }}>Create New Account</Text>
+    return (<ScrollView style={{ ...styles.scrollView, paddingLeft: -15 }}>
+        <Text style={styles.signUpHeading}>Create New Account</Text>
         <Form
             data={formData}
             handleSubmit={() => console.log('Submitted')}
@@ -39,7 +40,7 @@ const SignUpScreen = ({ navigation }) => {
                 }
             }}
         />
-        <Text style={{ color: '#444444', fontWeight: 'bold', alignSelf: 'center', marginTop: 10, marginBottom: 20, fontSize: 15 }} onPress={() => navigation.navigate('Login Screen')} maxWidth="200px">
+        <Text style={styles.alreadyHaveAnAccount} onPress={() => navigation.navigate('Login Screen')} maxWidth="200px">
             Already have account? Login
         </Text>
     </ScrollView>)
