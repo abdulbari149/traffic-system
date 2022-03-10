@@ -31,7 +31,7 @@ const Modal = ({
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView} alt="modal-image">
-                    <Image size={170} source={image} alt="image" />
+                    <Image width={220} source={image} alt="image" />
                     <Text fontSize="3xl" style={{ color: 'white' }}>{title}</Text>
                     <Text style={{ color: 'white', fontSize: 18, textAlign: 'center', paddingVertical: 18 }}>{subTitle}</Text>
                     <Button
@@ -45,7 +45,7 @@ const Modal = ({
                     {twoButtons && secondBtnTitle ? <TextBtn text="No" style={{ fontWeight: "bold" }} onPress={() => setModalVisible(false)} /> : null}
                 </View>
             </View>
-        </NativeModal>
+        </NativeModal >
     );
 };
 

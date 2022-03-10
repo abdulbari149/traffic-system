@@ -17,7 +17,7 @@ const ForgotPassword = ({ navigation }) => {
 
     return (<ScrollView style={{ ...styles.scrollView, flex: 1, }}>
         <Box w="100%" style={styles.forgotPasswordUpperCard}>
-            <Image style={styles.forgotPasswordImage} alt="hooman" size={170} source={require('../assets/images/human.png')} />
+            <Image style={styles.forgotPasswordImage} alt="hooman" size={170} source={require('../../assets/images/human.png')} />
             <Text style={styles.forgotPasswordHeading}>Forgot Password?</Text>
             <Text style={styles.forgotPasswordSubTitle}>Please enter your email address to recieve the verification code.</Text>
         </Box>

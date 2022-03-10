@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Text, View, Image } from 'native-base';
 import Button from '../../components/Button';
+import VerificationCodeInput from '../../components/VerificationCodeInput';
 
 const VerificationCodeScreen = ({ heading = 'Some heading', navigation }) => {
-    return (<View style={{ backgroundColor: '#B21B1B', flex: 1 }}>
-        <View style={{ padding: 20 }}>
-            <Image source={require('../assets/images/verification-code-image.png')} alt='verification-code-image' style={{ alignSelf: 'center', marginVertical: 60 }} />
+
+    const [value, setValue] = useState('');
+
+    return (<View backgroundColor='#B21B1B' flex={1}>
+        <View padding={5}>
+            <Image source={require('../../assets/images/verification-code-image.png')} alt='verification-code-image' style={{ alignSelf: 'center', marginVertical: 60 }} />
             <Text fontSize='3xl' fontWeight='extrabold' color='white'>{heading}</Text>
             <Text fontSize='18' color='white'>Please enter the 4 digit code sent to co*******16@gmail.com.</Text>
+            <VerificationCodeInput value={value} setValue={setValue} />
             <Button
                 title='Resend Code'
                 textDecoration='underline'

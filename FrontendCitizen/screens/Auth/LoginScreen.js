@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
         <Box pos="absolute" w="100%" h="35%">
             <View style={styles.loginScreenUpperCard}>
                 <Text style={styles.logo}>Logo Here</Text>
-                <Image style={styles.loginImage} size={170} source={require('../assets/images/login.png')} />
+                <Image style={styles.loginImage} size={170} source={require('../../assets/images/login.png')} />
             </View>
         </Box>
         <Formik
