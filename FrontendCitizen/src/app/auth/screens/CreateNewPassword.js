@@ -5,9 +5,9 @@ import {
     Box,
     ScrollView,
 } from 'native-base'
-import Form from '../../components/Form';
-import Modal from '../../components/Modal';
-import styles from '../../styles/Auth.styles'
+import Form from '../../../components/Form';
+import Modal from '../../../components/Modal';
+import styles from '../../../styles/Auth.styles'
 
 const CreateNewPassword = ({ navigation }) => {
 

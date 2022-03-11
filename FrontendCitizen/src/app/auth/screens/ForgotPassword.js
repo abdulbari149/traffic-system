@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, Text, Box, ScrollView } from 'native-base'
-import Form from '../../components/Form';
-import styles from '../../styles/Auth.styles';
-import { VERIFICATION_SCREEN } from '../../routes';
+import Form from '../../../components/Form';
+import styles from '../../../styles/Auth.styles';
+import { VERIFICATION_SCREEN } from '../../../routes';
 
 const ForgotPassword = ({ navigation }) => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NativeBaseProvider } from 'native-base';
-import Stack from './rnavigation';
+import Stack from './navigation';
 
 const App = () => {
   return (<NativeBaseProvider>

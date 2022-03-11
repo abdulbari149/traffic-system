@@ -1,9 +1,9 @@
 import React from 'react';
 import { Image, Text, View, Box, ScrollView } from 'native-base'
 import { Formik } from 'formik';
-import styles from '../../styles/Auth.styles';
-import Field from '../../components/Field';
-import Button from '../../components/Button';
+import styles from '../../../styles/Auth.styles';
+import Field from '../../../components/Field';
+import Button from '../../../components/Button';
 
 const LoginScreen = ({ navigation }) => {
     return (<ScrollView style={styles.scrollView}>
