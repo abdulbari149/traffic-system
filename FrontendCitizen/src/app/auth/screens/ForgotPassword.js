@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Text, Box, ScrollView } from 'native-base'
 import Form from '../../components/Form';
 import styles from '../../styles/Auth.styles';
+import { VERIFICATION_SCREEN } from '../../routes';
 
 const ForgotPassword = ({ navigation }) => {
 
@@ -31,7 +32,7 @@ const ForgotPassword = ({ navigation }) => {
                     marginBottom: 20
                 }
             }}
-            handleSubmit={() => navigation.navigate('Verification Screen')}
+            handleSubmit={() => navigation.navigate(VERIFICATION_SCREEN)}
         />
     </ScrollView>)
 }

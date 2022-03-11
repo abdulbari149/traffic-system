@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, Text, View } from 'native-base';
 import Form from '../../components/Form';
 import styles from '../../styles/Auth.styles';
+import { LOGIN_SCREEN, VERIFICATION_SCREEN } from '../../routes';
 
 const SignUpScreen = ({ navigation }) => {
 
@@ -31,7 +32,7 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.signUpHeading}>Create New Account</Text>
         <Form
             data={formData}
-            handleSubmit={() => console.log('Submitted')}
+            handleSubmit={() => navigation.navigate(VERIFICATION_SCREEN)}
             _btn={{
                 title: "Signup",
                 style: {
@@ -40,7 +41,7 @@ const SignUpScreen = ({ navigation }) => {
                 }
             }}
         />
-        <Text style={styles.alreadyHaveAnAccount} onPress={() => navigation.navigate('Login Screen')} maxWidth="200px">
+        <Text style={styles.alreadyHaveAnAccount} onPress={() => navigation.navigate(LOGIN_SCREEN)} maxWidth="200px">
             Already have account? Login
         </Text>
     </ScrollView>)

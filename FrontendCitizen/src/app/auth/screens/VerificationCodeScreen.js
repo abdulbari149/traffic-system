@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
 import { Text, View, Image } from 'native-base';
-import Button from '../../components/Button';
-import VerificationCodeInput from '../../components/VerificationCodeInput';
+import Button from '../../../components/Button';
+
+import VerificationCodeInput from '../../../components/VerificationCodeInput';
+
+import { CREATE_NEW_PASSWORD } from '../../../routes';
 
 const VerificationCodeScreen = ({ heading = 'Some heading', navigation }) => {
 
@@ -26,7 +29,7 @@ const VerificationCodeScreen = ({ heading = 'Some heading', navigation }) => {
                     alignSelf: 'center'
                 }}
                 onPress={() => {
-                    navigation.navigate('Create New Password')
+                    navigation.navigate(CREATE_NEW_PASSWORD)
                 }}
             />
         </View>

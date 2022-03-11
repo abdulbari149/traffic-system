@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import CreateNewPassword from '../screens/Auth/CreateNewPassword';
 import VerificationCodeScreen from '../screens/Auth/VerificationCodeScreen';
-
+import * as routes from '../routes';
 const ScreensStack = createNativeStackNavigator();
 
 const Stack = () => {
@@ -23,7 +23,7 @@ const Stack = () => {
         }}>
 
             <ScreensStack.Screen
-                name="Login Screen"
+                name={routes.LOGIN_SCREEN}
                 component={LoginScreen}
                 options={{
                     headerShown: false
@@ -31,7 +31,7 @@ const Stack = () => {
             />
 
             <ScreensStack.Screen
-                name="Signup Screen"
+                name={routes.SIGNUP_SCREEN}
                 component={SignUpScreen}
                 options={({ navigation }) => ({
                     headerLeft: () => <View style={{ padding: 5, backgroundColor: 'black', marginTop: 8 }}>
@@ -41,7 +41,7 @@ const Stack = () => {
             />
 
             <ScreensStack.Screen
-                name="Forgot Password"
+                name={routes.FORGOT_PASSWORD}
                 component={ForgotPassword}
                 options={({ navigation }) => ({
                     headerLeft: () => <View style={{ padding: 5, backgroundColor: 'white', marginTop: 8 }}>
@@ -51,7 +51,7 @@ const Stack = () => {
             />
 
             <ScreensStack.Screen
-                name="Create New Password"
+                name={routes.CREATE_NEW_PASSWORD}
                 component={CreateNewPassword}
                 options={({ navigation }) => ({
                     headerLeft: () => <View style={{ padding: 5, backgroundColor: 'black', marginTop: 8 }}>
@@ -61,7 +61,7 @@ const Stack = () => {
             />
 
             <ScreensStack.Screen
-                name="Verification Screen"
+                name={routes.VERIFICATION_SCREEN}
                 component={VerificationCodeScreen}
                 options={({ navigation }) => ({
                     headerLeft: () => <View style={{ padding: 5, backgroundColor: 'white', marginTop: 8 }}>

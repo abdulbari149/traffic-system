@@ -41,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
 
                         <Button
                             title="Login"
-                            onPress={() => navigation.navigate('Verification Screen')}
+                            onPress={() => console.log('Hi bro!')}
                             style={styles.loginButton}
                         />
                         <Text style={styles.notHaveAnAccountBtn} onPress={() => navigation.navigate('Signup Screen')} maxWidth="200px">
