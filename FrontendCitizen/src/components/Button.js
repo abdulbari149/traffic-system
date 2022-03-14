@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Text, StyleSheet, Pressable } from "react-native";
 
 const Button = ({ variant = "solid", onPress, title = "Next", style = {}, textDecoration }) => {
@@ -22,7 +23,7 @@ const Button = ({ variant = "solid", onPress, title = "Next", style = {}, textDe
     return (
         <Pressable
             style={{
-                ...style,
+                ...style.btn,
                 ...styles.button,
                 ...outlinedStyles,
                 ...solidStyles,
@@ -30,7 +31,7 @@ const Button = ({ variant = "solid", onPress, title = "Next", style = {}, textDe
             onPress={onPress}
             activeOpacity={0.8}
         >
-            <Text style={[styles.text, { textDecorationLine: textDecoration === 'underline' ? 'underline' : 'none' }]}>{title}</Text>
+            <Text style={[styles.text, style.text, { textDecorationLine: textDecoration === 'underline' ? 'underline' : 'none', color: textDecoration === 'underline' ? '#444444' : 'white', fontSize: variant === 'ghost' ? 16 : 19 }]}>{title}</Text>
         </Pressable>
     );
 };
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 32,
         borderRadius: 4,
+        marginTop: 40
     },
     text: {
         fontSize: 19,
@@ -60,7 +62,11 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: "white",
     },
-    textBtn: { width: "50%", alignSelf: "center", textAlign: "center" },
+    textBtn: {
+        width: "50%",
+        alignSelf: "center",
+        textAlign: "center"
+    },
 });
 
 export default Button;

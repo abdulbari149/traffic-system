@@ -1,23 +1,30 @@
 import React, { useState } from "react";
+
 import { FormControl, Stack, Input, Text } from "native-base";
-import styles from "../styles/Auth.styles";
-import { useField } from "formik";
 import Icon from 'react-native-vector-icons/Feather'
 
-const Field = ({ label, ...props }) => {
+import styles from "../styles/Auth.styles";
+
+import { useField } from "formik";
+
+const Field = ({ label, isLabel = true, ...props }) => {
 
     const [form, meta, field] = useField(props);
     const [visible, setVisible] = useState(false)
 
-    const passwordInput = props.type === "password" ? { InputRightElement: <Icon name={visible ? "eye-off" : "eye"} onPress={() => setVisible(!visible)} size={24} style={{ marginRight: 10 }} /> } : {}
+    const passwordInput = props.type === "password" ? { InputRightElement: <Icon name={visible ? "eye-off" : "eye"} color="black" onPress={() => setVisible(!visible)} size={20} style={{ marginRight: 10 }} /> } : {}
+    const searchInput = props.type === "search" ? {
+        InputLeftElement: <Icon name="search" size={20} color="#9c9c9c" style={{ marginLeft: 17 }} />
+    } : {}
 
+    console.log(props.type);
 
     return (
-        <FormControl isRequired isInvalid={meta.touched && meta.error}>
+        <FormControl isRequired={isLabel} isInvalid={meta.touched && meta.error}>
             <Stack my="3" >
-                <FormControl.Label style={styles.inputLabel}>
+                {isLabel && <FormControl.Label style={styles.inputLabel}>
                     <Text style={styles.inputLabelText} color="#000">{label}</Text>
-                </FormControl.Label>
+                </FormControl.Label>}
                 <Input
                     {...field}
                     placeholder={props?.placeholder ?? ""}
@@ -31,7 +38,11 @@ const Field = ({ label, ...props }) => {
                     marginRight={1}
                     outline={null}
                     maxWidth="700px"
+                    placeholderTextColor="#9c9c9c"
+                    fontSize={16}
                     {...passwordInput}
+                    {...searchInput}
+                    {...props.style}
                 />
                 {meta.touched && meta.error ? (
                     <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>

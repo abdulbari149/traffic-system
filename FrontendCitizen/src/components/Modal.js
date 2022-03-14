@@ -1,11 +1,14 @@
 import React from "react";
+
 import {
     Alert,
     Modal as NativeModal,
     StyleSheet,
     View,
 } from "react-native";
+
 import { TextBtn } from "./Button";
+
 import { Image, Flex, Text, Button } from "native-base";
 
 const Modal = ({

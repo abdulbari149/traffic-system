@@ -75,10 +75,16 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     loginButton: {
-        width: 150,
+        width: 171,
         alignSelf: 'center',
-        color: '#B21B1B',
-        marginVertical: 14
+        backgroundColor: '#B21B1B',
+        height: 51,
+        marginVertical: 18,
+        fontSize: 20
+    },
+    loginButtonText: {
+        fontSize: 20,
+        color: 'white'
     },
     notHaveAnAccountBtn: {
         color: '#444444',
@@ -90,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: 'black',
         fontWeight: 'bold',
-        paddingTop: 30,
+        paddingTop: 90,
         paddingLeft: 15
     },
     alreadyHaveAnAccount: {

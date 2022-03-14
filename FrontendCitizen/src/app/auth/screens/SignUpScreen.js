@@ -1,7 +1,11 @@
 import React from 'react'
+
 import { ScrollView, Text, View } from 'native-base';
+
 import Form from '../../../components/Form';
+
 import styles from '../../../styles/Auth.styles';
+
 import { LOGIN_SCREEN, VERIFICATION_SCREEN } from '../../../routes';
 
 const SignUpScreen = ({ navigation }) => {

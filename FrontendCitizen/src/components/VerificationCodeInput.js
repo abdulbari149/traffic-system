@@ -1,11 +1,14 @@
 import React from 'react';
+
 import { Text } from 'native-base';
+
 import {
     CodeField,
     Cursor,
     useBlurOnFulfill,
     useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+
 import styles from '../styles/Auth.styles'
 
 const VerificationCodeInput = ({ value, setValue }) => {

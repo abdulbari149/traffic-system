@@ -1,8 +1,12 @@
 import React from "react";
+
 import { Formik } from "formik";
+
 import Button from "./Button";
 import Field from "./Field";
+
 import { VStack, Box, Text } from "native-base";
+
 import styles from "../styles/Auth.styles";
 
 const getFieldValues = (data) => {
@@ -62,7 +66,7 @@ const SingleForm = ({ data, values, handleChange }) => {
 const VerficationCode = () => {
     return (
         <View>
-            
+
         </View>
     )
 }
@@ -80,12 +84,12 @@ const Form = ({ data, handleSubmit, variety = 'single', _btn, containerStyles = 
                             <SingleForm data={data} {...formikProps} />
                         ) : variety === 'verfication' ? (
                             <VerificationCode />
-                        ): <Text>Please provide variety prop</Text> 
+                        ) : <Text>Please provide variety prop</Text>
                     }
-            <Button {..._btn} onPress={() => formikProps.handleSubmit()} />
-        </VStack>
-    )
-}
+                    <Button {..._btn} onPress={() => formikProps.handleSubmit()} />
+                </VStack>
+            )
+            }
         </Formik >
     );
 };

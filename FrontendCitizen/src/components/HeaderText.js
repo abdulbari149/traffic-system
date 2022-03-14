@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Flex, Text, Heading } from 'native-base';
+
 const HeaderText = ({ title, subTitle = '', containerStyles = {} }) => {
     return (
         <Flex {...containerStyles} w="90%" direction="column" align="center" mx="auto">
