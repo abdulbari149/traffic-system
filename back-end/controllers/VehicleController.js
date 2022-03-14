@@ -1,4 +1,4 @@
-const Vechile = require("../models/VechileModel")
+const Vechile = require("../models/VehicleModel")
 
 class VechileController {
     response = {

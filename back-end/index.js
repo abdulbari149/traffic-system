@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cors = require("cors")
 const { connect } = require('mongoose');
 
 const CitizenRoutes = require("./routes/CitizenRoutes");
@@ -13,9 +13,10 @@ const uri = process.env.URI;
 
 (async () => {
     try {
-        await connect(uri);
+        await connect(uri).then(() => console.log("Db Connected"));
         
         const app = express();
+        app.use(cors())
         app.set("jwt", process.env.JWTSecret)
         app.use(express.json());
         app.use("/api/citizen", CitizenRoutes);

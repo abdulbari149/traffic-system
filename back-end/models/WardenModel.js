@@ -1,10 +1,12 @@
 const { Schema, model } = require("mongoose");
 
 const WardenSchema = new Schema({
-  name: String,
-  wardenId: Number,
-  verification_number: String,
-  password: String
+  first_name: String,
+  last_name: String,
+  phone_number: String,
+  email: String,
+  password: String,
+  authorized: Boolean
 });
 
 const Warden = model("Warden", WardenSchema);
