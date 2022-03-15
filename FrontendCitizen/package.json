@@ -41,7 +41,15 @@
   },
   "rnpm": {
     "assets": [
-      "./assets/fonts/"
+      "./src/assets/fonts/"
     ]
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:3000",
+      "pathRewrite": {
+        "^/\\api/citizen": ""
+      }
+    }
   }
 }
