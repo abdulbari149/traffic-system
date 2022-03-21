@@ -5,4 +5,11 @@ class ChallanController{
     status: 0
   }
 
+  submitChallan = async  (req, res) => {
+    const { challan } = req.body
+
+    
+    
+  }
+
 }

@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model,Types } = require("mongoose");
 
 const WardenSchema = new Schema({
   first_name: String,
@@ -6,10 +6,19 @@ const WardenSchema = new Schema({
   phone_number: String,
   email: String,
   password: String,
-  authorized: Boolean
+  authorized: {
+    type: Boolean,
+    default: false,
+  },
+  images: [
+    {
+      type : Types.ObjectId,
+      ref: "warden_image.files",
+      default: null
+    },
+  ],
 });
 
 const Warden = model("Warden", WardenSchema);
 
 module.exports = Warden;
-

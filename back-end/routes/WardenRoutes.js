@@ -1,53 +1,21 @@
 const { Router } = require("express");
+const { WardenController } = require("../controllers");
 const router = Router();
-
-const { WardenController, AuthController } = require("../controllers");
-const {
-  registerWardenValidator,
-  loginWardenValidator,
-  forgetPasswordValidator,
-  changePasswordValidator,
-} = require("../helpers/validators");
-const { verifyAuthToken } = require("../middlewares/authTokenVerification");
-const {
-  validationRequestSchema,
-} = require("../middlewares/validationRequestSchema");
-
+const upload = require("../lib/imageUpload");
 router.post(
-  "/auth/forget-password",
-  forgetPasswordValidator,
-  validationRequestSchema,
-  AuthController.forgetPassword
+  "/upload-image",
+  (req, res, next) => {
+    console.log({ file: req, body: req.body });
+
+    next();
+  },
+  upload,
+  WardenController.uploadImages
 );
+// / /api/warden/upload
 
-router.put(
-  "/auth/change-password",
-  changePasswordValidator,
-  validationRequestSchema,
-  verifyAuthToken,
-  AuthController.changePassword
-);
+// /api/citizen/auth/register
 
-router.post(
-  "/auth/login",
-  loginWardenValidator,
-  validationRequestSchema,
-  AuthController.login
-);
-// /api/warden/auth/login
-
-router.post("/auth/verify-sms", AuthController.sendVerificationCode);
-// /api/warden/auth/verifySMS
-
-router.post(
-  "/auth/register",
-  registerWardenValidator,
-  validationRequestSchema,
-  AuthController.registerWarden
-);
-// /api/warden/auth/register
-
-router.get("/:id", WardenController.getWardenData);
-// /api/warden/:id
+// /api/citizen/auth/:id
 
 module.exports = router;

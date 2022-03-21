@@ -1,14 +1,13 @@
 const { Schema, model } = require("mongoose");
 
 const CitizenSchema = new Schema({
-  name: String,
-  cnic: Number,
+  first_name: String,
+  last_name: String,
+  cnic_no: String,
+  phone_number: String,
   email: String,
   password: String,
-  phone_number: Number,
-  city: String,
-  country: String,
-  address: String,
+  authorized: Boolean
 });
 
 const Citizen = model("Citizen", CitizenSchema);

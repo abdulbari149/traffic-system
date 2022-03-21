@@ -1,4 +1,4 @@
-const { Warden } = require("../models");
+const { Warden, WardenImage } = require("../models");
 const { compare, hash } = require("bcrypt");
 const { sendSMS } = require("../lib/twilioSMS");
 const jwt = require("jsonwebtoken");
@@ -8,12 +8,25 @@ const jwt = require("jsonwebtoken");
 class WardenController {
   response = { message: "", status: 0, data: null };
 
-  authLogin = async (req, res) => {
-   
-  };
-
-  verifySMS = async (req, res) => {
-    
+  uploadImages = async (req, res) => {
+    try {
+      const { files } = req;
+      const { wardenId } = req.body;
+      const doc = await Warden.findOneAndUpdate(
+        { _id: wardenId },
+        { images: files.map((file) => file.id) }
+      );
+      this.response = {
+        message: "Images have been uploaded successfully",
+        status: 200,
+      };
+    } catch (error) {
+      this.response = {
+        message: "An error occured",
+        status: 200,
+      };
+    }
+    res.status(this.response.status).json(this.response);
   };
 
   registerWarden = async (req, res) => {
