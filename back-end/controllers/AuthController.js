@@ -32,11 +32,13 @@ class AuthController {
     res.status(this.response.status).json(this.response);
   };
 
+
   login = async (req, res) => {
-    const { email, password } = req.body;
+    const {  password, ...param } = req.body;
     const { DbModel } = res.locals;
     loginBlock: try {
-      const doc = await DbModel.findOne({ email });
+      
+      const doc = await DbModel.findOne(param);
       if (!doc) {
         this.response.message = "Wrong Credentials: Email";
         this.response.status = 400;

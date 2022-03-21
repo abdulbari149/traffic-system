@@ -1,7 +1,8 @@
 const { verify } = require("jsonwebtoken");
 
 exports.verifyAuthToken = (req, res, next) => {
-  const authToken = req.headers["authorization"].split(" ")[1];
+  console.log( req.headers["authorization-token"])
+  const authToken = req.headers["authorization-token"].split(" ")[1];
   const secret = req.app.get("jwt");
   const data = verify(authToken, secret);
   if (!!data) {
