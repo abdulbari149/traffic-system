@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors")
 const { connect } = require('mongoose');
 
-const CitizenRoutes = require("./routes/CitizenRoutes");
 const WardenRoutes = require("./routes/WardenRoutes");
+const AuthRoutes = require("./routes/AuthRoutes");
+const VoilationRoutes = require("./routes/VoilationRoutes");
 
 const dotenv = require("dotenv")
 dotenv.config({ encoding: false });
@@ -13,14 +14,17 @@ const uri = process.env.URI;
 
 (async () => {
     try {
-        await connect(uri).then(() => console.log("Db Connected"));
-        
+        const conn = await connect(uri)
+        const wardenImageBucket = new conn.mongo.GridFSBucket(conn.connection.db, { 
+            bucketName: "warden_image",
+        })
         const app = express();
         app.use(cors())
         app.set("jwt", process.env.JWTSecret)
         app.use(express.json());
-        app.use("/api/citizen", CitizenRoutes);
         app.use("/api/warden", WardenRoutes);
+        app.use("/api/auth/:user", AuthRoutes);
+        app.use("/voilation", VoilationRoutes)
         app.listen(PORT, () => {
             console.log(`App listening on http://localhost:${PORT} 🚀 !`)
         });

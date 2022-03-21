@@ -1,5 +1,3 @@
-const { Warden } = require("../models");
-const { validationResult } = require("express-validator");
 const { hash, compare } = require("bcrypt");
 const { sendSMS } = require("../lib/twilioSMS");
 const jwt = require("jsonwebtoken");
@@ -11,17 +9,14 @@ class AuthController {
     status: null,
   };
 
-  registerWarden = async (req, res) => {
+  register = async (req, res) => {
+    const { DbModel } = res.locals;
     registerBlock: try {
-      const { first_name, last_name, email, password, phone_number } = req.body;
+      const { password, ...user } = req.body;
       const hashedPassword = await hash(password, 10);
-      const wardenDoc = new Warden({
-        first_name,
-        last_name,
-        email,
-        phone_number,
+      const wardenDoc = new DbModel({
+        ...user,
         password: hashedPassword,
-        authorized: true,
       });
 
       const data = await wardenDoc.save();
@@ -30,7 +25,6 @@ class AuthController {
       this.response.status = 200;
       this.response.data = data;
     } catch (error) {
-      console.log(error);
       this.response.message = "Error Occured!";
       this.response.status = 404;
       this.response.data = error;
@@ -40,23 +34,21 @@ class AuthController {
 
   login = async (req, res) => {
     const { email, password } = req.body;
+    const { DbModel } = res.locals;
     loginBlock: try {
-      let wardenDoc;
-      wardenDoc = await Warden.findOne({ email });
-
-      if (!wardenDoc) {
+      const doc = await DbModel.findOne({ email });
+      if (!doc) {
         this.response.message = "Wrong Credentials: Email";
         this.response.status = 400;
         break loginBlock;
       }
-      const isAuthorized = await compare(password, wardenDoc.password);
+      const isAuthorized = await compare(password, doc.password);
       if (!isAuthorized) {
         this.response.message = "You have entered a wrong password";
         this.response.status = 400;
-        this.response.data = null;
         break loginBlock;
       }
-      if (!wardenDoc.authorized) {
+      if (!doc.authorized) {
         this.response = {
           message: "You are currently unauthorized to access the application",
           status: 403,
@@ -65,12 +57,12 @@ class AuthController {
         break loginBlock;
       }
 
-      this.response.message = "Warden is authorized to access the application";
+      this.response.message = `${req.params.user} is authorized to access the application`;
       this.response.status = 200;
-      this.response.data = wardenDoc;
+      this.response.data = doc;
     } catch (error) {
       this.response = {
-        message: error,
+        message: "Bad Request",
         status: 400,
         data: null,
       };
@@ -90,7 +82,7 @@ class AuthController {
   };
 
   sendVerificationCode = async (req, res) => {
-    const { phone_number, email } = req.body;
+    const { phone_number } = req.body;
     return sendSMS(phone_number).then((data) => {
       return res.status(data.status).send(data);
     });
@@ -98,16 +90,18 @@ class AuthController {
 
   forgetPassword = async (req, res) => {
     const { email } = req.body;
+    const { DbModel } = res.locals;
+
     forgetPasswordBlock: try {
-      const wardenDoc = await Warden.findOne({ email });
-      if (!wardenDoc) {
+      const doc = await DbModel.findOne({ email });
+      if (!doc) {
         this.response.message =
           "A User with the specificed email doesn't exist";
         this.response.status = 400;
         break forgetPasswordBlock;
       }
 
-      if (!wardenDoc.authorized) {
+      if (req.params.user === "warden" && !doc?.authorized) {
         this.response = {
           message: "You are currently unauthorized",
           status: 403,
@@ -116,7 +110,13 @@ class AuthController {
         break forgetPasswordBlock;
       }
 
-      this.response = await sendSMS(wardenDoc.phone_number);
+      this.response = {
+        message: "You can change your password",
+        data: {
+          phone_number: doc.phone_number,
+        },
+        status: 200,
+      };
     } catch (error) {
       this.response = {
         message: error,
@@ -130,7 +130,7 @@ class AuthController {
         },
         process.env.JWTSecret,
         {
-          expiresIn: 5*60*1000,
+          expiresIn: 5 * 60 * 1000,
         }
       );
       res.setHeader("Authorization-Token", `Bearer ${token}`);
@@ -138,26 +138,35 @@ class AuthController {
     }
   };
 
-
-  changePassword= async ( req,res) => {
-    try {
-      const { email,...extra } = res.locals.data
-      const { password } = req.body
+  changePassword = async (req, res) => {
+    changePasswordBlock: try {
+      const {
+        DbModel,
+        data: { email, ...extras },
+      } = res.locals;
+      const { password } = req.body;
       const hashedPassword = await hash(password, 10);
-      const wardenDoc = await Warden.findOneAndUpdate({ email }, { password:  hashedPassword })
-      console.log(extra)
-      console.log({ wardenDoc })
+      const doc = await DbModel.findOneAndUpdate(
+        { email },
+        { password: hashedPassword }
+      );
 
+      if (doc.password !== password) {
+        this.response = {
+          message: "Password has been changed successfully",
+          status: 200,
+        };
+        break changePasswordBlock;
+      }
     } catch (error) {
-      
+      this.response = {
+        message: error,
+        status: 404,
+      };
     }
-    
 
-    res.send({ message: "password changed" })
-
-  }
+    res.status(this.response.status).json(this.response);
+  };
 }
-
-
 
 module.exports = new AuthController();
