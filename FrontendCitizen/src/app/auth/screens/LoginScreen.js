@@ -31,13 +31,15 @@ const LoginScreen = ({ navigation }) => {
 
   const handleSubmit = async (values) => {
     console.log({ values });
+
     try {
-      const { data, error } = await login({ ...values });
+      const { data, error } = await login({ cnic_no: values.cnicNo, password: values.password });
       if (data) {
         navigation.navigate(routes.VERIFICATION_SCREEN, {
           phone_number: data.data.phone_number,
         });
       } else if (error) {
+				console.log(error)
         throw new Error(error?.data.message);
       }
     } catch (error) {

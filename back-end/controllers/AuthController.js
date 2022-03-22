@@ -35,16 +35,19 @@ class AuthController {
 
   login = async (req, res) => {
     const {  password, ...param } = req.body;
+    console.log({ param })
     const { DbModel } = res.locals;
     loginBlock: try {
       
       const doc = await DbModel.findOne(param);
+      console.log(doc)
       if (!doc) {
         this.response.message = "Wrong Credentials: Email";
         this.response.status = 400;
         break loginBlock;
       }
       const isAuthorized = await compare(password, doc.password);
+      console.log({ isAuthorized })
       if (!isAuthorized) {
         this.response.message = "You have entered a wrong password";
         this.response.status = 400;
@@ -71,7 +74,7 @@ class AuthController {
     } finally {
       const token = jwt.sign(
         {
-          email,
+          ...param,
         },
         process.env.JWTSecret,
         {

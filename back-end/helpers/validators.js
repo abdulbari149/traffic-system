@@ -75,10 +75,29 @@ exports.registerValidator = (req, res, next) => {
 };
 
 exports.loginValidator = () => ([
-  check("email")
-    .exists({ checkNull: true, checkFalsy: true })
-    .withMessage("Please provide with an email address")
-    .isEmail(),
+  param("user").custom((userValue) => {
+    if (userValue === "citizen") {
+      check("cnic_no")
+        .exists({ checkFalsy: true, checkNull: true })
+        .withMessage("The CNIC must not be empty")
+        .isString()
+        .custom((value) => {
+          if (!value.match(new RegExp("^[0-9]{5}-[0-9]{7}-[0-9]$"))) {
+            throw new Error(
+              "CNIC No must follow the XXXXX-XXXXXXX-X format!"
+            );
+          }
+          return value;
+        });
+    } else if (userValue === "warden") {
+      check("email")
+      .exists({ checkNull: true, checkFalsy: true })
+      .withMessage("Please provide with an email address")
+      .isEmail()
+    }
+    return userValue;
+  }),
+  
   check("password")
     .not()
     .isEmpty()

@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.1.192:5000/api/auth/citizen",
+    baseUrl: "http://192.168.1.102:5000/api/auth/citizen",
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: "/login",
         body: data,
         method: "POST",
@@ -14,7 +13,6 @@ export const api = createApi({
       async onQueryStarted(_, { queryFulfilled }) {
         const { data, meta } = await queryFulfilled;
         const token = meta.response.headers.map["authorization-token"];
-        await setAuthToken("login", token);
       },
     }),
     forgetPassword: builder.mutation({

@@ -25,6 +25,7 @@ const ForgotPassword = ({ navigation }) => {
 
 	const [forgotpassword] = useForgetPasswordMutation();
 	const handleSubmit = async (value) => {
+		console.log(value)
 		try {
 			const { data, error } = await forgotpassword({ email: value.email });
 			console.log({ data, error })

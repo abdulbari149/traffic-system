@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Text, View, Image, Button as NBButton } from "native-base";
 
@@ -15,13 +15,17 @@ const VerificationCodeScreen = ({ navigation, route }) => {
   const [mobileSMSVerification, result] = useSmsVerificationMutation();
 
   const [serverCode, setServerCode] = useState(0);
-
+	console.log({ serverCode, phone_number })
   async function sendMobileVerificationCode() {
     try {
       const { data, error } = await mobileSMSVerification({
         phone_number: phone_number,
       });
-      setServerCode(data?.data.code);
+			if(data) {
+				setServerCode(data?.data.code);
+			} else {
+				console.log(error)
+			}
     } catch (error) {
       console.error(error);
     }

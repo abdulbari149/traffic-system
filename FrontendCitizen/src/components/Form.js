@@ -33,7 +33,7 @@ const Form = ({
 			onSubmit={handleSubmit}
 			validationSchema={validationSchema}
 		>
-			{(formikProps) => (
+			{({ handleChange, handleBlur, handleSubmit: formikSubmit, values, errors }) => (
 				<VStack
 					style={{ ...containerStyles, padding: 10 }}
 					alignItems="center"
@@ -44,7 +44,6 @@ const Form = ({
 							<Field
 								onChange={handleChange(name)}
 								onBlur={handleBlur(name)}
-								isReadOnly={isReadOnly}
 								key={name}
 								name={name}
 								value={values[name]}
@@ -55,7 +54,7 @@ const Form = ({
 							/>
 						);
 					})}
-					<Button {..._btn} onPress={() => formikProps.handleSubmit()} />
+					<Button {..._btn} onPress={() => formikSubmit()} />
 				</VStack>
 			)}
 		</Formik>
