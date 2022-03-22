@@ -40,6 +40,14 @@ router.post(
   AuthController.forgetPassword
 );
 
+router.post("/verify-auth", verifyAuthToken, (req, res) => {
+  res.send({
+    message: "you can access the application",
+    data: { loggedIn: true },
+    status: 200,
+  });
+});
+
 router.put(
   "/change-password",
   changePasswordValidator(),
