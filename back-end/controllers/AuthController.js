@@ -11,7 +11,7 @@ class AuthController {
 
   register = async (req, res) => {
     const { DbModel } = res.locals;
-    registerBlock: try {
+    try {
       const { password, ...user } = req.body;
       const hashedPassword = await hash(password, 10);
       const wardenDoc = new DbModel({
@@ -23,22 +23,24 @@ class AuthController {
 
       this.response.message = "Successfully Saved";
       this.response.status = 200;
+      console.log("Success...")
       this.response.data = data;
     } catch (error) {
       this.response.message = "Error Occured!";
       this.response.status = 404;
       this.response.data = error;
+      console.log("Failure...")
     }
     res.status(this.response.status).json(this.response);
   };
 
 
   login = async (req, res) => {
-    const {  password, ...param } = req.body;
+    const { password, ...param } = req.body;
     console.log({ param })
     const { DbModel } = res.locals;
     loginBlock: try {
-      
+
       const doc = await DbModel.findOne(param);
       console.log(doc)
       if (!doc) {

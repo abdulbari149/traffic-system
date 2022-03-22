@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const CitizenSchema = new Schema({
   first_name: String,
@@ -10,6 +10,6 @@ const CitizenSchema = new Schema({
   authorized: Boolean
 });
 
-const Citizen = model("Citizen", CitizenSchema);
+const Citizen = model('Citizen', CitizenSchema);
 
 module.exports = Citizen

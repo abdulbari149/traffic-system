@@ -9,13 +9,14 @@ const VoilationRoutes = require("./routes/VoilationRoutes");
 const dotenv = require("dotenv")
 dotenv.config({ encoding: false });
 
+
 const PORT = process.env.PORT || 8080;
 const uri = process.env.URI;
 
 (async () => {
     try {
         const conn = await connect(uri)
-        const wardenImageBucket = new conn.mongo.GridFSBucket(conn.connection.db, { 
+        const wardenImageBucket = new conn.mongo.GridFSBucket(conn.connection.db, {
             bucketName: "warden_image",
         })
         const app = express();
@@ -32,7 +33,7 @@ const uri = process.env.URI;
     } catch (error) {
         console.error(error)
     }
-    
+
 })();
 
 
