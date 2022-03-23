@@ -1,0 +1,69 @@
+.heading {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    color: #989797;
+    font-size: 28px;
+    text-align: center;
+}
+
+.wardenProfile {
+    background-color: #0f0f0f;
+    height: 100vh;
+    line-height: 0.3;
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    justify-content: flex-start;
+    padding-inline: 15px;
+    overflow: scroll;
+}
+
+.wardenImage {
+    border-radius: 250px;
+    border: 5px white solid;
+    max-height: 180px;
+    max-width: 180px;
+    align-self: center;
+    margin-block: 20px;
+}
+
+.wardenName {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.boldText {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+}
+
+.text {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+}
+
+.proofHeading {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    padding-top: 25px;
+}
+
+.imageCaption {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    padding-block: 10px;
+}
+
+.proofImage {
+    max-width: 338px;
+    max-height: 332px;
+    border-radius: 10px;
+    margin-block: 20px;
+}

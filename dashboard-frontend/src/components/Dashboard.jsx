@@ -11,10 +11,10 @@ const Dashboard = () => {
             <Grid item xs={1.5}>
                 <Sidebar />
             </Grid>
-            <Grid item xs={6.5}>
+            <Grid item xs={7.5}>
                 <WardenApprovals />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <WardenProfile />
             </Grid>
         </Grid>

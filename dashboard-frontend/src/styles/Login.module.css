@@ -1,0 +1,86 @@
+.heading {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+}
+
+.loginBox {
+    background-color: #0f0f0f;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formCard {
+    max-width: 700px;
+    max-height: 600px;
+    padding-block: 30px;
+    padding-inline: 40px;
+    background-color: #000000 !important;
+    display: flex;
+    justify-content: center;
+    padding-inline: 50px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.icon {
+    width: 90px !important;
+    height: 90px !important;
+    color: #989797;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.input {
+    width: 466px !important;
+    height: 65px !important;
+    background-color: #0F0F0F;
+    border: none;
+    color: #949494;
+    font-size: 18px;
+    padding-inline: 20px;
+    font-family: 'Raleway', sans-serif !important;
+}
+
+.label {
+    color: white;
+    text-align: left !important;
+    font-size: 26px;
+    font-weight: 700;
+    padding-block: 20px;
+    font-family: 'Raleway', sans-serif !important;
+}
+
+.underline {
+    text-align: right;
+    text-decoration: underline;
+    color: white;
+    font-weight: 700;
+    color: #949494;
+    font-family: 'Raleway', sans-serif;
+}
+
+.button {
+    background-color: #0729A1;
+    color: white;
+    width: 244px;
+    height: 60px;
+    align-self: center;
+    border: none;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+    margin-block: 20px;
+}
+
+.buttonText {
+    text-decoration: none;
+    color: white;
+}

@@ -1,11 +1,11 @@
 .heading {
-    font-family: Raleway;
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
     color: white;
 }
 
 .WardenApprovalsBox {
-    background-color: #131313;
+    background-color: #0f0f0f;
     height: 100vh;
     line-height: 0.3;
     display: flex;
@@ -23,6 +23,7 @@
     justify-content: center;
     align-items: center;
     border: none;
+    margin-inline: 25px;
 }
 
 .logoutIcon {
@@ -32,36 +33,55 @@
 .logoutButtonText {
     color: white;
     margin: 4px;
-    font-family: Raleway;
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .firstContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 25px;
 }
 
 .tableHead {
-    display: flex;
-    justify-content: space-between;
+    background-color: #0f0f0f !important;
 }
 
 .tableHeading {
-    color: white;
-    font-family: Raleway;
-    font-weight: 700;
-    font-size: 22px;
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
 }
 
 .tableEntry {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    background-color: #0f0f0f !important;
 }
 
 .text {
     color: white;
-    font-family: Raleway;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
+}
+
+.nameAndImage {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+
+.approveButton {
+    height: 35px;
+    width: 113px;
+    background-color: #0729A1;
+    color: white;
+    font-size: 13px;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
 }
