@@ -1,0 +1,62 @@
+.heading {
+    color: white;
+    font-family: Raleway;
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 40px;
+}
+
+.image {
+    max-width: 200px;
+    height: auto;
+    align-self: center;
+}
+
+.profileBox {}
+
+.sidebar {
+    background-color: #131313;
+    height: 100vh;
+    line-height: 0.3;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 40px;
+    margin: 0% !important;
+    justify-content: flex-start;
+}
+
+.buttonIconBack {
+    border-radius: 10;
+    background-color: #292A2E;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.buttonTitle {
+    font-family: Raleway;
+    color: white !important;
+    font-size: 16px;
+}
+
+.button {
+    height: 141px;
+    width: 182px;
+    border-radius: 0px 10px 10px 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px !important;
+    margin-left: -25px !important;
+}
+
+.buttonIcon {
+    width: 48px !important;
+    height: 48px !important;
+    background-color: #292A2E;
+    color: white;
+}

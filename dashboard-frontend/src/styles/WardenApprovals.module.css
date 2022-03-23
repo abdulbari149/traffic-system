@@ -1,0 +1,67 @@
+.heading {
+    font-family: Raleway;
+    font-weight: 700;
+    color: white;
+}
+
+.WardenApprovalsBox {
+    background-color: #131313;
+    height: 100vh;
+    line-height: 0.3;
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    justify-content: flex-start;
+    padding-inline: 15px;
+}
+
+.logoutButton {
+    background-color: black;
+    width: 135px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.logoutIcon {
+    color: white !important;
+}
+
+.logoutButtonText {
+    color: white;
+    margin: 4px;
+    font-family: Raleway;
+    font-weight: 700;
+}
+
+.firstContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tableHead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tableHeading {
+    color: white;
+    font-family: Raleway;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.tableEntry {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.text {
+    color: white;
+    font-family: Raleway;
+    font-weight: 400;
+}
