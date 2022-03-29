@@ -4,8 +4,8 @@
     color: white;
 }
 
-.WardenApprovalsBox {
-    background-color: #0f0f0f;
+.Box {
+    background-color: #0f0f0f !important;
     height: 100vh;
     line-height: 0.3;
     display: flex;
@@ -42,6 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #0f0f0f;
     margin-bottom: 25px;
 }
 
@@ -64,9 +65,10 @@
 }
 
 .text {
-    color: white;
-    font-family: 'Raleway', sans-serif;
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
     font-weight: 400;
+    font-size: 1vw !important;
 }
 
 .nameAndImage {
@@ -75,13 +77,26 @@
     align-items: center !important;
 }
 
-.approveButton {
+.blueButton {
     height: 35px;
     width: 113px;
-    background-color: #0729A1;
-    color: white;
+    background-color: #0729A1 !important;
+    color: white !important;
     font-size: 13px;
     border: none;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+}
+
+.violationButton {
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    text-transform: none !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+}
+
+.addIcon {
+    margin: 5px;
 }

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React, { useState } from 'react';
+import React from 'react';
 
 import AdminImage from '../images/admin-image.png'
 import styles from '../styles/Sidebar.module.css';
@@ -8,9 +8,8 @@ import SidebarButton from './SidebarButton';
 import PersonIcon from '@mui/icons-material/Person';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 
-const Sidebar = () => {
+const Sidebar = ({ nav, setNav }) => {
 
-    const [nav, setNav] = useState(0)
 
     const buttons = [
         {
