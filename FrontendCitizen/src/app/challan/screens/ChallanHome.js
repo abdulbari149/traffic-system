@@ -17,11 +17,10 @@ const ChallanHome = ({ navigation }) => {
       <Header />
       <SearchBar />
       <HeaderText title="Your Challans" />
-      {challansExists ? // <ChallanCard
-      //     onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
-      //     onDetailButtonPress={() => navigation.navigate(routes.CHALLAN_DETAILS)}
-      // />
-      null : (
+      {challansExists ? <ChallanCard
+        onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
+        onDetailButtonPress={() => navigation.navigate(routes.CHALLAN_DETAILS)}
+      /> : (
         <ZeroChallan />
       )}
     </View>
