@@ -14,7 +14,16 @@ exports.registerValidator = (req, res, next) => [
           }
           return value;
         });
-    } 
+    } else if (userValue === "warden") {
+      check("service_id")
+        .exists({ checkFalsy: true, checkNull: true })
+        .withMessage("The Service Id must not be empty")
+        .isString();
+      check("designation")
+        .exists({ checkFalsy: true, checkNull: true })
+        .withMessage("The Designation must not be empty")
+        .matches(/\b(?:SSP||contributor|user)\b/);
+    }
     return userValue;
   }),
   body(["first_name", "last_name"]).isLength({ min: 3 }),
@@ -117,11 +126,17 @@ exports.changePasswordValidator = () => [
 ];
 
 exports.challanValidator = () => [
-  check(["voilation","citizen"]).not().isEmpty().isMongoId(),
+  check(["voilation", "citizen"]).not().isEmpty().isMongoId(),
   check("PSID_no")
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("PSID NO is required"),
-  check(["city", "place_of_voilation", "district", "province", "traffic_sector"])
+  check([
+    "city",
+    "place_of_voilation",
+    "district",
+    "province",
+    "traffic_sector",
+  ])
     .exists({ checkFalsy: true, checkNull: true })
     .not()
     .isEmpty(),
