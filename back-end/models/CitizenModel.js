@@ -24,5 +24,10 @@ CitizenSchema.virtual("challans", {
   localField: "_id",
   foreignField: "citizen",
 });
+CitizenSchema.virtual("images", { 
+  ref: "Image",
+  localField: "_id",
+  foreignField: "metadata.user"
+})
 const Citizen = model("Citizen", CitizenSchema);
 module.exports = Citizen;

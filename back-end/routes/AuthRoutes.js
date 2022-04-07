@@ -9,12 +9,15 @@ const {
   forgetPasswordValidator,
   changePasswordValidator,
   registerValidator,
+  citizenRegisterValidator,
+  wardenRegisterValidator
 } = require("../helpers/validators");
 const { verifyAuthToken } = require("../middlewares/authTokenVerification");
 const { accessDB } = require("../middlewares/conditionalAccess");
 const {
   validationRequestSchema,
 } = require("../middlewares/validationRequestSchema");
+
 
 router.use(accessDB);
 

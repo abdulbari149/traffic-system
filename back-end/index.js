@@ -14,7 +14,7 @@ const uri = process.env.URI;
   try {
     const conn = await connect(uri);
     const wardenImageBucket = new conn.mongo.GridFSBucket(conn.connection.db, {
-      bucketName: "warden_image",
+      bucketName: "images",
     });
     const app = express();
     app.use(cors());

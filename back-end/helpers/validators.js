@@ -1,31 +1,33 @@
 const { body, check, param } = require("express-validator");
 const { Warden } = require("../models");
 
-exports.registerValidator = (req, res, next) => [
-  param("user").custom((userValue) => {
-    if (userValue === "citizen") {
-      check("cnic_no")
-        .exists({ checkFalsy: true, checkNull: true })
-        .withMessage("The CNIC must not be empty")
-        .isString()
-        .custom((value) => {
-          if (!value.match(new RegExp("^[0-9]{5}-[0-9]{7}-[0-9]$"))) {
-            throw new Error("CNIC No must follow the XXXXX-XXXXXXX-X format!");
-          }
-          return value;
-        });
-    } else if (userValue === "warden") {
-      check("service_id")
-        .exists({ checkFalsy: true, checkNull: true })
-        .withMessage("The Service Id must not be empty")
-        .isString();
-      check("designation")
-        .exists({ checkFalsy: true, checkNull: true })
-        .withMessage("The Designation must not be empty")
-        .matches(/\b(?:SSP|SHO|DSP|Inspector|Sub-Inspector)\b/);
-    }
-    return userValue;
-  }),
+exports.registerValidator = () => [
+  check("cnic_no")
+    .if(param("user").equals("citizen"))
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage("The CNIC must not be empty")
+    .isString()
+    .custom((value) => {
+      if (!value.match(new RegExp("^[0-9]{5}-[0-9]{7}-[0-9]$"))) {
+        throw new Error("CNIC No must follow the XXXXX-XXXXXXX-X format!");
+      }
+      return value;
+    }),
+  check("service_id")
+    .if(param("user").equals("warden"))
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage("The Service Id must not be empty")
+    .isString(),
+    check("traffic_sector")
+    .if(param("user").equals("warden"))
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage("The Traffic Sector must not be empty")
+    .isString(),
+  check("designation")
+    .if(param("user").equals("warden"))
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage("The Designation must not be empty")
+    .matches(/\b(?:SSP|SHO|DSP|Inspector|Sub-Inspector)\b/),
   body(["first_name", "last_name"]).isLength({ min: 3 }),
   body("email").isEmail(),
   check("password")

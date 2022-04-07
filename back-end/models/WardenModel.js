@@ -20,17 +20,6 @@ const WardenSchema = new Schema(
       type: Boolean,
       default: false,
     },
-
-    images: [
-      {
-        file: {
-          type: Types.ObjectId,
-          ref: "warden_image.files",
-          default: null,
-        },
-        type: String,
-      },
-    ],
   },
   {
     timestamps: true,
@@ -43,6 +32,11 @@ WardenSchema.virtual("challans", {
   ref: "Challan",
   localField: "_id",
   foreignField: "warden",
+});
+WardenSchema.virtual("images", {
+  ref: "Image",
+  localField: "_id",
+  foreignField: "metadata.user",
 });
 const Warden = model("Warden", WardenSchema);
 

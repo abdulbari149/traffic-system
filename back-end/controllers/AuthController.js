@@ -42,24 +42,26 @@ class AuthController {
   };
 
   register = async (req, res) => {
-    const { DbModel } = res.locals;
-    registerBlock: try {
-      const { password, ...user } = req.body;
+    try {
+      const { DbModel } = res.locals;
+      const { password, confirm_password, ...user } = req.body;
+      console.log({ user });
       const hashedPassword = await hash(password, 10);
-      const wardenDoc = new DbModel({
+      const data = await DbModel.create({
         ...user,
         password: hashedPassword,
       });
-
-      const data = await wardenDoc.save();
-
-      this.response.message = "Successfully Saved";
-      this.response.status = 200;
-      this.response.data = data;
+      this.response = {
+        message: "Successfully Saved",
+        status: 200,
+        data,
+      };
     } catch (error) {
-      this.response.message = "Error Occured!";
-      this.response.status = 404;
-      this.response.data = error;
+      this.response = {
+        message: "Error Occured!",
+        status: 404,
+        data: error,
+      };
     }
     res.status(this.response.status).json(this.response);
   };
@@ -103,14 +105,19 @@ class AuthController {
         {
           ...param,
           id: doc._id,
-          name: doc.first_name + doc.last_name
+          name: doc.first_name + doc.last_name,
         },
         process.env.JWTSecret,
         {
           expiresIn: 12 * 60 * 60,
         }
       );
-      this.response.data =  {...doc._doc, password: undefined, authorized: undefined, token }
+      this.response.data = {
+        ...doc._doc,
+        password: undefined,
+        authorized: undefined,
+        token,
+      };
       res.setHeader("Authorization", `Bearer ${token}`);
     } catch (error) {
       this.response = {
