@@ -8,31 +8,7 @@ const jwt = require("jsonwebtoken");
 class WardenController {
   response = { message: "", status: 0, data: null };
   
-  uploadImages = async (req, res) => {
-    try {
-      const doc = await Warden.findOneAndUpdate(
-        { _id: req.body.wardenId },
-        {
-          $push: {
-            images: {
-              file: req.file.id,
-              type: req.query.imageType,
-            },
-          },
-        }
-      );
-      this.response = {
-        message: "Images have been uploaded successfully",
-        status: 200,
-      };
-    } catch (error) {
-      this.response = {
-        message: "An error occured",
-        status: 200,
-      };
-    }
-    res.status(this.response.status).json(this.response);
-  };
+  
 
   getWardenData = async (req, res) => {
     const { _id } = res.locals.data;

@@ -22,7 +22,7 @@ exports.registerValidator = (req, res, next) => [
       check("designation")
         .exists({ checkFalsy: true, checkNull: true })
         .withMessage("The Designation must not be empty")
-        .matches(/\b(?:SSP||contributor|user)\b/);
+        .matches(/\b(?:SSP|SHO|DSP|Inspector|Sub-Inspector)\b/);
     }
     return userValue;
   }),

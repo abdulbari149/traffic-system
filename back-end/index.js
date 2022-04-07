@@ -2,11 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { connect } = require("mongoose");
 
-const WardenRoutes = require("./routes/WardenRoutes");
-const AuthRoutes = require("./routes/AuthRoutes");
-const VoilationRoutes = require("./routes/VoilationRoutes");
-const CitizenRoutes = require("./routes/CitizenRoutes");
-const ChallanRoutes = require("./routes/ChallanRoutes");
+const routes = require("./routes");
 
 const dotenv = require("dotenv");
 dotenv.config({ encoding: false });
@@ -24,11 +20,12 @@ const uri = process.env.URI;
     app.use(cors());
     app.set("jwt", process.env.JWTSecret);
     app.use(express.json());
-    app.use("/api/warden", WardenRoutes);
-    app.use("/api/auth/:user", AuthRoutes);
-    app.use("/api/voilation", VoilationRoutes);
-    app.use("/api/citizen", CitizenRoutes);
-    app.use("/api/challan", ChallanRoutes);
+    app.use("/api/warden", routes.WardenRoutes);
+    app.use("/api/auth/:user", routes.AuthRoutes);
+    app.use("/api/voilation", routes.VoilationRoutes);
+    app.use("/api/citizen", routes.CitizenRoutes);
+    app.use("/api/challan", routes.ChallanRoutes);
+    app.use("/api/image/:user", routes.ImageRoutes);
     app.listen(PORT, () => {
       console.log(`App listening on http://localhost:${PORT} 🚀 !`);
     });
