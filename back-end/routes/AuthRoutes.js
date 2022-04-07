@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { body } = require("express-validator");
 const router = Router({ mergeParams: true });
 const fs = require("fs/promises");
 const path = require("path");
@@ -40,10 +41,17 @@ router.post(
   AuthController.forgetPassword
 );
 
+router.post(
+  "/check-user",
+  body("email").isEmail(),
+  validationRequestSchema,
+  AuthController.checkUserExists
+);
+
 router.post("/verify-auth", verifyAuthToken, (req, res) => {
   res.send({
     message: "you can access the application",
-    data: { loggedIn: true },
+    data: { loggedIn: true, ...res.locals.data },
     status: 200,
   });
 });

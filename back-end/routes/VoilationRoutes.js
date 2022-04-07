@@ -1,11 +1,12 @@
-
 const { Router } = require("express");
 const { VoilationController } = require("../controllers");
 const router = Router();
 
-router.post('/get-voilation', VoilationController.getVoilations);
+router
+  .route("/")
+  .get(VoilationController.getVoilations)
+  .post(VoilationController.addVoilation);
 
-router.put("/update-price", VoilationController.updateVoiationPrice);
-
+router.post("/update-price", VoilationController.updateVoiationPrice)
 
 module.exports = router;

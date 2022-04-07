@@ -1,7 +1,37 @@
-const  { model, Schema } = require("mongoose")
+const { model, Schema, Types } = require("mongoose");
 
 const ChallanSchema = new Schema({
+  citizen: {
+    ref: "Citizen",
+    type: Types.ObjectId,
+  },
+  PSID_no: {
+    type: String,
+    immutable: true,
+    unique: true,
+    length: 17
+  },
+  place_of_voilation: String,
+  district: String,
+  city: String,
+  province: String,
+  voilation: {
+    ref: "Voilation",
+    type: Types.ObjectId,
+  },
+  vehicle_registration_no: String,
+  traffic_sector: String,
+  warden: {
+    type: Types.ObjectId,
+    ref: "Warden",
+  },
+  fine_imposed: Number,
+  paid: {
+    type: Boolean,
+    default: false,
+  },
+}, {
+   timestamps: true
+});
 
-})
-
-module.exports = model("challan", ChallanSchema)
+module.exports = model("Challan", ChallanSchema);

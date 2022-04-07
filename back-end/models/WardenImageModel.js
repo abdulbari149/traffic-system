@@ -9,7 +9,7 @@ const WardenImageSchema = new Schema({
   metadata: {
     imageType: {
       type: String,
-      enum: ["idcard", "profilepic"],
+      enum: ["idCardFront", "idCardBack", "profilePic"],
     },
   },
 }, { collection: 'warden_image.files' });
