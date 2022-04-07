@@ -6,7 +6,7 @@ import Form from "../../../components/Form";
 
 import styles from "../../../styles/Auth.styles";
 
-import { VERIFICATION_SCREEN } from "../../../routes";
+import { CREATE_NEW_PASSWORD, VERIFICATION_SCREEN } from "../../../routes";
 import * as yup from "yup";
 import { useForgetPasswordMutation } from "../../../api";
 import { Alert } from "react-native";
@@ -18,7 +18,7 @@ const validationSchema = yup.object({
 });
 const ForgotPassword = ({ navigation }) => {
 	const formData = {
-		names: ["Email"],
+		names: ["email"],
 		placeholders: ["Enter your Email Address"],
 		types: ["text"],
 	};
@@ -31,7 +31,7 @@ const ForgotPassword = ({ navigation }) => {
 			console.log({ data, error })
 			if (data) {
 				navigation.navigate(VERIFICATION_SCREEN, {
-					next: CREATE_PASSWORD_SCREEN,
+					next: CREATE_NEW_PASSWORD,
 					phone_number: data.data.phone_number,
 				});
 			} else if (error) {

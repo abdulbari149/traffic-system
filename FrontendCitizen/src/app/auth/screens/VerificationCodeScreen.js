@@ -24,10 +24,10 @@ const VerificationCodeScreen = ({ navigation, route }) => {
 			if(data) {
 				setServerCode(data?.data.code);
 			} else {
-				console.log(error)
+				throw new Error(error?.data.message)
 			}
     } catch (error) {
-      console.error(error);
+      Alert.alert(error.message)
     }
   }
 
@@ -62,7 +62,7 @@ const VerificationCodeScreen = ({ navigation, route }) => {
           Please enter the 4 digit code sent to +92314XXXXXXX
         </Text>
         <VerificationCodeInput value={value} setValue={setValue} />
-        <NBButton style={{ backgroundColor: "transparent" }}>
+        <NBButton style={{ backgroundColor: "transparent" }} onPress={sendMobileVerificationCode}>
           <Text
             style={{
               color: "white",

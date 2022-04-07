@@ -1,9 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setAuthToken, getAuthToken } from "../utils/async-storage";
+
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://192.168.1.102:5000/api/auth/citizen",
   }),
   endpoints: (builder) => ({
+    signup: builder.mutation({
+      query: (data) => ({
+        url: "/register",
+        body: data,
+        method: "POST",
+      }),
+    }),
     login: builder.mutation({
       query: (data) => ({
         url: "/login",
@@ -13,6 +22,7 @@ export const api = createApi({
       async onQueryStarted(_, { queryFulfilled }) {
         const { data, meta } = await queryFulfilled;
         const token = meta.response.headers.map["authorization-token"];
+        await setAuthToken("login", token);
       },
     }),
     forgetPassword: builder.mutation({
@@ -61,4 +71,10 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginMutation, useChangePasswordMutation, useSmsVerificationMutation, useForgetPasswordMutation } = api;
+export const {
+  useLoginMutation,
+  useChangePasswordMutation,
+  useSmsVerificationMutation,
+  useForgetPasswordMutation,
+  useSignupMutation,
+} = api;

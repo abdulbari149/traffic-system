@@ -30,16 +30,16 @@ const LoginScreen = ({ navigation }) => {
   const [login, { isLoading, isFetching }] = useLoginMutation();
 
   const handleSubmit = async (values) => {
-    console.log({ values });
-
     try {
-      const { data, error } = await login({ cnic_no: values.cnicNo, password: values.password });
+      const { data, error } = await login({
+        cnic_no: values.cnicNo,
+        password: values.password,
+      });
       if (data) {
         navigation.navigate(routes.VERIFICATION_SCREEN, {
           phone_number: data.data.phone_number,
         });
       } else if (error) {
-				console.log(error)
         throw new Error(error?.data.message);
       }
     } catch (error) {
@@ -56,6 +56,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.loginImage}
             size={170}
             source={require("../../../assets/images/login.png")}
+            alt="Login images"
           />
         </View>
       </Box>
