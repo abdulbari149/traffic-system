@@ -11,12 +11,10 @@ exports.conditionalAccess =
 const path = require("path");
 exports.accessDB = async (req, res, next) => {
   const { user } = req.params;
-  console.log(user)
   const modelPath = path.resolve(
     __dirname,
     `../models/${user.charAt(0).toUpperCase()}${user.slice(1)}Model.js`
   );
-  console.log({ modelPath });
   try {
     if (user != "warden" && user !="citizen") {
       throw new Error("Please provide a valid query parameter for user");
