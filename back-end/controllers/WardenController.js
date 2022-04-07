@@ -1,4 +1,4 @@
-const { Warden, WardenImage } = require("../models");
+const { Warden, WardenImage, Challan } = require("../models");
 const { compare, hash } = require("bcrypt");
 const { sendSMS } = require("../lib/twilioSMS");
 const jwt = require("jsonwebtoken");
@@ -7,14 +7,19 @@ const jwt = require("jsonwebtoken");
 // Error --> 404
 class WardenController {
   response = { message: "", status: 0, data: null };
-
+  
   uploadImages = async (req, res) => {
     try {
-      const { files } = req;
-      const { wardenId } = req.body;
       const doc = await Warden.findOneAndUpdate(
-        { _id: wardenId },
-        { images: files.map((file) => file.id) }
+        { _id: req.body.wardenId },
+        {
+          $push: {
+            images: {
+              file: req.file.id,
+              type: req.query.imageType,
+            },
+          },
+        }
       );
       this.response = {
         message: "Images have been uploaded successfully",
@@ -25,27 +30,6 @@ class WardenController {
         message: "An error occured",
         status: 200,
       };
-    }
-    res.status(this.response.status).json(this.response);
-  };
-
-  registerWarden = async (req, res) => {
-    const { warden } = req.body;
-    try {
-      const hashedPassword = await hash(warden.password, 10);
-      const wardenDoc = new Warden({
-        ...warden,
-        password: hashedPassword,
-      });
-
-      const data = await wardenDoc.save();
-      this.response.message = "Successfully Saved";
-      this.response.status = 200;
-      this.response.data = data;
-    } catch (error) {
-      this.response.message = "Error Occured!";
-      this.response.status = 404;
-      this.response.data = error;
     }
     res.status(this.response.status).json(this.response);
   };
@@ -67,6 +51,65 @@ class WardenController {
       this.response.status = 404;
     }
     res.status(this.response.status).send(this.response);
+  };
+  filterTimeline = (doc, timeline) => {
+    if (timeline === "monthly") {
+      return doc.issued_date.month === new Date().getMonth();
+    } else if (timeline === "yearly") {
+      return doc.issued_date.year === new Date().getFullYear();
+    }
+  };
+  getWardenChallanCount = async (req, res) => {
+    const { id } = res.locals.data;
+    const { timeline } = req.query;
+    const docs = await Challan.find({ wardenId: id });
+    const data = docs.filter((doc) =>
+      this.filterTimeline(doc, timeline)
+    ).length;
+    console.log({ docs });
+    res.status(200).json({ data });
+  };
+
+  getWardenListForApproval = async (req, res) => {
+    try {
+      const docs = await Warden.find({ authorized: false }, [
+        "first_name",
+        "last_name",
+        "email",
+      ]);
+
+      this.response = {
+        data: docs,
+        status: 200,
+      };
+    } catch (error) {
+      this.response = {
+        message: "An error occurred",
+        error,
+        status: 404,
+      };
+    }
+    res.status(this.response.status).json(this.response);
+  };
+
+  getWardenDetailsById = async (req, res) => {
+    try {
+      const doc = await Warden.findById(req.params.id).populate("images");
+      this.response = {
+        data: {
+          ...doc._doc,
+          challans: undefined
+        },
+        status: 200,
+      };
+    } catch (error) {
+      this.response = {
+        error,
+        message: "An Error Occured",
+        status: 404,
+      };
+    }
+    res.status(this.response.status).json(this.response);
   };
 }
 

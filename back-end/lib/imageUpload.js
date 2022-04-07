@@ -28,7 +28,8 @@ const storage = new GridFsStorage({
 });
 
 module.exports = function(req, res, next){
-  const upload = multer({ storage }).array("file", 3);
+  console.log({ req: req.file })
+  const upload = multer({ storage }).single("file");
   upload(req, res, function(err) {
     if(err){console.error(err)}
     console.log("request received")
