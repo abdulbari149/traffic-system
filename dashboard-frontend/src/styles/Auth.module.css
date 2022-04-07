@@ -2,16 +2,17 @@
     color: white;
     font-family: 'Raleway', sans-serif !important;
     font-weight: 700 !important;
-    padding-bottom: 5%;
+    padding-block: 25px !important;
 }
 
 .subtitle {
-    text-align: left !important;
     color: white;
     font-family: 'Raleway', sans-serif !important;
     font-weight: lighter;
     margin: 0%;
+    padding-inline: 40px;
     text-align: center;
+    padding-bottom: 20px !important;
 }
 
 .loginBox {
@@ -27,12 +28,14 @@
     background-color: #000000 !important;
     display: flex !important;
     justify-content: center !important;
-    padding-inline: 50px !important;
-    padding-block: 50px !important;
+    padding-inline: 30px !important;
+    padding-block: 30px !important;
     width: 100% !important;
-    max-width: 800px !important;
+    max-width: 500px !important;
     height: auto !important;
     align-items: center !important;
+    box-shadow: 0px 10px 40px 0px #00000080 !important;
+    border-radius: 30px !important;
     flex-direction: column !important;
 }
 
@@ -44,11 +47,10 @@
 
 .form {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    flex-direction: column;
 }
-
 
 .input {
     width: 25vw !important;
@@ -67,34 +69,37 @@
     align-self: flex-start !important;
     font-size: 26px;
     font-weight: 700 !important;
-    padding-block: 1vw;
+    padding-top: 1vw;
+    padding-bottom: 10px;
     font-family: 'Raleway', sans-serif !important;
 }
 
 .underline {
     align-self: flex-end;
+    padding-block: 10px;
     text-decoration: underline;
     color: white;
-    font-weight: 700;
+    font-weight: 700 !important;
     color: #949494;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
 }
 
 .button {
-    background-color: #0729A1;
-    color: white;
-    width: 12.5vw;
-    height: 3.5vw;
-    border: none;
-    font-size: 20px;
-    margin-block: 20px;
+    background-color: #0729A1 !important;
+    color: white !important;
+    width: 12.5vw !important;
+    height: 3.5vw !important;
+    border: none !important;
+    font-size: 20px !important;
+    margin-block: 20px !important;
 }
 
 .buttonText {
-    font-family: 'Raleway', sans-serif;
-    text-decoration: none;
-    font-weight: 700;
-    color: white;
+    font-family: 'Raleway', sans-serif !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    color: white !important;
+    text-transform: none;
 }
 
 .error {
@@ -115,14 +120,26 @@
 }
 
 .ghostButton {
-    color: white;
-    width: 12.5vw;
-    height: 4vw;
-    align-self: center;
-    border: none;
-    font-size: 20px;
-    margin-block: 20px;
-    color: white;
-    background-color: transparent;
-    font-family: 'Raleway', sans-serif;
+    color: white !important;
+    width: 12.5vw !important;
+    height: 4vw !important;
+    align-self: center !important;
+    border: none !important;
+    font-size: 20px !important;
+    margin-block: 20px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    text-transform: none !important;
+    background-color: transparent !important;
+    font-family: 'Raleway', sans-serif !important;
+}
+
+.modalInput {
+    height: 65px !important;
+    color: #949494 !important;
+    font-size: 18px !important;
+    width: 100% !important;
+    border-bottom: 1px #292A2E solid;
+    padding-inline: 20px;
+    font-family: 'Raleway', sans-serif !important;
 }

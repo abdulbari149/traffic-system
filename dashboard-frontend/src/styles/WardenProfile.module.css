@@ -1,8 +1,7 @@
 .heading {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 400;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 400 !important;
     color: #989797;
-    font-size: 28px;
     text-align: center;
 }
 
@@ -12,7 +11,7 @@
     line-height: 0.3;
     display: flex;
     flex-direction: column;
-    padding-top: 40px;
+    padding-top: 20px;
     justify-content: flex-start;
     padding-inline: 15px;
     overflow: scroll;
@@ -21,49 +20,105 @@
 .wardenImage {
     border-radius: 250px;
     border: 5px white solid;
-    max-height: 180px;
-    max-width: 180px;
+    max-height: 130px;
+    max-width: 130px;
     align-self: center;
     margin-block: 20px;
 }
 
 .wardenName {
     color: white;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
     text-align: center;
 }
 
 .boldText {
-    color: white;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
 }
 
 .text {
-    color: white;
-    font-family: 'Raleway', sans-serif;
-    font-size: 16px;
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
 }
 
 .proofHeading {
     color: white;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
     padding-top: 25px;
 }
 
 .imageCaption {
     color: white;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 400;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 400 !important;
     font-size: 20px;
-    padding-block: 10px;
+    padding-block: 15px;
 }
 
+
 .proofImage {
-    max-width: 338px;
-    max-height: 332px;
+    width: 100%;
+    max-width: 800px;
+    height: 80%;
     border-radius: 10px;
-    margin-block: 20px;
+}
+
+.blueButton {
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
+    background-color: #0729A1 !important;
+    color: white !important;
+    font-size: 13px;
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+    font-size: 18px;
+    margin-block: 15px;
+    max-height: 51px;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+}
+
+
+
+.backButton {
+    background-color: transparent;
+    font-family: 'Raleway', sans-serif !important;
+    align-self: flex-start !important;
+}
+
+.goBackText {
+    color: white;
+    text-decoration: none !important;
+    text-transform: none;
+}
+
+.redButton {
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
+    background-color: red !important;
+    color: white !important;
+    font-size: 13px;
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+    font-size: 18px;
+    margin-block: 15px;
+    max-height: 51px;
+    margin-left: 20px !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-block: 40px;
 }

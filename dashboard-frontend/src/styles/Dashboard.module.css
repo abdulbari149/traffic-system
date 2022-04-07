@@ -1,18 +1,19 @@
 .heading {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
     color: white;
+    padding-top: 15px;
 }
 
 .Box {
-    background-color: #0f0f0f !important;
+    background-color: #131313 !important;
     height: 100vh;
     line-height: 0.3;
     display: flex;
     flex-direction: column;
-    padding-top: 40px;
+    padding-top: 20px;
+    padding-inline: 10px;
     justify-content: flex-start;
-    padding-inline: 15px;
 }
 
 .logoutButton {
@@ -23,7 +24,6 @@
     justify-content: center;
     align-items: center;
     border: none;
-    margin-inline: 25px;
 }
 
 .logoutIcon {
@@ -35,6 +35,7 @@
     margin: 4px;
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
+    text-transform: none;
     text-decoration: none;
 }
 
@@ -42,13 +43,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #0f0f0f;
     margin-bottom: 25px;
+    margin-block: 20px;
+    margin-right: 140px
 }
 
-.tableHead {
-    background-color: #0f0f0f !important;
-}
 
 .tableHeading {
     color: white !important;
@@ -57,18 +56,12 @@
     font-size: 22px !important;
 }
 
-.tableEntry {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background-color: #0f0f0f !important;
-}
 
 .text {
     color: white !important;
     font-family: 'Raleway', sans-serif !important;
     font-weight: 400;
-    font-size: 1vw !important;
+    font-size: medium !important;
 }
 
 .nameAndImage {
@@ -78,8 +71,8 @@
 }
 
 .blueButton {
-    height: 35px;
-    width: 113px;
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
     background-color: #0729A1 !important;
     color: white !important;
     font-size: 13px;
@@ -99,4 +92,30 @@
 
 .addIcon {
     margin: 5px;
+}
+
+.underlinedButton {
+    text-transform: none !important;
+    text-decoration: underline !important;
+    font-weight: 700 !important;
+    font-family: 'Raleway', sans-serif !important;
+    border: none !important;
+    color: #0729A1 !important;
+}
+
+.tableRow:hover {
+    background-color: #000000 !important;
+    box-shadow: 0px 10px 40px 0px #00000080 !important;
+}
+
+.redButton {
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
+    background-color: red !important;
+    color: white !important;
+    font-size: 13px;
+    border: none;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
 }

@@ -18,18 +18,18 @@ const useStyles = makeStyles({
     }
 });
 
-const Input = ({ isReadOnly, label, ...props }) => {
+const Input = ({ isReadOnly, label, modal, ...props }) => {
 
     const classes = useStyles()
     const [{ name, value }, meta] = useField(props)
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility()
     const { placeholder, type } = props;
 
-    return (<React.Fragment>
+    return (<>
         <Typography variant="h5" className={styles.label} > {label}</Typography>
         <TextField
             placeholder={placeholder}
-            className={styles.input}
+            className={modal ? styles.modalInput : styles.input}
             value={value}
             onChange={props.onChange}
             onBlur={props.onBlur}
@@ -49,7 +49,7 @@ const Input = ({ isReadOnly, label, ...props }) => {
                 </p>
             ) : null
         }
-    </React.Fragment>)
+    </>)
 }
 
 export default Input

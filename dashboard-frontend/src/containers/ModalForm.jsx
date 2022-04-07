@@ -4,11 +4,8 @@ import { Formik } from 'formik'
 
 import Input from './Input'
 
-import styles from '../styles/Auth.module.css';
-
-import { Link, useNavigate } from 'react-router-dom'
-import { Button, Typography } from '@mui/material';
-
+import styles from '../styles/ModalForm.module.css';
+import { Button } from '@mui/material';
 
 const getFieldValues = (data) => {
     let names = []
@@ -19,17 +16,18 @@ const getFieldValues = (data) => {
     return values;
 }
 
-const Form = ({
+const ModalForm = ({
     data,
     handleSubmit,
-    btn,
-    forgotPassword = false,
-    variety
+    btn: {
+        title,
+        amount,
+        onClickOfCancel
+    }
 }) => {
     const fieldInitialValues = getFieldValues(data);
-    const navigate = useNavigate()
     return (<>
-        {variety !== 'verification' ? <Formik
+        <Formik
             initialValues={fieldInitialValues}
             onSubmit={handleSubmit}
         >
@@ -40,6 +38,7 @@ const Form = ({
                             onChange={handleChange(name)}
                             onBlur={handleBlur(name)}
                             key={name}
+                            modal={true}
                             name={name}
                             value={values[name]}
                             placeholder={data.placeholders ? data?.placeholders[idx] : ""}
@@ -48,29 +47,23 @@ const Form = ({
                             error={errors[name]}
                         />
                     ))}
-                    {forgotPassword &&
-                        <Typography className={styles.underline} onClick={forgotPassword}>
-                            Forgot password?
-                        </Typography>}
-                    <div className={styles.buttonGroup}>
-                        {btn.amount === 2 && <Button className={styles.ghostButton}
-                            onClick={() => navigate(-1)}
-                        >
-                            Cancel
-                        </Button>}
-                        <Button className={styles.button}
-                            onClick={() => formikSubmit()}
-                        >
-                            <Link to={btn.navigate} className={styles.buttonText}>
-                                {btn.title}
-                            </Link>
-                        </Button>
-                    </div>
                 </form>
+                <div className={styles.buttonGroup}>
+                    {amount === 2 && <Button className={styles.ghostButton}
+                        onClick={onClickOfCancel}
+                    >
+                        Cancel
+                    </Button>}
+                    <Button className={styles.button}
+                        onClick={() => formikSubmit()}
+                    >
+                        {title}
+                    </Button>
+                </div>
             </>)}
 
-        </Formik> : null}
+        </Formik>
     </>)
 }
 
-export default Form;
+export default ModalForm;

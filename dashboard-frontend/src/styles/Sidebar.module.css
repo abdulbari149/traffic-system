@@ -1,9 +1,11 @@
 .heading {
     color: white;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     text-align: center;
-    font-weight: 700;
-    padding-bottom: 40px;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    padding-top: 10px !important;
+    padding-bottom: 40px !important;
 }
 
 .image {
@@ -25,7 +27,6 @@
 }
 
 .buttonIconBack {
-    border-radius: 10;
     background-color: #292A2E;
     width: 70px;
     height: 70px;
@@ -54,5 +55,23 @@
     width: 48px !important;
     height: 48px !important;
     background-color: #292A2E;
+    border-radius: 0px 20px 20px 0px;
     color: white;
+}
+
+.mobileButton {
+    height: 141px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.mobileButtonTitle {
+    font-family: 'Raleway', sans-serif;
+    color: white !important;
+    font-size: 24px;
+    padding: 14px;
 }

@@ -19,7 +19,7 @@ import {
 
 
 const Routes = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const AppStack = createNativeStackNavigator();
   const config = {
@@ -61,8 +61,8 @@ const Routes = () => {
           ...headerOptions,
         }}
       >
-        <AppStack.Screen name={CHALLAN_FORM_SCREEN} component={ChallanForm}  />
-        <AppStack.Screen name={VOILATION_SCREEN} component={Voilation}  />
+        <AppStack.Screen name={CHALLAN_FORM_SCREEN} component={ChallanForm} />
+        <AppStack.Screen name={VOILATION_SCREEN} component={Voilation} />
         <AppStack.Screen
           name={EXTENDED_CHALLAN_SCREEN}
           component={ExtendedChallan}

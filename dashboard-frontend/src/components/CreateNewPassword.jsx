@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/Auth.module.css';
 
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 
 import Form from '../containers/Form';
 
@@ -22,8 +22,8 @@ const CreateNewPassword = () => {
 
     return (<Box className={styles.loginBox}>
         <Paper elevation={3} className={styles.formCard} style={{ paddingBlock: 320 }}>
-            <h1 className={styles.heading}>Create New Password</h1>
-            <p className={styles.subtitle}>Your new password must be different from previous password.</p>
+            <Typography className={styles.heading} variant="h4">Create New Password</Typography>
+            <Typography className={styles.subtitle} variant="h6">Your new password must be different from previous password.</Typography>
             <Form
                 data={formData}
                 handleSubmit={(values) => {

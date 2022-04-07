@@ -2,43 +2,67 @@ import React from 'react';
 
 import styles from '../styles/WardenProfile.module.css'
 
-import { Box } from '@mui/material'
+import { Box, IconButton, Typography, Button, Grid } from '@mui/material'
 import WardenHugeImage from '../images/warden-huge-image.png';
+import { Link } from 'react-router-dom'
+import ProofOfIdentity from '../images/proof-of-identity.png'
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import ArrowBackIosNewSharpIcon from '@mui/icons-material/ArrowBackIosNewSharp';
 
-import ProofOfIdentity1 from '../images/proof-of-identity-1.png'
-import ProofOfIdentity2 from '../images/proof-of-identity-2.png'
+
 
 const images = [
     {
         title: 'Front Photo',
-        source: ProofOfIdentity1,
+        source: ProofOfIdentity,
     },
     {
         title: 'Back Photo',
-        source: ProofOfIdentity2,
+        source: ProofOfIdentity,
     },
 ]
 
 const ImagePresenter = ({ title, source }) => {
-    return (<>
-        <p className={styles.imageCaption}>{title}</p>
-        <img src={source} className={styles.proofImage} alt={title} />
-    </>)
+    return (
+        <Grid item sm={6} xs={6} md={12} lg={12}>
+            <Typography className={styles.imageCaption}>{title}</Typography>
+            <img src={source} className={styles.proofImage} alt={title} />
+        </Grid>
+    )
 }
 
-const WardenProfile = () => {
+const WardenProfile = ({ handleIdChange, matches }) => {
     return (<Box className={styles.wardenProfile}>
-        <h1 className={styles.heading}>Warden Profile</h1>
+        {matches ? <IconButton onClick={() => handleIdChange(0)} style={{ justifyContent: 'flex-start' }}>
+            <CloseSharpIcon style={{ color: 'white', fontSize: 30 }} />
+        </IconButton> : <Button className={styles.backButton} startIcon={<ArrowBackIosNewSharpIcon style={{ color: 'white' }} />} >
+            <Link to="/dashboard" className={styles.goBackText}>
+                Go Back
+            </Link>
+        </Button>}
+        <Typography variant={matches ? "h4" : 'h6'} className={styles.heading}>Warden Profile</Typography>
         <img src={WardenHugeImage} alt="warden" className={styles.wardenImage} />
-        <h1 className={styles.wardenName}>Abdul Bari</h1>
-        <h2 className={styles.boldText}>Email</h2>
-        <p className={styles.text}>abdulbari122@gmail.com</p>
-        <h2 className={styles.boldText}>Phone no.</h2>
-        <p className={styles.text}>+12 345 6789012</p>
-        <h1 className={styles.proofHeading}>Proof Of Identity</h1>
-        {images.map(image => (
-            <ImagePresenter title={image.title} source={image.source} />
-        ))}
+        <Typography className={styles.wardenName} variant="h5">Abdul Bari</Typography>
+        <br />
+        <Typography variant="h5" className={styles.boldText}>Email</Typography>
+        <Typography className={styles.text}>abdulbari122@gmail.com</Typography>
+        <br />
+        <Typography variant="h5" className={styles.boldText}>Phone no.</Typography>
+        <Typography className={styles.text}>+12 345 6789012</Typography>
+        <Typography variant="h4" className={styles.proofHeading}>Proof Of Identity</Typography>
+        <Grid container spacing={3} className={styles.imageContainer}>
+            {images.map(image => (
+                <ImagePresenter title={image.title} source={image.source} />
+            ))}
+        </Grid>
+        {!matches && (<div className={styles.buttonGroup}>
+            <Button className={styles.blueButton}>
+                Approve
+            </Button>
+            <Button className={styles.redButton}>
+                Decline
+            </Button>
+        </div>)}
     </Box>)
 }
 

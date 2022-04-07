@@ -1,21 +1,21 @@
 import React from "react";
 import { ScrollView, Text } from "native-base";
-import {  Col, Row } from "react-native-easy-grid";
+import { Col, Row } from "react-native-easy-grid";
 import { TextBtn } from "@components/index"
 import { RECORD_DETAIL_SCREEN } from "src/routes"
 import { recordTableStyles as styles } from "../styles"
 
 const data = [
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
-  { challan_no: "062", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
+  { offenders_name: "Abdul Bari", vehicle_no: "KHZ-0987", details: "123" },
 ];
 
 const RecordTable = ({ navigation, status }) => {
@@ -23,9 +23,9 @@ const RecordTable = ({ navigation, status }) => {
   return (
     <ScrollView mt="10px">
       <Row
-        style={styles.row }
+        style={styles.row}
       >
-        <Text fontWeight="bold" flex={0.33}>Challan No</Text>
+        <Text fontWeight="bold" flex={0.33}>Offender's Name</Text>
         <Text fontWeight="bold" flex={0.33}>Vehicle No</Text>
       </Row>
       {data.map((row, rowId) => (

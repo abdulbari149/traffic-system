@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/Auth.module.css';
 
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 
 import Form from '../containers/Form';
 
@@ -21,8 +21,8 @@ const ForgotPassword = () => {
     return (<Box className={styles.loginBox}>
         <Paper elevation={3} className={styles.formCard} style={{ paddingBlock: 350 }}>
             <img src={require("../images/ghost.png")} className={styles.ghost} alt="ghost" />
-            <h1 className={styles.heading}>Forgot Password</h1>
-            <p className={styles.subtitle}>Please enter your email address to receive a verification code</p>
+            <Typography variant="h4" className={styles.heading}>Forgot Password</Typography>
+            <Typography variant="h6" className={styles.subtitle}>Please enter your email address to receive a verification code</Typography>
             <Form
                 data={formData}
                 handleSubmit={(values) => {

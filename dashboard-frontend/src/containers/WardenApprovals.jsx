@@ -3,51 +3,62 @@ import React from 'react';
 
 import styles from '../styles/Dashboard.module.css';
 
-import { Box, TableContainer, Table, Paper, TableCell, TableRow, TableHead } from '@mui/material';
+import { Box, TableContainer, Table, Paper, TableCell, TableRow, TableHead, Typography, Button, tableCellClasses, TableBody } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TableEntry from './TableEntry';
 
 import { Link } from 'react-router-dom'
 
-const WardenApprovals = () => {
+const WardenApprovals = ({ matches, handleIdChange }) => {
+
     return (<Box className={styles.Box}>
         <div className={styles.firstContainer}>
-            <h1 className={styles.heading}>Warden's Account Approval</h1>
-            <button className={styles.logoutButton}>
+            <Typography variant={matches ? 'h4' : 'h5'} className={styles.heading}>Warden's Account Approval</Typography>
+            {matches && <Button className={styles.logoutButton}>
                 <LogoutIcon className={styles.logoutIcon} />
-                <p className={styles.logoutButtonText}>
+                <Typography className={styles.logoutButtonText}>
                     <Link to="/" className={styles.logoutButtonText}>Logout</Link>
-                </p>
-            </button>
+                </Typography>
+            </Button>}
         </div>
-        <TableContainer component={Paper} style={{ backgroundColor: '#0f0f0f' }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} style={{ backgroundColor: '#131313' }}>
+            <Table sx={{
+                [`& .${tableCellClasses.root}`]: {
+                    borderBottom: "none",
+                    marginRight: matches ? 'auto' : 0.4,
+                    marginLeft: matches ? 'auto' : 0.4,
+                    paddingLeft: matches ? 'auto' : 0.4,
+                    paddingRight: matches ? 'auto' : 0.4,
+                    maxWidth: 650
+                },
+            }} aria-label="simple table">
                 <TableHead className={styles.tableHead}>
                     <TableRow style={{ border: 'none' }}>
-                        <TableCell className={styles.tableHeading}>Name</TableCell>
-                        <TableCell className={styles.tableHeading}>Email</TableCell>
-                        <TableCell />
+                        <TableCell className={styles.tableHeading} align="left" style={{ fontSize: 22 }}>Name</TableCell>
+                        {matches && <TableCell className={styles.tableHeading} style={{ fontSize: 22 }}>Email</TableCell>}
                     </TableRow>
                 </TableHead>
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
-                <TableEntry />
+                <TableBody>
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                    <TableEntry handleIdChange={handleIdChange} />
+                </TableBody>
             </Table>
         </TableContainer>
 
-    </Box>)
+    </Box >)
 }
 
 export default WardenApprovals

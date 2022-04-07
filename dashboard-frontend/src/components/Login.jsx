@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/Auth.module.css';
 
-import { Paper, Grid, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import Form from '../containers/Form';
@@ -26,25 +26,23 @@ const Login = () => {
     const navigate = useNavigate()
 
     return (
-        <Grid container spacing={0} className={styles.loginBox}>
-            <Grid item>
-                <Typography variant="h1" fontSize={40} textAlign="center" className={styles.heading}>LOGIN</Typography>
-                <Paper elevation={3} className={styles.formCard}>
-                    <AccountCircleRoundedIcon className={styles.icon} />
-                    <Form
-                        data={formData}
-                        handleSubmit={(values) => {
-                            console.log(values);
-                        }}
-                        btn={{
-                            navigate: '/dashboard',
-                            title: 'Login'
-                        }}
-                        forgotPassword={() => navigate('forgot-ps')}
-                    />
-                </Paper>
-            </Grid>
-        </Grid>
+        <div className={styles.loginBox}>
+            <Typography variant="h1" fontSize={40} textAlign="center" className={styles.heading}>LOGIN</Typography>
+            <div className={styles.formCard}>
+                <AccountCircleRoundedIcon className={styles.icon} />
+                <Form
+                    data={formData}
+                    handleSubmit={(values) => {
+                        console.log(values);
+                    }}
+                    btn={{
+                        navigate: '/dashboard',
+                        title: 'Login'
+                    }}
+                    forgotPassword={() => navigate('forgot-ps')}
+                />
+            </div>
+        </div>
     )
 }
 

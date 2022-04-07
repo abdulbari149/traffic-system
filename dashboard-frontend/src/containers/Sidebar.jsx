@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react';
 
 import AdminImage from '../images/admin-image.png'
@@ -7,8 +7,9 @@ import SidebarButton from './SidebarButton';
 
 import PersonIcon from '@mui/icons-material/Person';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
+import ArchiveSharpIcon from '@mui/icons-material/ArchiveSharp';
 
-const Sidebar = ({ nav, setNav }) => {
+const Sidebar = ({ nav, setNav, mobile, isMenuOpened }) => {
 
 
     const buttons = [
@@ -19,15 +20,23 @@ const Sidebar = ({ nav, setNav }) => {
         {
             title: 'Violation',
             icon: <LinkOffIcon color='white' className={styles.buttonIcon} />
-        }]
+        },
+        {
+            title: 'Decline',
+            icon: <ArchiveSharpIcon className={styles.buttonIcon} />
+        }
+    ]
 
     return (<Box className={styles.sidebar}>
-        <img src={AdminImage} className={styles.image} alt="admin" />
-        <h1 className={styles.heading}>Admin</h1>
+        {!mobile && <><img src={AdminImage} className={styles.image} alt="admin" />
+            <Typography className={styles.heading}>Admin</Typography></>}
         {buttons.map((button, idx) => (
             <SidebarButton
+                mobile={mobile}
+                key={idx}
                 title={button.title}
                 icon={button.icon}
+                isMenuOpened={isMenuOpened}
                 nav={nav}
                 setNav={setNav}
             />
