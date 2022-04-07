@@ -7,10 +7,40 @@ class VoilationController {
     status: 0,
   };
 
-  getVoilations = async (req, res) => {
-    const { v_type } = req.query;
+  addVoilation = async (req, res) => {
     try {
-      const voilations = await Voilation.find({ v_type });
+      const newVoilation = new Voilation({
+        voilation: req.body.voilation,
+        v_type: req.body.v_type,
+        code: req.body.code,
+        price: req.body.price,
+      });
+      const data = await newVoilation.save();
+      if (!data) {
+        throw new Error("Voilation hasn't been added");
+      } else {
+        this.response = {
+          data,
+          message: "Voilation has been successfully added",
+          status: 200,
+        };
+      }
+    } catch (error) {
+      this.response = {
+        status: 400,
+        message: error.message,
+      };
+    }
+    res.status(this.response.status).json(this.response);
+  };
+
+  getVoilations = async (req, res) => {
+    try {
+      const query =
+        typeof req.query.v_type !== "undefined"
+          ? { v_type: req.query?.v_type }
+          : {};
+      const voilations = await Voilation.find(query);
       this.response = {
         data: voilations,
         message: "Succees",
@@ -18,28 +48,26 @@ class VoilationController {
       };
     } catch (error) {
       this.response = {
-        message: error,
+        message: error.message,
         status: 404,
       };
     } finally {
-      res.status(this.repsonse.status).json(this.response);
+      res.status(this.response.status).json(this.response);
     }
   };
 
   updateVoiationPrice = async (req, res) => {
     try {
-      const { price, id } = req.body;
-      const voilation = await Voilation.findByIdAndUpdate(id, { price });
-      if (voilation.price !== price) {
-        this.response = {
-          message:
-            "An error occured while updating the price, Please try again",
-          status: 404,
-        };
-      }
+      const { new_price, id } = req.body;
+      console.log("Updating the price", { new_price, id });
+      const voilation = await Voilation.findByIdAndUpdate(id, {
+        price: new_price,
+      });
+
       this.response = {
         message: "Price has been updated Successfully",
         status: 200,
+        data: voilation,
       };
     } catch (error) {
       this.response = {
@@ -50,8 +78,6 @@ class VoilationController {
       res.status(this.response.status).json(this.response);
     }
   };
-
-
 }
 
-module.exports  = new VoilationController()
+module.exports = new VoilationController();
