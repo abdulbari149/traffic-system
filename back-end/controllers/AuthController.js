@@ -9,6 +9,38 @@ class AuthController {
     status: null,
   };
 
+  checkUserExists = async (req, res) => {
+    const { email } = req.body;
+    const { DbModel } = res.locals;
+    try {
+      const doc = await DbModel.findOne({ email });
+      if (doc) {
+        this.response = {
+          message: "A warden with the email address already exists",
+          data: {
+            userExists: true,
+          },
+          status: 200,
+        };
+      } else {
+        console.log({ doc });
+        this.response = {
+          status: 200,
+          message: "You can signup",
+          data: {
+            userExists: false,
+          },
+        };
+      }
+    } catch (error) {
+      this.response = {
+        message: error.message,
+        status: 404,
+      };
+    }
+    res.status(this.response.status).json(this.response);
+  };
+
   register = async (req, res) => {
     const { DbModel } = res.locals;
     registerBlock: try {
@@ -32,22 +64,20 @@ class AuthController {
     res.status(this.response.status).json(this.response);
   };
 
-
   login = async (req, res) => {
-    const {  password, ...param } = req.body;
-    console.log({ param })
+    const { password, ...param } = req.body;
+    console.log({ param });
     const { DbModel } = res.locals;
     loginBlock: try {
-      
       const doc = await DbModel.findOne(param);
-      console.log(doc)
       if (!doc) {
-        this.response.message = "Wrong Credentials: Email";
-        this.response.status = 400;
+        this.response = {
+          message: `Wrong Credentials: ${Object.keys(param)[0]}`,
+          status: 400,
+        };
         break loginBlock;
       }
       const isAuthorized = await compare(password, doc.password);
-      console.log({ isAuthorized })
       if (!isAuthorized) {
         this.response.message = "You have entered a wrong password";
         this.response.status = 400;
@@ -64,7 +94,24 @@ class AuthController {
 
       this.response.message = `${req.params.user} is authorized to access the application`;
       this.response.status = 200;
-      this.response.data = doc;
+      const data = {
+        email: doc.email,
+        _id: doc._id,
+        name: doc.first_name + doc.last_name,
+      };
+      const token = jwt.sign(
+        {
+          ...param,
+          id: doc._id,
+          name: doc.first_name + doc.last_name
+        },
+        process.env.JWTSecret,
+        {
+          expiresIn: 12 * 60 * 60,
+        }
+      );
+      this.response.data =  {...doc._doc, password: undefined, authorized: undefined, token }
+      res.setHeader("Authorization", `Bearer ${token}`);
     } catch (error) {
       this.response = {
         message: "Bad Request",
@@ -72,16 +119,6 @@ class AuthController {
         data: null,
       };
     } finally {
-      const token = jwt.sign(
-        {
-          ...param,
-        },
-        process.env.JWTSecret,
-        {
-          expiresIn: 12 * 60 * 60,
-        }
-      );
-      res.setHeader("Authorization-Token", `Bearer ${token}`);
       res.status(this.response.status).json(this.response);
     }
   };
@@ -138,7 +175,7 @@ class AuthController {
           expiresIn: 5 * 60 * 1000,
         }
       );
-      res.setHeader("Authorization-Token", `Bearer ${token}`);
+      res.setHeader("Authorization", `Bearer ${token}`);
       res.status(this.response.status).json(this.response);
     }
   };
