@@ -8,6 +8,7 @@ import styles from '../styles/Auth.module.css';
 
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Typography } from '@mui/material';
+import VerificationInput from './VerificationInput';
 
 
 const getFieldValues = (data) => {
@@ -69,7 +70,7 @@ const Form = ({
                 </form>
             </>)}
 
-        </Formik> : null}
+        </Formik> : <VerificationInput />}
     </>)
 }
 
