@@ -9,3 +9,7 @@ export const VERIFICATION_SCREEN = 'Verification Screen';
 export const PAYMENT_METHOD = 'Payment Method';
 export const CHALLAN_HOME = 'Challan Home';
 export const CHALLAN_DETAILS = 'Challan Details';
+
+// Customization
+export const UPLOAD_PHOTO = 'Upload Photo'
+export const UPLOAD_PHOTO_FINAL = 'Upload Photo Final'
