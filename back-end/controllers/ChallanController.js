@@ -6,21 +6,15 @@ class ChallanController {
     message: "",
     status: 0,
   };
-  // voilation,
-  // citizen,
-  // PSID_no,
-  // place_of_voilation,
-  // district,
-  // city,
-  // province,
-  // vehicle_registration_no,
-  // traffic_sector,
-  // fine_imposed,wwwww
   submitChallan = async (req, res) => {
     try {
       const { id: warden } = res.locals.data;
-      const data = await Challan.create({ ...req.body, warden });
-      console.log({ data })
+      console.log(req.body);
+      const data = await Challan.create({
+        ...req.body,
+        warden,
+      });
+      console.log({ data });
       this.response = {
         message: "Your challan has been successfully submitted",
         status: 200,
@@ -39,18 +33,16 @@ class ChallanController {
       const { email, id } = res.locals.data;
       console.log({ id });
       const { DbModel } = res.locals;
-      const data = await DbModel.findById(id, { challans: 1 }).populate({
+      const data = await DbModel.findById(id).populate({
         path: "challans",
         populate: {
           path: "voilation",
           model: "Voilation",
         },
       });
-      console.log({ data });
       this.response = {
         data: data.challans.map((challan) => ({
           ...challan._doc,
-          issued_date: challan.date,
         })),
         message: "These are the registered challans",
         status: 200,
@@ -67,23 +59,35 @@ class ChallanController {
   getChallanRecords = async (req, res) => {
     console.log(req.query);
     try {
-      const { page, paid } = req.query;
-      const limit = 10;
-      const docs = await Challan.find(
-        { wardenId: res.locals.data.id, paid: Boolean(parseInt(paid)) },
-        ["citizenId", "vehicle_registration_no"],
+      const { page, paid, limit = 10 } = req.query;
+
+      let properties =
+        req.params.user === "warden"
+          ? "citizen vehicle_registration_no createdAt"
+          : "psid_no vehicle_registration_no createdAt fine_imposed";
+
+      const records = await Challan.find(
         {
-          limit,
+          [req.params.user]: res.locals.data.id,
+          paid: Boolean(parseInt(paid)),
+        },
+        properties,
+        {
           skip: parseInt(page, 0) * 10,
+          limit,
         }
-      ).populate("citizenId");
+      )
+        .sort({ createdAt: -1 })
+        .populate("citizen");
+
+      const transformedData = records.map((doc) => ({
+        ...doc._doc,
+        citizen: undefined,
+        name: req.params.user === "warden" ? doc._doc.citizen.name : undefined,
+      }));
+
       this.response = {
-        data: docs.map((doc) => ({
-          ...doc._doc,
-          citizenId: undefined,
-          name: doc.citizenId.name,
-        })),
-        message: "Here's the record of challans",
+        data: transformedData,
         status: 200,
       };
     } catch (error) {
@@ -99,12 +103,17 @@ class ChallanController {
   getChallanById = async (req, res) => {
     try {
       const id = req.params.challan_id;
-      const doc = await Challan.findById(id).populate(["citizenId", ""]);
+
+      const data = await Challan.findById(id)
+        .populate({
+          path: "citizen",
+          select: "first_name last_name images",
+          populate: { path: "images", model: "Image", select: "filename" },
+        })
+        .populate("voilation")
+        .lean();
       this.response = {
-        data: {
-          ...doc._doc,
-          issued_date: doc.date,
-        },
+        data,
         status: 200,
       };
     } catch (error) {
@@ -115,6 +124,19 @@ class ChallanController {
       };
     }
     res.status(this.response.status).json(this.response);
+  };
+
+  getChallanCount = async (req, res) => {
+    try {
+      const { data, monthlyDate, yearlyDate } = res.locals;
+
+      const monthlyCount = await Challan.find({
+        warden: data.id,
+        createdAt: { $gte: monthlyDate },
+      }).count();
+      const yearlyCount = await Challan.find({ warden: data.id, createAt: {$gte: yearlyDate} }).count()
+      res.status(200).json({ monthlyCount, yearlyCount });
+    } catch (error) {}
   };
 }
 
