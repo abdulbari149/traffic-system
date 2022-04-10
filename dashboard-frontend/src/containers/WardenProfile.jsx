@@ -4,10 +4,11 @@ import styles from '../styles/WardenProfile.module.css'
 
 import { Box, IconButton, Typography, Button, Grid } from '@mui/material'
 import WardenHugeImage from '../images/warden-huge-image.png';
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProofOfIdentity from '../images/proof-of-identity.png'
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ArrowBackIosNewSharpIcon from '@mui/icons-material/ArrowBackIosNewSharp';
+import { UndoSharp } from '@mui/icons-material';
 
 
 
@@ -32,6 +33,9 @@ const ImagePresenter = ({ title, source }) => {
 }
 
 const WardenProfile = ({ handleIdChange, matches }) => {
+
+    const { state } = useParams()
+
     return (<Box className={styles.wardenProfile}>
         {matches ? <IconButton onClick={() => handleIdChange(0)} style={{ justifyContent: 'flex-start' }}>
             <CloseSharpIcon style={{ color: 'white', fontSize: 30 }} />
@@ -56,12 +60,16 @@ const WardenProfile = ({ handleIdChange, matches }) => {
             ))}
         </Grid>
         {!matches && (<div className={styles.buttonGroup}>
-            <Button className={styles.blueButton}>
+            {state === 'decline' ? (
+                <Button className={styles.blueButton} startIcon={<UndoSharp style={{ color: 'white' }} />}>
+                    Undo
+                </Button>
+            ) : (<> <Button className={styles.blueButton}>
                 Approve
             </Button>
-            <Button className={styles.redButton}>
-                Decline
-            </Button>
+                <Button className={styles.redButton}>
+                    Decline
+                </Button></>)}
         </div>)}
     </Box>)
 }

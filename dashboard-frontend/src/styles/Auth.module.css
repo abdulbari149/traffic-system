@@ -3,25 +3,30 @@
     font-family: 'Raleway', sans-serif !important;
     font-weight: 700 !important;
     padding-block: 25px !important;
+    text-align: center;
 }
 
 .subtitle {
     color: white;
     font-family: 'Raleway', sans-serif !important;
     font-weight: lighter;
-    margin: 0%;
-    padding-inline: 40px;
     text-align: center;
     padding-bottom: 20px !important;
 }
 
 .loginBox {
-    background-color: #0f0f0f !important;
     height: 100vh !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     flex-direction: column !important;
+    background-color: #000000;
+}
+
+@media screen and (orientation: landscape) {
+    .loginBox {
+        background-color: #0f0f0f !important;
+    }
 }
 
 .formCard {
@@ -53,8 +58,8 @@
 }
 
 .input {
-    width: 25vw !important;
-    height: 65px !important;
+    width: 350px;
+    height: 55px !important;
     background-color: #0F0F0F;
     border: none !important;
     color: #949494 !important;
@@ -69,7 +74,7 @@
     align-self: flex-start !important;
     font-size: 26px;
     font-weight: 700 !important;
-    padding-top: 1vw;
+    padding-top: 35px;
     padding-bottom: 10px;
     font-family: 'Raleway', sans-serif !important;
 }
@@ -85,11 +90,14 @@
 }
 
 .button {
-    background-color: #0729A1 !important;
     color: white !important;
-    width: 12.5vw !important;
-    height: 3.5vw !important;
+    height: 50px !important;
+    background-color: #0729A1 !important;
     border: none !important;
+    text-transform: none !important;
+    padding-inline: 57px !important;
+    font-weight: 700 !important;
+    font-family: 'Raleway', sans-serif !important;
     font-size: 20px !important;
     margin-block: 20px !important;
 }
@@ -114,24 +122,21 @@
 
 .buttonGroup {
     display: flex;
-    justify-content: space-around !important;
+    justify-content: space-between !important;
     padding-block: 15px;
     align-items: center;
 }
 
 .ghostButton {
     color: white !important;
-    width: 12.5vw !important;
-    height: 4vw !important;
-    align-self: center !important;
+    height: 50px !important;
     border: none !important;
+    text-transform: none !important;
+    padding-inline: 57px !important;
+    font-weight: 700 !important;
+    font-family: 'Raleway', sans-serif !important;
     font-size: 20px !important;
     margin-block: 20px !important;
-    font-weight: 700 !important;
-    color: white !important;
-    text-transform: none !important;
-    background-color: transparent !important;
-    font-family: 'Raleway', sans-serif !important;
 }
 
 .modalInput {
@@ -163,47 +168,41 @@
     margin-left: 0;
 }
 
-.button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent !important;
-}
-
 .text {
     font-family: 'Raleway', sans-serif;
     white-space: nowrap;
-}
-
-.buttonText {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
-    font-size: medium;
     color: white;
 }
 
 .verificationButtonGroup {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
 }
 
 .verificationGhostButton {
     font-family: 'Raleway', sans-serif !important;
-    background-color: transparent;
-    text-transform: none;
+    background-color: transparent !important;
+    text-transform: none !important;
     color: white !important;
-    padding-block: 10px;
-    padding-inline: 50px;
-    font-weight: 700;
+    padding-block: 10px !important;
+    padding-inline: 50px !important;
+    font-weight: 700 !important;
 }
 
 .verificationBlueButton {
     background-color: #0729A1 !important;
-    padding-block: 10px;
-    padding-inline: 50px;
-    text-transform: none;
-    color: white;
+    padding-block: 10px !important;
+    padding-inline: 50px !important;
+    text-transform: none !important;
+    color: white !important;
     font-family: 'Raleway', sans-serif !important;
-    font-weight: 700;
+    font-weight: 700 !important;
+}
+
+.resendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 20px;
 }

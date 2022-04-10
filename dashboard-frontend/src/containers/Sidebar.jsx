@@ -8,6 +8,7 @@ import SidebarButton from './SidebarButton';
 import PersonIcon from '@mui/icons-material/Person';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import ArchiveSharpIcon from '@mui/icons-material/ArchiveSharp';
+import CreateSharpIcon from '@mui/icons-material/CreateSharp';
 
 const Sidebar = ({ nav, setNav, mobile, isMenuOpened }) => {
 
@@ -24,6 +25,10 @@ const Sidebar = ({ nav, setNav, mobile, isMenuOpened }) => {
         {
             title: 'Decline',
             icon: <ArchiveSharpIcon className={styles.buttonIcon} />
+        },
+        {
+            title: 'Register',
+            icon: <CreateSharpIcon className={styles.buttonIcon} />
         }
     ]
 
@@ -33,12 +38,11 @@ const Sidebar = ({ nav, setNav, mobile, isMenuOpened }) => {
         {buttons.map((button, idx) => (
             <SidebarButton
                 mobile={mobile}
-                key={idx}
                 title={button.title}
                 icon={button.icon}
                 isMenuOpened={isMenuOpened}
                 nav={nav}
-                setNav={setNav}
+                setNav={() => setNav(idx)}
             />
         ))}
 

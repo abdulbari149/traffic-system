@@ -11,19 +11,19 @@ const CreateNewPassword = () => {
     const formData = {
         names: [
             'Password',
-            'Confirm_Password'
+            'Confirm_password',
         ],
         placeholders: [
             'Enter your password',
-            'Retype your password'
+            'Retype your password',
         ],
         types: ['password', 'password']
     }
 
     return (<Box className={styles.loginBox}>
-        <Paper elevation={3} className={styles.formCard} style={{ paddingBlock: 320 }}>
-            <Typography className={styles.heading} variant="h4">Create New Password</Typography>
-            <Typography className={styles.subtitle} variant="h6">Your new password must be different from previous password.</Typography>
+        <Paper elevation={3} className={styles.formCard} style={{ paddingBlock: 350 }}>
+            <Typography variant="h5" className={styles.heading}>Create New Password</Typography>
+            <Typography variant="h6" className={styles.subtitle}>Your new password must be different from previous password.</Typography>
             <Form
                 data={formData}
                 handleSubmit={(values) => {
@@ -31,8 +31,7 @@ const CreateNewPassword = () => {
                 }}
                 btn={{
                     navigate: '/dashboard',
-                    title: 'Send',
-                    amount: 2
+                    title: 'Save',
                 }}
             />
         </Paper>

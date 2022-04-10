@@ -2,7 +2,6 @@
     font-family: 'Raleway', sans-serif !important;
     font-weight: 700 !important;
     color: white;
-    padding-top: 15px;
 }
 
 .Box {
@@ -17,7 +16,7 @@
 }
 
 .logoutButton {
-    background-color: black;
+    background-color: black !important;
     width: 135px;
     height: 50px;
     display: flex;
@@ -45,7 +44,7 @@
     justify-content: space-between;
     margin-bottom: 25px;
     margin-block: 20px;
-    margin-right: 140px
+    margin-right: 40px
 }
 
 
@@ -64,11 +63,7 @@
     font-size: medium !important;
 }
 
-.nameAndImage {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-}
+
 
 .blueButton {
     padding-inline: 30px !important;
@@ -118,4 +113,12 @@
     font-family: 'Raleway', sans-serif !important;
     font-weight: 700 !important;
     text-transform: none !important;
+}
+
+@media screen and (orientation: portrait) {
+    .nameAndImage {
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+    }
 }

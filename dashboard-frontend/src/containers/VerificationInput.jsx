@@ -15,8 +15,8 @@ const VerificationInput = () => {
                 characterSelected: styles.characterSelected,
             }}
         />
-        <div className={styles.button}>
-            <Typography className={styles.text}>Didn't receive code?&nbsp; </Typography>
+        <div className={styles.resendButton}>
+            <Typography className={styles.text}>Didn't receive code? </Typography>
             <Button className={styles.buttonText}>Resend</Button>
         </div>
         <div className={styles.verificationButtonGroup}>

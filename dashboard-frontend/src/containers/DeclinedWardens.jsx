@@ -5,15 +5,15 @@ import styles from '../styles/Dashboard.module.css';
 
 import { Box, TableContainer, Table, Paper, TableCell, TableRow, TableHead, Typography, Button, tableCellClasses, TableBody } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import TableEntry from './TableEntry';
 
 import { Link } from 'react-router-dom'
+import DeclinedWardenTableEntry from './DeclinedWardenTableEntry';
 
-const WardenApprovals = ({ matches, handleIdChange }) => {
+const DeclinedWardens = ({ matches, handleIdChange }) => {
 
     return (<Box className={styles.Box}>
         <div className={styles.firstContainer}>
-            <Typography variant={matches ? 'h4' : 'h5'} className={styles.heading}>Warden's Account Approvals</Typography>
+            <Typography variant={matches ? 'h4' : 'h5'} className={styles.heading}>Warden's Account Declined</Typography>
             {matches && <Button className={styles.logoutButton} startIcon={<LogoutIcon className={styles.logoutIcon} />}>
                 <Typography className={styles.logoutButtonText}>
                     <Link to="/" className={styles.logoutButtonText}>Logout</Link>
@@ -38,21 +38,7 @@ const WardenApprovals = ({ matches, handleIdChange }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
-                    <TableEntry handleIdChange={handleIdChange} />
+                    <DeclinedWardenTableEntry handleIdChange={handleIdChange} />
                 </TableBody>
             </Table>
         </TableContainer>
@@ -60,4 +46,4 @@ const WardenApprovals = ({ matches, handleIdChange }) => {
     </Box >)
 }
 
-export default WardenApprovals
+export default DeclinedWardens

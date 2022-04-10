@@ -6,11 +6,11 @@ import WardenApprovals from '../containers/WardenApprovals';
 import WardenProfile from '../containers/WardenProfile';
 import Violation from './Violation';
 
-import styles from '../styles/Sidebar.module.css'
-
+import DeclinedWardens from '../containers/DeclinedWardens'
 
 import json2mq from 'json2mq'
 import AppBar from './AppBar';
+import SuperAdminSignUp from './SuperAdminSignUp';
 
 const Dashboard = () => {
 
@@ -29,7 +29,7 @@ const Dashboard = () => {
     }, []);
 
     return ( // 1.5 + 7.5 + 
-        <Grid container spacing={0}>
+        <Grid container spacing={0} style={{ backgroundColor: '#0f0f0f' }}>
             {!matches && <AppBar menuOpened={menuOpened} isMenuOpened={isMenuOpened} />}
             {matches && <Grid item xs={1.5}>
                 <Sidebar nav={nav} setNav={setNav} />
@@ -38,18 +38,29 @@ const Dashboard = () => {
                 <Grid item xs={12}>
                     <Sidebar nav={nav} setNav={setNav} mobile={true} isMenuOpened={isMenuOpened} menuOpened={menuOpened} />
                 </Grid>
-            ) : !nav ? (<>
+            ) : nav === 0 ? (<>
                 <Grid item md={matches && id ? 7.5 : matches && !id ? 10.5 : 12} lg={matches && id ? 7.5 : !matches ? 12 : 10.5} sm={matches && !id ? 10.5 : matches && id ? 7.5 : 12} xs={12}>
                     <WardenApprovals matches={matches} handleIdChange={handleIdChange} />
                 </Grid>
                 {matches && id ? <Grid item xs={3}>
                     <WardenProfile handleIdChange={handleIdChange} matches={matches} />
                 </Grid> : null}
-            </>) : (
+            </>) : nav === 1 ? (
                 <Grid item md={matches ? 10.5 : 12} lg={matches ? 10.5 : 12} sm={matches ? 10.5 : 12} xs={12}>
                     <Violation matches={matches} />
                 </Grid>
-            )}
+            ) : nav === 2 ? (<>
+                <Grid item md={matches && id ? 7.5 : matches && !id ? 10.5 : 12} lg={matches && id ? 7.5 : !matches ? 12 : 10.5} sm={matches && !id ? 10.5 : matches && id ? 7.5 : 12} xs={12}>
+                    <DeclinedWardens matches={matches} handleIdChange={handleIdChange} />
+                </Grid>
+                {matches && id ? <Grid item xs={3}>
+                    <WardenProfile handleIdChange={handleIdChange} matches={matches} />
+                </Grid> : null}
+            </>) : nav === 3 ? (
+                <Grid item md={matches ? 10.5 : 12} lg={matches ? 10.5 : 12} sm={matches ? 10.5 : 12} xs={12}>
+                    <SuperAdminSignUp />
+                </Grid>
+            ) : null}
         </Grid>
     )
 }

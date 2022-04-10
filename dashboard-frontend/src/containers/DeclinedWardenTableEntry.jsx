@@ -10,8 +10,9 @@ import json2mq from 'json2mq'
 import { Link } from 'react-router-dom'
 
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
+import UndoSharpIcon from '@mui/icons-material/UndoSharp';
 
-const TableEntry = ({ handleIdChange }) => {
+const DeclinedWardenTableEntry = ({ handleIdChange }) => {
 
     const matches = useMediaQuery(
         json2mq({
@@ -24,7 +25,7 @@ const TableEntry = ({ handleIdChange }) => {
             <TableCell className={styles.nameAndImage}>
                 {!matches && <img src={WardenImage} alt="warden" />}
                 <div style={{ paddingLeft: 15 }}>
-                    <Typography variant={matches ? "h6" : "subtitle1"} className={styles.text} style={{ fontWeight: 700 }}>
+                    <Typography variant={matches ? "h6" : "subtitle1"} className={styles.text} style={{ fontWeight: matches ? 400 : 700 }}>
                         Abdul Bari
                     </Typography>
                     {!matches && <Typography variant={matches ? "h6" : "subtitle1"} className={styles.text}>
@@ -38,13 +39,8 @@ const TableEntry = ({ handleIdChange }) => {
                         <Typography className={styles.text}> abdulbari11@gmail.com</Typography>
                     </TableCell>
                     <TableCell align="right">
-                        <Button className={styles.blueButton}>
-                            Approve
-                        </Button>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Button className={styles.redButton}>
-                            Decline
+                        <Button className={styles.blueButton} startIcon={<UndoSharpIcon style={{ color: 'white' }} />}>
+                            Undo
                         </Button>
                     </TableCell>
                     <TableCell align="right">
@@ -56,7 +52,7 @@ const TableEntry = ({ handleIdChange }) => {
             ) : (
                 <TableCell align='right'>
                     <Button className={styles.underlinedButton}>
-                        <Link to="/profile/approve">
+                        <Link to="/profile/decline">
                             View Details
                         </Link>
                     </Button>
@@ -66,4 +62,4 @@ const TableEntry = ({ handleIdChange }) => {
     )
 }
 
-export default TableEntry
+export default DeclinedWardenTableEntry
