@@ -2,11 +2,10 @@ import React from "react";
 import { Image, Flex, VStack, Box } from "native-base";
 import { HeaderText, Dots, Button } from "src/components";
 import styles from "../styles";
-import { LOGIN_SCREEN, SIGNUP_SCREEN } from "src/routes";
+import { LOGIN_SCREEN, SIGNUP_SCREEN, IDENTITY_PROOF_SCREEN, SHOW_PROFILE_PIC_SCREEN, UPLOAD_PROFILE_PIC_SCREEN } from "src/routes";
 import { StyleSheet } from "react-native"
+import UploadProfilePic from "./UploadProfilePic";
 const AuthHome = ({ navigation }) => {
-
-
   return (
     <Flex pos="relative" flex={1} align="center" overflowX="hidden">
       <Box style={styles.homeContainer}>

@@ -4,7 +4,14 @@ import { Form } from "@components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "../styles";
 
-const Password = ({ route, data, text, handleSubmit }) => {
+const Password = ({
+  route,
+  data,
+  text,
+  handleSubmit,
+  validationSchema,
+  renderModal = () => <></>,
+}) => {
   return (
     <KeyboardAwareScrollView>
       <Flex style={styles.passwordContainer}>
@@ -37,9 +44,11 @@ const Password = ({ route, data, text, handleSubmit }) => {
                 marginVertical: 15,
               },
             }}
+            validationSchema={validationSchema}
           />
         </View>
       </Flex>
+      {renderModal()}
     </KeyboardAwareScrollView>
   );
 };

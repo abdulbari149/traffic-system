@@ -1,10 +1,5 @@
-import React, { useState } from "react";
-import {
-  ChallanForm,
-  ExtendedChallan,
-  Voilation,
-  RecordDetails,
-} from "../app";
+import React, { useEffect, useState } from "react";
+import { ChallanForm, ExtendedChallan, Voilation, RecordDetails } from "../app";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import AuthNavigation from "./AuthNavigation";
@@ -16,10 +11,43 @@ import {
   RECORD_DETAIL_SCREEN,
   VOILATION_SCREEN,
 } from "../routes";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useCheckTokenMutation } from "src/api";
+import { getAuthToken } from "src/utils/async-storage";
+import { setLogin } from "src/app/auth/slice";
+import { Text, View } from "native-base";
 
 const Routes = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [checkToken, { isLoading }] = useCheckTokenMutation();
+  const dispatch = useDispatch();
+
+  const jwtAuthToken = async () => {
+    const token = await getAuthToken("login");
+    if (!token) {
+      dispatch(setLogin(false));
+    } else {
+      console.log("else running", { token });
+      try {
+        const { data, error } = await checkToken({ token });
+        if (data) {
+          console.log({ data });
+          dispatch(setLogin(data.data.loggedIn));
+        }
+        if (error) {
+          console.log(error);
+          throw new Error(error);
+        }
+      } catch (error) {
+        dispatch(setLogin(false));
+      }
+    }
+  };
+
+  useEffect(() => {
+    jwtAuthToken();
+  }, []);
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   const AppStack = createNativeStackNavigator();
   const config = {
@@ -40,7 +68,15 @@ const Routes = () => {
     headerBackImageSource: require("src/cdn/BackArrow.png"),
   };
 
-  return !isLoggedIn ? (
+  if (isLoading && !isLoggedIn) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  return true ? (
     <AuthNavigation />
   ) : (
     <AppStack.Navigator
@@ -61,8 +97,8 @@ const Routes = () => {
           ...headerOptions,
         }}
       >
-        <AppStack.Screen name={CHALLAN_FORM_SCREEN} component={ChallanForm}  />
-        <AppStack.Screen name={VOILATION_SCREEN} component={Voilation}  />
+        <AppStack.Screen name={CHALLAN_FORM_SCREEN} component={ChallanForm} />
+        <AppStack.Screen name={VOILATION_SCREEN} component={Voilation} />
         <AppStack.Screen
           name={EXTENDED_CHALLAN_SCREEN}
           component={ExtendedChallan}

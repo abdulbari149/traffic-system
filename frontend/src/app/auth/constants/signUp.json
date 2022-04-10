@@ -1,0 +1,38 @@
+[
+  {
+    "name": "first_name",
+    "placeholder": "Enter your First name",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "last_name",
+    "placeholder": "Enter your last name",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "email",
+    "placeholder": "Enter your email",
+    "type": "email",
+    "defaultValue": ""
+  },
+  {
+    "name": "phone_number",
+    "placeholder": "Enter your phone number e.g 03122304798",
+    "type": "numeric",
+    "defaultValue": ""
+  },
+  {
+    "name": "password",
+    "placeholder": "Enter password must be atleast 8 characters",
+    "type": "password",
+    "defaultValue": ""
+  },
+  {
+    "name": "confirm_password",
+    "placeholder": "Enter password must be atleast 8 characters",
+    "type": "password",
+    "defaultValue": ""
+  }
+]

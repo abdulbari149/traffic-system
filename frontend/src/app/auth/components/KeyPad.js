@@ -28,11 +28,7 @@ const arrayOfNumbers = [
 ];
 
 const KeyPad = ({
-  onEnteredPincode,
-  withTouchId = true,
-  spaceColor,
-  descriptionText,
-  handleSubmit
+  handleSubmit,
 }) => {
   const [empties, setEmpties] = useState([
     { key: 1, value: " " },
@@ -48,9 +44,9 @@ const KeyPad = ({
 
   useEffect(() => {
     if (code.length === 4) {
-      onEnteredPincode(code);
       setClearDisabled(false);
     }
+  
   }, [code, counter]);
 
   const updateEmptyValues = (value, index) => {
@@ -64,7 +60,6 @@ const KeyPad = ({
       setCounter(counter + 1);
       updateEmptyValues(num, counter);
       setClearDisabled(false);
-      setCode((code) => code + num.toString());
     }
     console.log({ num, empties, counter });
   };
@@ -133,11 +128,14 @@ const KeyPad = ({
       </Box>
       <Button
         title="Verify Account"
-        onPress={handleSubmit}
+        disabled={counter < 4}
+        onPress={() =>{
+          handleSubmit(empties.reduce((c, val) => c + val.value.toString(), ""))
+        }}
         style={{
           width: 200,
-					marginHorizontal: 20,
-					marginBottom: 10,
+          marginHorizontal: 20,
+          marginBottom: 10,
         }}
       />
       <View style={styles.flatcontainer}>

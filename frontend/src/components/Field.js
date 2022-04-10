@@ -26,8 +26,6 @@ const Field = ({ isReadOnly, label, ...props }) => {
     secureTextEntry: passwordVisibility,
   };
 
-  console.log({ isReadOnly });
-
   return (
     <FormControl>
       <Stack my="3">
@@ -63,10 +61,8 @@ const Field = ({ isReadOnly, label, ...props }) => {
           )}
         </View>
 
-        {meta.touched || meta.error ? (
-          <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-            Please enter the missed field..
-          </FormControl.ErrorMessage>
+        {!!meta.error ? (
+          <Text pl="2" pt="1" color="#ff101a" fontSize="10">{meta?.error}</Text>
         ) : (
           <></>
         )}

@@ -1,14 +1,23 @@
 import React from "react";
-import { View, Image, Text, Flex } from "native-base";
-import { Button, TextBtn, HeaderText } from "@components";
+import { View, Image, Text } from "native-base";
+import { Button, HeaderText } from "@components";
 import { profilePicStyles as styles } from "../styles";
-import {} from "react-native-image-picker";
-import { IDENTITY_PROOF_SCREEN, SHOW_PROFILE_PIC_SCREEN, UPLOAD_PROFILE_PIC_SCREEN } from "src/routes";
+import { SHOW_PROFILE_PIC_SCREEN } from "src/routes";
 import { useUploadPhoto } from "src/hooks/useUploadPhoto";
-const UploadProfilePic = ({ navigation }) => {
-  const { photo, selectPhotoTapped } = useUploadPhoto();
+import { Alert } from "react-native";
 
-  
+const UploadProfilePic = ({ navigation }) => {
+  const { selectPhotoTapped } = useUploadPhoto();
+
+  const handleSelectPhoto = async () => {
+    try {
+      const { photo } = await selectPhotoTapped();
+      navigation.navigate(SHOW_PROFILE_PIC_SCREEN, { photo });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.profilePicContainer}>
       <HeaderText title="Upload Profile Picture" />
@@ -26,10 +35,9 @@ const UploadProfilePic = ({ navigation }) => {
       </Text>
       <Button
         title="Upload a Photo"
-        onPress={() => selectPhotoTapped()}
+        onPress={handleSelectPhoto}
         style={{ marginVertical: 15 }}
       />
-    
     </View>
   );
 };

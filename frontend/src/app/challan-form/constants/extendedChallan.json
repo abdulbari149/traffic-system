@@ -1,0 +1,35 @@
+[
+  {
+    "name": "PSDI_no"
+  },
+  {
+    "name": "offenders_cnic"
+  },
+  {
+    "name": "offenders_name"
+  },
+  {
+    "name": "address"
+  },
+  {
+    "name": "vehicle_registration_number"
+  },
+  {
+    "name": "voilation_code"
+  },
+  {
+    "name": "voilation"
+  },
+  {
+    "name": "issuing_officer"
+  },
+  {
+    "name": "traffic_sector"
+  },
+  {
+    "name": "fine_imposed"
+  },
+  {
+    "name": "date"
+  }
+]

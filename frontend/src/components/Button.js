@@ -35,6 +35,7 @@ const Button = ({
   onPress,
   title = "Next",
   style = {},
+  disabled = false
 }) => {
   const [btnSizeStyles, textSizeStyles] = sizeStyles(size);
 
@@ -56,11 +57,20 @@ const Button = ({
           backgroundColor: "#0038FF",
         }
       : {};
+
+    const PressableStyles = [style, styles.button, outlinedStyles, solidStyles, btnSizeStyles]
+
+    if(disabled)  {
+      PressableStyles.push({
+        backgroundColor: "#0f21ac"
+      })
+    }
   return (
     <Pressable
-      style={[style, styles.button, outlinedStyles, solidStyles, btnSizeStyles]}
+      style={PressableStyles}
       onPress={onPress}
       activeOpacity={0.8}
+      disabled={disabled}
     >
       <Text
         style={[

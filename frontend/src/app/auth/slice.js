@@ -1,51 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export const authSlice = createSlice({
-  name: "authenticaton",
-  initialState: {
-    warden: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone_number: "",
-      password: "",
-      confirm_password: "",
-      profile_pic: {
-        src: "",
-        alt: "",
-        base64EncodedImage: "",
-        maxSize: 0,
-        memeType: "",
-      },
-
-      idCard: {
-        frontImage: {
-          src: "",
-          alt: "",
-          id: 0,
-          base64EncodedImage: "",
-          maxSize: 0,
-          memeType: "",
-        },
-        backImage: {
-          src: "",
-          alt: "",
-          id: "",
-          base64EncodedImage: "",
-          maxSize: 0,
-          memeType: "",
-        },
-      },
-    },
+const initialState = {
+  warden: {
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    password: "",
+    confirm_password: "",
   },
-
+  wardenImages: {},
+  isLoggedIn: false,
+  forgotPassword: {
+    email: "",
+  },
+};
+const authSlice = createSlice({
+  name: "authSlice",
+  initialState,
   reducers: {
-    login: (state, action) => {
-      
+    addWardenInfo(state, { type, payload }) {
+      state.warden = payload;
+    },
+
+    setImage(state, { type, payload }) {
+      state.wardenImages[payload.photoname] = payload.photo;
+    },
+
+    setLogin(state, { type, payload }) {
+      state.isLoggedIn = payload;
+    },
+    setForgotPasswordEmail(state, { type, payload }) {
+      state.forgotPassword.email = payload.email;
     },
   },
 });
 
-export const { login } = authSlice.actions;
-
+export const {
+  addWardenInfo,
+  setImage,
+  setLogin,
+  setForgotPasswordEmail,
+} = authSlice.actions;
 export default authSlice.reducer;
