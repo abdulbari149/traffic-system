@@ -68,6 +68,10 @@ class WardenController {
     res.status(this.response.status).json(this.response);
   };
 
+  getWardenInfo = async (req,res) => {
+      
+
+  }
   getWardenDetailsById = async (req, res) => {
     try {
       const doc = await Warden.findById(req.params.id).populate("images");

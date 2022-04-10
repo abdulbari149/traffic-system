@@ -10,6 +10,10 @@ const CitizenSchema = new Schema({
   phone_number: String,
   email: String,
   password: String,
+  images: [{
+    type: Types.ObjectId,
+    ref: "Image",
+  }]
 }, {
    timestamps: true,
    toJSON: { virtuals: true },
@@ -17,17 +21,13 @@ const CitizenSchema = new Schema({
 });
 
 CitizenSchema.virtual("name").get(function () {
-  return this.first_name + this.last_name;
+  return this.first_name + " " +  this.last_name;
 });
 CitizenSchema.virtual("challans", {
   ref: "Challan",
   localField: "_id",
   foreignField: "citizen",
 });
-CitizenSchema.virtual("images", { 
-  ref: "Image",
-  localField: "_id",
-  foreignField: "metadata.user"
-})
+
 const Citizen = model("Citizen", CitizenSchema);
 module.exports = Citizen;

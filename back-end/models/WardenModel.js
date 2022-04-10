@@ -12,6 +12,7 @@ const WardenSchema = new Schema(
       type: String,
       enum: ["SSP", "DSP", "SHO", "Inspector", "Sub-Inspector"],
     },
+    traffic_sector: String,
     authorized: {
       type: Boolean,
       default: false,
@@ -20,6 +21,10 @@ const WardenSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    images: [{
+      type: Types.ObjectId,
+      ref: "Image"
+    }]
   },
   {
     timestamps: true,
@@ -33,11 +38,7 @@ WardenSchema.virtual("challans", {
   localField: "_id",
   foreignField: "warden",
 });
-WardenSchema.virtual("images", {
-  ref: "Image",
-  localField: "_id",
-  foreignField: "metadata.user",
-});
+
 const Warden = model("Warden", WardenSchema);
 
 module.exports = Warden;

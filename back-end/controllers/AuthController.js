@@ -85,7 +85,7 @@ class AuthController {
         this.response.status = 400;
         break loginBlock;
       }
-      if (!doc.authorized) {
+      if (req.params.user === "warden" && !doc.authorized) {
         this.response = {
           message: "You are currently unauthorized to access the application",
           status: 403,
@@ -105,7 +105,12 @@ class AuthController {
         {
           ...param,
           id: doc._id,
-          name: doc.first_name + doc.last_name,
+          name: doc.first_name + " " + doc.last_name,
+          ...(req.params.user === "warden" && {
+            designation: doc?._doc.designation,
+            traffic_sector: doc?._doc.traffic_sector,
+            service_id: doc?._doc.service_id
+          })
         },
         process.env.JWTSecret,
         {
@@ -216,6 +221,10 @@ class AuthController {
 
     res.status(this.response.status).json(this.response);
   };
+
+  logout = async(req,res) => {
+
+  }
 }
 
 module.exports = new AuthController();

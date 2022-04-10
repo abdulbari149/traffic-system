@@ -129,15 +129,14 @@ exports.changePasswordValidator = () => [
 
 exports.challanValidator = () => [
   check(["voilation", "citizen"]).not().isEmpty().isMongoId(),
-  check("PSID_no")
+  check("psid_no")
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("PSID NO is required"),
   check([
-    "city",
+    "division",
     "place_of_voilation",
     "district",
     "province",
-    "traffic_sector",
   ])
     .exists({ checkFalsy: true, checkNull: true })
     .not()

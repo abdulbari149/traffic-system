@@ -13,17 +13,13 @@ const storage = new GridFsStorage({
       crypto.randomBytes(16, (err, buf) => {
         if (err) {
           return reject(err);
-        }
+        }        
         const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
           bucketName: "images",
           metadata: {
             imageType: req.query.imageType,
-            user:
-              req.params.user === "warden"
-                ? req.body.wardenId
-                : req.body.citizenId,
           },
         };
         resolve(fileInfo);

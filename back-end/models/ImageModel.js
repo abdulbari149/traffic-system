@@ -11,10 +11,7 @@ const ImageSchema = new Schema(
       imageType: {
         type: String,
         enum: ["idCardFront", "idCardBack", "profilePic"],
-      },
-      wardenId: {
-        type: Types.ObjectId,
-      },
+      }
     },
   },
   { collection }

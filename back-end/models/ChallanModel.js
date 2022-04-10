@@ -5,7 +5,7 @@ const ChallanSchema = new Schema({
     ref: "Citizen",
     type: Types.ObjectId,
   },
-  PSID_no: {
+  psid_no: {
     type: String,
     immutable: true,
     unique: true,
@@ -13,7 +13,7 @@ const ChallanSchema = new Schema({
   },
   place_of_voilation: String,
   district: String,
-  city: String,
+  division: String,
   province: String,
   voilation: {
     ref: "Voilation",
