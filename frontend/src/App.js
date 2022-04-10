@@ -2,16 +2,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import React from "react";
 import Routes from "./navigation";
+import { QueryClient, QueryClientProvider } from "react-query";
+import store from "./store";
 import { Provider as ReactReduxProvider } from "react-redux";
-import store from "./store"
+const queryClient = new QueryClient();
 const App = () => {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        <ReactReduxProvider store={store}>
-
-          <Routes />
-        </ReactReduxProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactReduxProvider store={store}>
+            <Routes />
+          </ReactReduxProvider>
+        </QueryClientProvider>
       </NativeBaseProvider>
     </NavigationContainer>
   );

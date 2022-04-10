@@ -8,8 +8,7 @@ import {
   ForgotPassword,
   CreatePassword,
   PasswordChanged,
-  UploadProfilePic,
-  ProfilePic
+  UploadProfilePic
 } from "@app/";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -91,7 +90,7 @@ const AuthNavigation = () => {
           headerBackImageSource: require("../cdn/BackArrow.png"),
         }}
       />
-      <AuthStack.Screen
+      {/* <AuthStack.Screen
         name={UPLOAD_PROFILE_PIC_SCREEN}
         component={UploadProfilePic}
         options={{
@@ -102,13 +101,13 @@ const AuthNavigation = () => {
       />
       <AuthStack.Screen
         name={SHOW_PROFILE_PIC_SCREEN}
-        component={ProfilePic}
+        component={ShowProfilePic}
         options={{
           headerTitle: () => <></>,
           headerShadowVisible: false,
           headerBackImageSource: require("../cdn/BackArrow.png"),
         }}
-      />
+      /> */}
     </AuthStack.Navigator>
   );
 };

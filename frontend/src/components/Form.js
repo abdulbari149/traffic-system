@@ -10,11 +10,9 @@ const Form = ({
   _btn,
   containerStyles = {},
   isReadOnly = false,
-  validationSchema = {},
 }) => {
-  console.log({ handleSubmit })
   const fieldInitialValues = useMemo(() => {
-    const names = [...data.names];
+    const names = [...data.names]
     return names.reduce(
       (obj, name, idx) => ({
         ...obj,
@@ -25,54 +23,30 @@ const Form = ({
   }, []);
 
   console.log({ fieldInitialValues })
+
   return (
-    <Formik
-      initialValues={fieldInitialValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
-      {({
-        handleChange,
-        handleBlur,
-        values,
-        handleSubmit: formikHandleSubmit,
-        errors,
-        isSubmitting,
-      }) => {
-        return (
-          <VStack
-            alignItems="center"
-            width="100%"
-            mt="2"
-            style={containerStyles}
-          >
-            {data.names.map((name, idx) => {
-              return (
-                <Field
-                  onChange={handleChange(name)}
-                  onBlur={handleBlur(name)}
-                  isReadOnly={isReadOnly}
-                  key={name}
-                  name={name}
-                  value={values[name]}
-                  placeholder={data.placeholders ? data?.placeholders[idx] : ""}
-                  label={name.replace(/_/g, " ")}
-                  type={data.types ? data?.types[idx] : "text"}
-                  error={errors[name]}
-                />
-              );
-            })}
-            <Button
-              {..._btn}
-              onPress={() => {
-                console.log("Form submitting")
-                formikHandleSubmit();
-              }}
-              disabled={isSubmitting}
-            />
-          </VStack>
-        );
-      }}
+    <Formik initialValues={fieldInitialValues} onSubmit={(values) => handleSubmit(values)}>
+      {({ handleChange, handleBlur, values, handleSubmit: formikHandleSubmit }) => (
+        <VStack alignItems="center" width="100%" mt="2" style={containerStyles}>
+          {data.names.map((name, idx) => {
+            return (
+              <Field
+                onChange={handleChange(name)}
+                onBlur={handleBlur(name)}
+                isReadOnly={isReadOnly}
+                key={name}
+                name={name}
+                value={values[name]}
+                placeholder={data.placeholders ? data?.placeholders[idx] : ""}
+                label={name.replace(/_/g, " ")}
+                type={data.types ? data?.types[idx] : "text"}
+                
+              />
+            );
+          })}         
+          <Button {..._btn} onPress={() => formikHandleSubmit()} />
+        </VStack>
+      )}
     </Formik>
   );
 };

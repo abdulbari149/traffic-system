@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     flex: 1,
-    height: "48%",
-    zIndex: 100,
     backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 40,
     alignItems: "center",

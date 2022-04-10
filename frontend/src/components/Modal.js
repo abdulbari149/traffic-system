@@ -9,33 +9,13 @@ import {
 } from "react-native";
 import { HeaderText, Button, TextBtn } from "src/components";
 import { Image, Flex } from "native-base";
-
-const DefualtButtons = ({ onPress, setModalVisible }) => (
-  <>
-    <Button
-      title="Sure"
-      size="sm"
-      style={{ width: 110 }}
-      onPress={() => onPress()}
-    />
-    <TextBtn
-      text="No"
-      style={{ fontWeight: "bold", marginLeft: 20 }}
-      onPress={() => setModalVisible(false)}
-    />
-  </>
-);
-
 const Modal = ({
   title,
   subTitle,
   modalVisible,
   setModalVisible,
   image,
-  onConfirm = () => console.log("Hello"),
-  renderButton = (onConfirm, setModalVisible) => (
-    <DefualtButtons onPress={onConfirm} setModalVisible={setModalVisible} />
-  ),
+  onConfirm = () => console.log('Hello')
 }) => {
   return (
     <NativeModal
@@ -54,11 +34,16 @@ const Modal = ({
           <Flex
             direction="row"
             align="center"
-            justify="center"
+            justify="space-between"
             width={150}
           >
-          {renderButton(onConfirm, setModalVisible)}
-
+            <Button
+              title="Sure"
+              size="sm"
+              style={{ width: 110 }}
+              onPress={() => onConfirm()}
+            />
+            <TextBtn text="No" style={{ fontWeight: "bold" }} onPress={() => setModalVisible(false)} />
           </Flex>
         </View>
       </View>

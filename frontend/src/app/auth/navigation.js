@@ -7,11 +7,10 @@ export const navigateToForgotPassword = (navigation) => {
   })
 }
 
-
 export const navigateBetweenTwoScreens = (routeName, params) => (state) => {
   const routes = [state.routes[0], {
     name: routeName,
-    params: params ?? null,
+    params,
   }]
 
   console.log({ routes })

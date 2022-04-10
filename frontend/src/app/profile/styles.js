@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     },
     calendarIcon: {
         color: 'white',
-        width: 50,
         alignSelf: 'center'
     },
     challanCount: {
