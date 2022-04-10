@@ -31,7 +31,6 @@ const Form = ({
 		<Formik
 			initialValues={fieldInitialValues}
 			onSubmit={handleSubmit}
-			validationSchema={validationSchema}
 		>
 			{({ handleChange, handleBlur, handleSubmit: formikSubmit, values, errors }) => (
 				<VStack

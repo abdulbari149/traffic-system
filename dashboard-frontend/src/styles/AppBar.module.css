@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #131313;
+    width: 100%;
+    padding: 20px;
+}
+
+.userIdentity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.heading {
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    color: white;
+}
+
+.image {
+    max-width: 60px;
+    padding-right: 10px;
+}

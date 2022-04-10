@@ -24,13 +24,14 @@ const ScreensStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 
 const AuthRoutes = () => {
-  const backIconOption = ({ navigation }) => ({
+
+  const backIconOption = (navigation, iconBackColor, iconColor) => ({
     headerLeft: () => (
-      <View style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}>
+      <View style={{ padding: 5, backgroundColor: iconBackColor, marginTop: 8 }}>
         <Icon
           name="ios-chevron-back-outline"
           size={24}
-          color="white"
+          color={iconColor}
           onPress={() => navigation.goBack()}
         />
       </View>
@@ -57,25 +58,25 @@ const AuthRoutes = () => {
       <AuthStack.Screen
         name={routes.SIGNUP_SCREEN}
         component={SignUpScreen}
-        options={backIconOption}
+        options={({ navigation }) => backIconOption(navigation, 'black', 'white')}
       />
 
       <AuthStack.Screen
         name={routes.FORGOT_PASSWORD}
         component={ForgotPassword}
-        options={backIconOption}
+        options={({ navigation }) => backIconOption(navigation, 'white', 'black')}
       />
 
       <AuthStack.Screen
         name={routes.CREATE_NEW_PASSWORD}
         component={CreateNewPassword}
-        options={backIconOption}
+        options={({ navigation }) => backIconOption(navigation, 'black', 'white')}
       />
 
       <AuthStack.Screen
         name={routes.VERIFICATION_SCREEN}
         component={VerificationCodeScreen}
-        options={backIconOption}
+        options={({ navigation }) => backIconOption(navigation, 'white', 'black')}
       />
     </AuthStack.Navigator>
   );
@@ -119,6 +120,44 @@ const Stack = () => {
           <ScreensStack.Screen
             name={routes.CHALLAN_DETAILS}
             component={ChallanDetails}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <View
+                  style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}
+                >
+                  <Icon
+                    name="ios-chevron-back-outline"
+                    size={24}
+                    color="white"
+                    onPress={() => navigation.goBack()}
+                  />
+                </View>
+              ),
+            })}
+          />
+
+          <ScreensStack.Screen
+            name={routes.UPLOAD_PHOTO}
+            component={<UploadPhoto />}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <View
+                  style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}
+                >
+                  <Icon
+                    name="ios-chevron-back-outline"
+                    size={24}
+                    color="white"
+                    onPress={() => navigation.goBack()}
+                  />
+                </View>
+              ),
+            })}
+          />
+
+          <ScreensStack.Screen
+            name={routes.UPLOAD_PHOTO_FINAL}
+            component={<UploadPhotoFinal />}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <View
