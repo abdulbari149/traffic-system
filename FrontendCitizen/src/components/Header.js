@@ -15,7 +15,7 @@ const Header = () => {
 const styles = StyleSheet.create({
     headerContainer: {
         paddingHorizontal: 15,
-        paddingVertical: 15,
+        paddingVertical: 12,
         width: "100%",
         display: "flex",
         flexDirection: "row",

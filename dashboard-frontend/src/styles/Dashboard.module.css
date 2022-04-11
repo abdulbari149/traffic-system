@@ -115,6 +115,12 @@
     text-transform: none !important;
 }
 
+.nameAndImage {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+
 @media screen and (orientation: portrait) {
     .nameAndImage {
         display: flex !important;

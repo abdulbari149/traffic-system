@@ -1,50 +1,63 @@
-import React from 'react';
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Text, View, Button } from "native-base";
+import styles from "../styles";
+import _ from "lodash";
+import { CHALLAN_DETAILS, PAYMENT_METHOD } from "../../../routes";
+const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
+  let details = {
+    psid_no: challan.psid_no,
+    vehicle_no: challan.vehicle_registration_no,
+    date: challan.date,
+  };
 
-import { Text, View } from 'native-base';
-import styles from '../../../styles/Challan.styles';
-import Button from '../../../components/Button';
+  const navigation = useNavigation();
 
-const ChallanCard = ({ onPayment, onDetailButtonPress }) => {
-    return (<View style={styles.challanContainer}>
-        <View style={styles.challanCard}>
-            <View>
-                <Text color='black' fontSize={22} fontWeight="bold">Challan 035</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text fontWeight="bold">Veh. No: </Text>
-                    <Text>MD25de334535</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text fontWeight="bold">Date: </Text>
-                    <Text>03/12/2022</Text>
-                </View>
-                <Button
-                    title="Pay"
-                    onPress={onPayment}
-                />
-            </View>
-            <View>
-                <Text color='black' marginRight={6} fontSize={22} fontWeight="bold" textAlign="right">Rs. 2000</Text>
-                <Text textAlign="right" marginRight={6}>Fine</Text>
-                <Button
-                    title="View More Details"
-                    textDecoration='underline'
-                    variant="ghost"
-                    onPress={onDetailButtonPress}
-                    style={{
-                        btn: {
-                            maxWidth: 'auto'
-                        },
-                        text: {
-                            fontSize: 16,
-                            paddingVertical: 18
-                        }
-                    }}
-                />
-            </View>
-            <View>
-            </View>
-        </View>
-    </View>)
-}
+  return (
+    <View style={styles.challanCard}>
+      <View style={{ flex: 1.5 }}>
+        {Object.keys(details).map((key) => (
+          <View style={{ flexDirection: "row", paddingVertical: 4 }}>
+            <Text fontWeight="bold">
+              {_.capitalize(key.replace(/_/g, " "))}:{" "}
+            </Text>
+            <Text>{details[key]}</Text>
+          </View>
+        ))}
+        <Button
+          marginTop="auto"
+          bg="#B21B1B"
+          style={{ width: 150 }}
+          onPress={() =>
+            navigation.navigate(PAYMENT_METHOD, { id: challan._id })
+          }
+        >
+          Pay
+        </Button>
+      </View>
+      <View style={{ flex: 1, alignItems: "flex-end" }}>
+        <Text color="black" fontSize={23} fontWeight="bold">
+          Rs {challan.fine_imposed}
+        </Text>
+        <Text color="#555151" fontSize={16}>
+          Fine
+        </Text>
+        <Button
+          bg="transparent"
+          padding={0}
+          marginTop="auto"
+          _text={{
+            style: styles.challanDetailText,
+          }}
+          onPress={() =>
+            navigation.navigate(CHALLAN_DETAILS, { id: challan._id })
+          }
+        >
+          Details
+        </Button>
+      </View>
+    </View>
+  );
+};
 
-export default ChallanCard
+export default ChallanCard;

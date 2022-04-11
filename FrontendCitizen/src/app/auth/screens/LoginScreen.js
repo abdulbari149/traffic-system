@@ -1,20 +1,18 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { Image, Text, View, Box, ScrollView, Button } from "native-base";
-
+import { Pressable } from "react-native";
 import { Formik } from "formik";
-
 import styles from "../../../styles/Auth.styles";
-
 import Field from "../../../components/Field";
-
 import * as routes from "../../../routes";
 import { useLoginMutation } from "../../../api";
 import * as yup from "yup";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../slice";
 
 const validationSchema = yup.object({
-  cnicNo: yup
+  cnic_no: yup
     .string()
     .matches(
       /^[0-9]{5}-[0-9]{7}-[0-9]$/,
@@ -26,32 +24,39 @@ const validationSchema = yup.object({
     .required("This is a required field")
     .min(8, "Password must be minimum of 8 characters long"),
 });
+
 const LoginScreen = ({ navigation }) => {
-  const [login, { isLoading, isFetching }] = useLoginMutation();
+
+  const dispatch = useDispatch();
+
+  const [login, { isLoading, isError, isSuccess, data, error }] = useLoginMutation();
 
   const handleSubmit = async (values) => {
-    try {
-      const { data, error } = await login({
-        cnic_no: values.cnicNo,
-        password: values.password,
-      });
-      if (data) {
-        navigation.navigate(routes.VERIFICATION_SCREEN, {
-          phone_number: data.data.phone_number,
-        });
-      } else if (error) {
-        throw new Error(error?.data.message);
-      }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
+    let data = {
+      cnic_no: values.cnicNo,
+      password: values.password,
+    };
+    await login(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser({ data: data.data }));
+      navigation.navigate(routes.VERIFICATION_SCREEN);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      Alert.alert("Login Error", JSON.stringify(error));
+    }
+  }, [isError]);
 
   return (
     <ScrollView style={styles.scrollView}>
       <Box pos="absolute" w="100%" h="35%">
         <View style={styles.loginScreenUpperCard}>
-          <Text style={styles.logo}>Logo Here</Text>
+          <Text style={styles.logo}>{"C I T I Z E N"}</Text>
           <Image
             style={styles.loginImage}
             size={170}
@@ -61,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
       </Box>
       <Formik
-        initialValues={{ cnicNo: "", password: "" }}
+        initialValues={{ cnic_no: "", password: "" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
@@ -74,17 +79,17 @@ const LoginScreen = ({ navigation }) => {
         }) => {
           return (
             <View flex={1} styles={styles.loginContainer} px="12px">
-              <Text fontSize="3xl" style={styles.loginHeading}>
-                Login
+              <Text fontSize="2xl" style={styles.loginHeading}>
+                {"L O G I N"}
               </Text>
               <Field
-                onChange={handleChange("cnicNo")}
-                onBlur={handleBlur("cnicNo")}
-                name="cnicNo"
+                onChange={handleChange("cnic_no")}
+                onBlur={handleBlur("cnic_no")}
+                name="cnic_no"
                 type="text"
                 placeholder="Enter CNIC Number"
-                label="CNIC No"
-                error={errors.cnicNumber}
+                label="C N I C "
+                error={errors.cnic_no}
               />
               <Field
                 onChange={handleChange("password")}
@@ -98,7 +103,7 @@ const LoginScreen = ({ navigation }) => {
               <Text
                 style={styles.forgotPasswordButton}
                 maxWidth="200px"
-                onPress={() => navigation.navigate("Forgot Password")}
+                onPress={() => navigation.navigate(routes.FORGOT_PASSWORD)}
               >
                 Forgot password?
               </Text>
@@ -106,13 +111,16 @@ const LoginScreen = ({ navigation }) => {
               <Button onPress={formikSubmit} style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>Login</Text>
               </Button>
-              <Text
-                style={styles.notHaveAnAccountBtn}
-                onPress={() => navigation.navigate("Signup Screen")}
-                maxWidth="200px"
-              >
-                Don't have an account? Signup
-              </Text>
+              <Box style={styles.notHaveAnAccountBtn} maxWidth="200px">
+                Don't have an account?{" "}
+                <Pressable
+                  onPress={() => navigation.navigate(routes.SIGNUP_SCREEN)}
+                >
+                  <Text style={{ color: "#B21B1B", fontWeight: "bold" }}>
+                    SignUp
+                  </Text>
+                </Pressable>
+              </Box>
             </View>
           );
         }}

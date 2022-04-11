@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
         marginBottom: 20,
-        marginTop: 30,
+        marginTop: 60,
         paddingLeft: 5
     },
     scrollView: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     logo: {
         color: 'white',
         paddingVertical: 40,
-        fontSize: 30,
+        fontSize: 24,
         alignSelf: 'center',
         fontWeight: 'bold'
     },
@@ -69,28 +69,29 @@ const styles = StyleSheet.create({
         marginBottom: -35
     },
     forgotPasswordButton: {
-        color: '#444444',
+        color: '#B21B1B',
         backgroundColor: 'white',
         fontWeight: 'bold',
         alignSelf: 'flex-end'
     },
     loginButton: {
-        width: 171,
+        width: 150,
         alignSelf: 'center',
         backgroundColor: '#B21B1B',
-        height: 51,
+        height: 45,
         marginVertical: 18,
-        fontSize: 20
     },
     loginButtonText: {
-        fontSize: 20,
+        fontSize: 18,
         color: 'white'
     },
     notHaveAnAccountBtn: {
         color: '#444444',
         backgroundColor: 'white',
         fontWeight: 'bold',
-        alignSelf: 'center'
+        flexDirection: "row",
+        alignSelf: 'center',
+        justifyContent: "center"
     },
     signUpHeading: {
         fontSize: 30,
@@ -123,28 +124,31 @@ const styles = StyleSheet.create({
     },
     forgotPasswordUpperCard: {
         backgroundColor: '#B21B1B',
-        paddingTop: 30
+        paddingVertical: 30,
+        paddingTop: 50,
+        height: 350
     },
     forgotPasswordImage: {
         alignSelf: 'center',
-        height: 170,
-        width: 170
+        height: 120,
+        width: 120,
+        
     },
     forgotPasswordHeading: {
         color: 'white',
         paddingTop: 40,
-        fontSize: 30,
+        fontSize: 24,
         alignSelf: 'center',
         fontWeight: 'bold'
     },
     forgotPasswordSubTitle: {
         color: 'white',
-        paddingVertical: 25,
-        fontSize: 18,
+        paddingVertical: 20,
+        fontSize: 16,
         textAlign: 'center',
         marginLeft: 30,
         marginRight: 30,
-        lineHeight: 27
+        lineHeight: 25
     },
     root: {
         flex: 1,

@@ -82,11 +82,28 @@ const AuthRoutes = () => {
   );
 };
 
+const HeaderIcon = () => (
+  <View
+    style={{ padding: 5, backgroundColor: "white", marginTop: 8 }}
+  >
+    <Icon
+      name="ios-chevron-back-outline"
+      size={24}
+      color="black"
+      onPress={() => navigation.goBack()}
+    />
+  </View>
+)
+
 const Stack = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const options = ({ navigation }) => ({
+    headerLeft: <HeaderIcon /> 
+  })
+
   return (
     <NavigationContainer>
-      {!isLoggedIn ? (
+      {false ? (
         <AuthRoutes />
       ) : (
         <ScreensStack.Navigator>
@@ -101,42 +118,16 @@ const Stack = () => {
           <ScreensStack.Screen
             name={routes.PAYMENT_METHOD}
             component={PaymentMethod}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <View
-                  style={{ padding: 5, backgroundColor: "white", marginTop: 8 }}
-                >
-                  <Icon
-                    name="ios-chevron-back-outline"
-                    size={24}
-                    color="black"
-                    onPress={() => navigation.goBack()}
-                  />
-                </View>
-              ),
-            })}
+            options={options}
           />
 
           <ScreensStack.Screen
             name={routes.CHALLAN_DETAILS}
             component={ChallanDetails}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <View
-                  style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}
-                >
-                  <Icon
-                    name="ios-chevron-back-outline"
-                    size={24}
-                    color="white"
-                    onPress={() => navigation.goBack()}
-                  />
-                </View>
-              ),
-            })}
+            options={options}
           />
 
-          <ScreensStack.Screen
+          {/* <ScreensStack.Screen
             name={routes.UPLOAD_PHOTO}
             component={<UploadPhoto />}
             options={({ navigation }) => ({
@@ -172,7 +163,7 @@ const Stack = () => {
                 </View>
               ),
             })}
-          />
+          /> */}
         </ScreensStack.Navigator>
       )}
     </NavigationContainer>

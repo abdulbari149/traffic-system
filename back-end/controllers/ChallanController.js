@@ -59,23 +59,19 @@ class ChallanController {
   getChallanRecords = async (req, res) => {
     console.log(req.query);
     try {
-      const { page, paid, limit = 10 } = req.query;
+      const { paid } = req.query;
 
       let properties =
         req.params.user === "warden"
           ? "citizen vehicle_registration_no createdAt"
-          : "psid_no vehicle_registration_no createdAt fine_imposed";
+          : "psid_no vehicle_registration_no createdAt fine_imposed paid";
 
       const records = await Challan.find(
         {
           [req.params.user]: res.locals.data.id,
-          paid: Boolean(parseInt(paid)),
+          ...(typeof paid !== "undefined" && { paid: Boolean(parseInt(paid)) }),
         },
-        properties,
-        {
-          skip: parseInt(page, 0) * 10,
-          limit,
-        }
+        properties
       )
         .sort({ createdAt: -1 })
         .populate("citizen");
@@ -134,7 +130,10 @@ class ChallanController {
         warden: data.id,
         createdAt: { $gte: monthlyDate },
       }).count();
-      const yearlyCount = await Challan.find({ warden: data.id, createAt: {$gte: yearlyDate} }).count()
+      const yearlyCount = await Challan.find({
+        warden: data.id,
+        createAt: { $gte: yearlyDate },
+      }).count();
       res.status(200).json({ monthlyCount, yearlyCount });
     } catch (error) {}
   };

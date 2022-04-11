@@ -6,43 +6,70 @@ import Button from "../../../components/Button";
 
 import VerificationCodeInput from "../../../components/VerificationCodeInput";
 import { Alert } from "react-native";
-import { CREATE_NEW_PASSWORD, CHALLAN_HOME } from "../../../routes";
+import {
+  CREATE_NEW_PASSWORD,
+  CHALLAN_HOME,
+  LOGIN_SCREEN,
+  FORGOT_PASSWORD,
+} from "../../../routes";
 import { useSmsVerificationMutation } from "../../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../slice";
+import { setAuthToken } from "../../../utils/async-storage";
 
 const VerificationCodeScreen = ({ navigation, route }) => {
+  // Component State
   const [value, setValue] = useState("");
-  const { next, phone_number } = route.params;
-  const [mobileSMSVerification, result] = useSmsVerificationMutation();
-
   const [serverCode, setServerCode] = useState(0);
-	console.log({ serverCode, phone_number })
-  async function sendMobileVerificationCode() {
-    try {
-      const { data, error } = await mobileSMSVerification({
-        phone_number: phone_number,
-      });
-			if(data) {
-				setServerCode(data?.data.code);
-			} else {
-				throw new Error(error?.data.message)
-			}
-    } catch (error) {
-      Alert.alert(error.message)
-    }
-  }
+  // React-Redux
+  const { citizen, accessToken } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
 
+  // Mutation
+  const [mobileSMSVerification, { isSuccess, data, error, isError }] =
+    useSmsVerificationMutation();
+
+  async function sendMobileVerificationCode() {
+    await mobileSMSVerification(citizen.phone_number);
+  }
+  // Success Handler
+  useEffect(() => {
+    if (isSuccess) {
+      setServerCode(data.data.code);
+    }
+  }, [isSuccess]);
+
+  // Error Handler
+
+  useEffect(() => {
+    if (isError) {
+      Alert.alert(
+        "Server Error Occured",
+        "There was an error while sending the code please try again in a few seconds"
+      );
+    }
+  }, [isError]);
+
+  // Sending inital Pin Code
   useEffect(() => {
     sendMobileVerificationCode();
   }, []);
-  const handlePinCode = () => {
-    if (value === serverCode) {
-      if (next === CHALLAN_HOME) {
-        dispatch(setLogin(true));
-      } else {
-        navigation.navigate(next);
-      }
-    } else {
-      Alert.alert("You have entered a wrong verification Code");
+
+  // Handling Pin Code Input
+  const handlePinCode = async () => {
+    if (value.length !== 4 || value !== serverCode) {
+      Alert.alert("Invalid Code", "Please Type A Valid Code");
+      return;
+    }
+    const { routes } = navigation.getState();
+    const parent = routes[routes.length - 2].name;
+    if (parent === LOGIN_SCREEN) {
+      await setAuthToken("access", accessToken);
+      dispatch(setLogin(true));
+    } else if (parent === FORGOT_PASSWORD) {
+      navigation.navigate(CREATE_NEW_PASSWORD);
     }
   };
   return (
@@ -52,17 +79,20 @@ const VerificationCodeScreen = ({ navigation, route }) => {
           source={require("../../../assets/images/verification-code-image.png")}
           alt="verification-code-image"
           style={{ alignSelf: "center", marginTop: 30 }}
-          size={260}
+          size={220}
           resizeMode="contain"
         />
         <Text fontSize="3xl" fontWeight="extrabold" color="white">
           Verification Code
         </Text>
         <Text fontSize="15" color="white">
-          Please enter the 4 digit code sent to +92314XXXXXXX
+          Please enter the 4 digit code sent to {citizen.phone_number}
         </Text>
         <VerificationCodeInput value={value} setValue={setValue} />
-        <NBButton style={{ backgroundColor: "transparent" }} onPress={sendMobileVerificationCode}>
+        <NBButton
+          style={{ backgroundColor: "transparent" }}
+        // onPress={sendMobileVerificationCode}
+        >
           <Text
             style={{
               color: "white",
@@ -78,7 +108,6 @@ const VerificationCodeScreen = ({ navigation, route }) => {
         <Button
           title="Confirm"
           variant="outlined"
-          disabled={value.length < 4}
           style={{
             btn: {
               width: 200,

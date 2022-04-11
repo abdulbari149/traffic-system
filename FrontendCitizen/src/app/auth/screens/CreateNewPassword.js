@@ -25,12 +25,13 @@ const validationSchema = yup.object({
 });
 
 const CreateNewPassword = ({ navigation }) => {
+
+  const { passwordToken } = useSelector(state => state.auth)
   const [changePassword, result] = useChangePasswordMutation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
-      console.log("Handlesubmit runs")
       const authToken = await getAuthToken("password");
       console.log({ authToken })
       const { data, error } = await changePassword({
