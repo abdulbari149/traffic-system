@@ -28,23 +28,6 @@ class WardenController {
     }
     res.status(this.response.status).send(this.response);
   };
-  filterTimeline = (doc, timeline) => {
-    if (timeline === "monthly") {
-      return doc.issued_date.month === new Date().getMonth();
-    } else if (timeline === "yearly") {
-      return doc.issued_date.year === new Date().getFullYear();
-    }
-  };
-  getWardenChallanCount = async (req, res) => {
-    const { id } = res.locals.data;
-    const { timeline } = req.query;
-    const docs = await Challan.find({ wardenId: id });
-    const data = docs.filter((doc) =>
-      this.filterTimeline(doc, timeline)
-    ).length;
-    console.log({ docs });
-    res.status(200).json({ data });
-  };
 
   getWardenListForApproval = async (req, res) => {
     try {
