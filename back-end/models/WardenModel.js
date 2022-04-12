@@ -17,14 +17,17 @@ const WardenSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    reviewed: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      default: "Uncheck",
+      enum: ["Decline", "Approve", "Uncheck"],
     },
-    images: [{
-      type: Types.ObjectId,
-      ref: "Image"
-    }]
+    images: [
+      {
+        type: Types.ObjectId,
+        ref: "Image",
+      },
+    ],
   },
   {
     timestamps: true,

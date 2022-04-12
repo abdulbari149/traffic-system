@@ -18,7 +18,7 @@ exports.registerValidator = () => [
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("The Service Id must not be empty")
     .isString(),
-    check("traffic_sector")
+  check("traffic_sector")
     .if(param("user").equals("warden"))
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("The Traffic Sector must not be empty")
@@ -28,7 +28,6 @@ exports.registerValidator = () => [
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("The Designation must not be empty")
     .matches(/\b(?:SSP|SHO|DSP|Inspector|Sub-Inspector)\b/),
-  body(["first_name", "last_name"]).isLength({ min: 3 }),
   body("email").isEmail(),
   check("password")
     .exists({ checkFalsy: true, checkNull: true })
@@ -53,7 +52,14 @@ exports.registerValidator = () => [
       }
       return value;
     }),
+  check("role")
+    .if(param("user").equals("admin"))
+    .exists({ checkNull: true, checkFalsy: true })
+    .withMessage("Role is required")
+    .isString()
+    .matches(/Admin|Editor/),
   check("phone_number")
+    .if(param("user").matches(/warden|citizen/))
     .isMobilePhone(["en-PK"], { strict: true })
     .withMessage("You haven't entered a valid phone number")
     .custom((value) => {
@@ -132,12 +138,7 @@ exports.challanValidator = () => [
   check("psid_no")
     .exists({ checkFalsy: true, checkNull: true })
     .withMessage("PSID NO is required"),
-  check([
-    "division",
-    "place_of_voilation",
-    "district",
-    "province",
-  ])
+  check(["division", "place_of_voilation", "district", "province"])
     .exists({ checkFalsy: true, checkNull: true })
     .not()
     .isEmpty(),
@@ -147,3 +148,7 @@ exports.challanValidator = () => [
     .withMessage("Provide a vehicle Registration Number"),
   check("fine_imposed").isNumeric(),
 ];
+
+exports.authorizeValidator = () => [
+  check("wardenId").exists({ checkFalsy: true, checkNull: true }).isMongoId()
+]

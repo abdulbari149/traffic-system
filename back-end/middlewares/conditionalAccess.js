@@ -16,7 +16,7 @@ exports.accessDB = async (req, res, next) => {
     `../models/${user.charAt(0).toUpperCase()}${user.slice(1)}Model.js`
   );
   try {
-    if (user != "warden" && user !="citizen") {
+    if (user != "warden" && user !="citizen" && user !== "admin") {
       throw new Error("Please provide a valid query parameter for user");
     }
     res.locals.DbModel = require(modelPath);
