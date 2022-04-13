@@ -9,12 +9,6 @@ const {
 } = require("../middlewares/validationRequestSchema");
 const { verifyAdmin } = require("../middlewares/verifyAdmin");
 
-router.post("/upload-image", upload, ImageController.uploadImages);
-router.get(
-  "/challan-count",
-  verifyAuthToken,
-  WardenController.getWardenChallanCount
-);
 router.get(
   "/approval",
   verifyAuthToken,
@@ -22,7 +16,7 @@ router.get(
   WardenController.getWardenListForApproval
 );
 router.get("/approval/:id", WardenController.getWardenDetailsById);
-router.post(
+router.put(
   "/authorize",
   authorizeValidator(),
   validationRequestSchema,
@@ -30,7 +24,7 @@ router.post(
   verifyAdmin,
   WardenController.authorizeWarden
 );
-router.post(
+router.put(
   "/decline",
   authorizeValidator(),
   validationRequestSchema,
@@ -38,4 +32,6 @@ router.post(
   verifyAdmin,
   WardenController.declineWarden
 );
+
+router.put("/reset", WardenController.resetWardenStatus)
 module.exports = router;

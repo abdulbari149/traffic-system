@@ -99,13 +99,15 @@ class AuthController {
       const data = {
         email: doc.email,
         _id: doc._id,
-        name: doc.first_name + doc.last_name,
+        name: doc.name ?? `${doc.first_name} ${doc.last_name}`
       };
+      console.log({ data })
+      console.log({ name: doc.name })
       const token = jwt.sign(
         {
           ...param,
           id: doc._id,
-          name: doc.first_name + " " + doc.last_name,
+          name: doc?.name ?? `${doc?.first_name} ${doc?.last_name}`,
           ...(req.params.user === "warden" && {
             designation: doc?._doc.designation,
             traffic_sector: doc?._doc.traffic_sector,

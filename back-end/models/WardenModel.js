@@ -19,8 +19,9 @@ const WardenSchema = new Schema(
     },
     status: {
       type: String,
-      default: "Uncheck",
-      enum: ["Decline", "Approve", "Uncheck"],
+      required: true,
+      default: "onhold",
+      enum: ["approve", "decline", "uncheck", "onhold"]
     },
     images: [
       {

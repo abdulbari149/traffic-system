@@ -57,7 +57,7 @@ exports.registerValidator = () => [
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage("Role is required")
     .isString()
-    .matches(/Admin|Editor/),
+    .matches(/superadmin|admin/),
   check("phone_number")
     .if(param("user").matches(/warden|citizen/))
     .isMobilePhone(["en-PK"], { strict: true })
