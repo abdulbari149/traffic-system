@@ -229,12 +229,18 @@ class WardenController {
 
   deleteWarden = async(req,res) => {
     try{
-      
-
-
+      const result = await WardenApproval.findOneAndDelete({ wardenId: req.body.wardenId, adminId: res.locals.data.id })
+      if(!result){
+        let error = new Error()
+        error.messaage = "Not Found"
+        error.status = 404
+        throw error
+      }
+      const wardenResult = await Warden.findOneAndDelete({ _id : req.body.wardenId })
+      res.status(200).json({ result, wardenResult })
 
     }catch(error){
-
+      res.status(error?.status ?? 500).json({ ...error })
     }
 
   }

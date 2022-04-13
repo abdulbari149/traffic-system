@@ -33,5 +33,14 @@ router.put(
   WardenController.declineWarden
 );
 
+router.delete(
+  "/delete",
+  authorizeValidator(),
+  validationRequestSchema,
+  verifyAuthToken,
+  verifyAdmin,
+  WardenController.deleteWarden
+);
+
 router.put("/reset", WardenController.resetWardenStatus)
 module.exports = router;
