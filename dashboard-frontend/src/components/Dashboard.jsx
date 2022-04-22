@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
 
-import { Grid, useMediaQuery } from '@mui/material'
+import { Grid, useMediaQuery, CircularProgress } from '@mui/material'
 import Sidebar from '../containers/Sidebar'
 import WardenApprovals from '../containers/WardenApprovals';
 import WardenProfile from '../containers/WardenProfile';
 import Violation from './Violation';
 
 import DeclinedWardens from '../containers/DeclinedWardens'
-
+import { useParams } from "react-router-dom"
 import json2mq from 'json2mq'
 import AppBar from './AppBar';
 import SuperAdminSignUp from './SuperAdminSignUp';
@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const matches = useMediaQuery(
         json2mq({
-            minWidth: 797,
+            minWidth: 1200
         }),
     );
 
@@ -43,7 +43,7 @@ const Dashboard = () => {
                     <WardenApprovals matches={matches} handleIdChange={handleIdChange} />
                 </Grid>
                 {matches && id ? <Grid item xs={3}>
-                    <WardenProfile handleIdChange={handleIdChange} matches={matches} />
+                    <WardenProfile id={id} handleIdChange={handleIdChange} matches={matches} />
                 </Grid> : null}
             </>) : nav === 1 ? (
                 <Grid item md={matches ? 10.5 : 12} lg={matches ? 10.5 : 12} sm={matches ? 10.5 : 12} xs={12}>
@@ -54,7 +54,7 @@ const Dashboard = () => {
                     <DeclinedWardens matches={matches} handleIdChange={handleIdChange} />
                 </Grid>
                 {matches && id ? <Grid item xs={3}>
-                    <WardenProfile handleIdChange={handleIdChange} matches={matches} />
+                    <WardenProfile id={id} handleIdChange={handleIdChange} matches={matches} />
                 </Grid> : null}
             </>) : nav === 3 ? (
                 <Grid item md={matches ? 10.5 : 12} lg={matches ? 10.5 : 12} sm={matches ? 10.5 : 12} xs={12}>

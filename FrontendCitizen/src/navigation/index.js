@@ -1,172 +1,64 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { View } from "native-base";
-import Icon from "react-native-vector-icons/Ionicons";
-
-import SignUpScreen from "../app/auth/screens/SignUpScreen";
-import LoginScreen from "../app/auth/screens/LoginScreen";
-import ForgotPassword from "../app/auth/screens/ForgotPassword";
-import CreateNewPassword from "../app/auth/screens/CreateNewPassword";
-import VerificationCodeScreen from "../app/auth/screens/VerificationCodeScreen";
-
-import ChallanHome from "../app/challan/screens/ChallanHome";
-import ChallanDetails from "../app/challan/screens/ChallanDetails";
-import PaymentMethod from "../app/challan/screens/PaymentMethod";
-
-import * as routes from "../routes";
-import { useSelector } from "react-redux";
-
-const ScreensStack = createNativeStackNavigator();
-
-const AuthStack = createNativeStackNavigator();
-
-const AuthRoutes = () => {
-
-  const backIconOption = (navigation, iconBackColor, iconColor) => ({
-    headerLeft: () => (
-      <View style={{ padding: 5, backgroundColor: iconBackColor, marginTop: 8 }}>
-        <Icon
-          name="ios-chevron-back-outline"
-          size={24}
-          color={iconColor}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-    ),
-  });
-
-  return (
-    <AuthStack.Navigator
-      screenOptions={{
-        headerShadowVisible: false,
-        headerBackVisible: false,
-        headerTitle: () => <></>,
-        headerTransparent: true,
-      }}
-    >
-      <AuthStack.Screen
-        name={routes.LOGIN_SCREEN}
-        component={LoginScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <AuthStack.Screen
-        name={routes.SIGNUP_SCREEN}
-        component={SignUpScreen}
-        options={({ navigation }) => backIconOption(navigation, 'black', 'white')}
-      />
-
-      <AuthStack.Screen
-        name={routes.FORGOT_PASSWORD}
-        component={ForgotPassword}
-        options={({ navigation }) => backIconOption(navigation, 'white', 'black')}
-      />
-
-      <AuthStack.Screen
-        name={routes.CREATE_NEW_PASSWORD}
-        component={CreateNewPassword}
-        options={({ navigation }) => backIconOption(navigation, 'black', 'white')}
-      />
-
-      <AuthStack.Screen
-        name={routes.VERIFICATION_SCREEN}
-        component={VerificationCodeScreen}
-        options={({ navigation }) => backIconOption(navigation, 'white', 'black')}
-      />
-    </AuthStack.Navigator>
-  );
-};
-
-const HeaderIcon = () => (
-  <View
-    style={{ padding: 5, backgroundColor: "white", marginTop: 8 }}
-  >
-    <Icon
-      name="ios-chevron-back-outline"
-      size={24}
-      color="black"
-      onPress={() => navigation.goBack()}
-    />
-  </View>
-)
+import AppNavigation from "./AppNavigation";
+import AuthNavigation from "./AuthNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthToken } from "utils/async-storage";
+import { setAccessToken, setLogin, setUser } from "app/auth/slice";
+import { Loader } from "components";
+import { useVerifyAuthMutation } from "api";
 
 const Stack = () => {
+  const [loading, setLoading] = useState(true);
+  const [myToken, setMyToken] = useState("");
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const options = ({ navigation }) => ({
-    headerLeft: <HeaderIcon /> 
-  })
+  const dispatch = useDispatch();
+  const [verifyAuth, { data, error, isSuccess, isError }] =
+    useVerifyAuthMutation();
+
+  const jwtUserAuthentication = async () => {
+    const token = await getAuthToken("access");
+    if (!token) {
+      dispatch(setLogin(false));
+      setLoading(false);
+    }
+    console.log({ myToken });
+    setMyToken(token);
+    setLoading(true);
+    await verifyAuth(token);
+  };
+
+  useEffect(() => {
+    jwtUserAuthentication();
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log({ myToken });
+      dispatch(setUser({ data: { ...data.data, loggedIn: undefined } }));
+      dispatch(setAccessToken({ data: myToken }));
+      dispatch(setLogin(data?.data?.loggedIn));
+      setTimeout(() => setLoading(false), 1000);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      console.log({ error });
+      setTimeout(() => setLoading(false), 1000);
+    }
+  }, [isError]);
 
   return (
-    <NavigationContainer>
-      {false ? (
-        <AuthRoutes />
+    <>
+      {loading ? (
+        <Loader />
       ) : (
-        <ScreensStack.Navigator>
-          <ScreensStack.Screen
-            name={routes.CHALLAN_HOME}
-            component={ChallanHome}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <ScreensStack.Screen
-            name={routes.PAYMENT_METHOD}
-            component={PaymentMethod}
-            options={options}
-          />
-
-          <ScreensStack.Screen
-            name={routes.CHALLAN_DETAILS}
-            component={ChallanDetails}
-            options={options}
-          />
-
-          {/* <ScreensStack.Screen
-            name={routes.UPLOAD_PHOTO}
-            component={<UploadPhoto />}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <View
-                  style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}
-                >
-                  <Icon
-                    name="ios-chevron-back-outline"
-                    size={24}
-                    color="white"
-                    onPress={() => navigation.goBack()}
-                  />
-                </View>
-              ),
-            })}
-          />
-
-          <ScreensStack.Screen
-            name={routes.UPLOAD_PHOTO_FINAL}
-            component={<UploadPhotoFinal />}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <View
-                  style={{ padding: 5, backgroundColor: "black", marginTop: 8 }}
-                >
-                  <Icon
-                    name="ios-chevron-back-outline"
-                    size={24}
-                    color="white"
-                    onPress={() => navigation.goBack()}
-                  />
-                </View>
-              ),
-            })}
-          /> */}
-        </ScreensStack.Navigator>
+        <NavigationContainer>
+          {!isLoggedIn ? <AuthNavigation /> : <AppNavigation />}
+        </NavigationContainer>
       )}
-    </NavigationContainer>
+    </>
   );
 };
 

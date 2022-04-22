@@ -14,18 +14,17 @@ const AuthSlice = createSlice({
     setLogin(state, { payload }) {
       state.isLoggedIn = payload;
     },
-    setToken(state, { payload }) {
-      state.token = payload.data;
+    setAccessToken(state, { payload }) {
+      state.accessToken = payload.data;
     },
     setUser(state, { payload }){
-      state.citizen = {...payload.data, token:undefined}
-      state.accessToken = payload.data.token
+      state.citizen = payload.data
     },
     setPasswordToken(state, { payload }){
       state.passwordToken = payload.data
     }
   },
 });
-export const { setToken, setUser, setLogin, setPasswordToken } = AuthSlice.actions;
+export const { setAccessToken, setUser, setLogin, setPasswordToken } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

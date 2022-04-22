@@ -1,26 +1,59 @@
-import React from 'react';
-
-import {
-    Routes as Switch,
-    Route,
-} from 'react-router-dom'
-
-import Dashboard from '../components/Dashboard';
-import Login from '../components/Login';
-import ForgotPassword from '../components/ForgotPassword';
-import CreateNewPassword from '../components/CreateNewPassword';
-import Verification from '../components/Verification';
-import WardenProfile from '../containers/WardenProfile';
-
+import React, { useEffect } from "react";
+import { Routes as Switch, Route, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Dashboard from "../components/Dashboard";
+import Login from "../components/Login";
+import ForgotPassword from "../components/ForgotPassword";
+import CreateNewPassword from "../components/CreateNewPassword";
+import Verification from "../components/Verification";
+import WardenProfile from "../containers/WardenProfile";
+import { useVerifyAuthMutation } from "../api";
+import { setUser } from "../reducers/auth";
 const Routes = () => {
-    return (<Switch>
-        <Route element={<Dashboard />} path="dashboard" />
-        <Route element={<Login />} index exact />
-        <Route element={<ForgotPassword />} path="forgot-ps" />
-        <Route element={<CreateNewPassword />} path="create-new-ps" />
-        <Route element={<Verification />} path="verification" />
-        <Route element={<WardenProfile />} path="profile/:state" />
-    </Switch>)
-}
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const [
+    verifyAuth,
+    { data, error, isLoading, isFetching, isError, isSuccess },
+  ] = useVerifyAuthMutation();
 
-export default Routes
+  async function initalizeUser() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Token doesn't exists")
+      navigation("/login", { replace: true });
+      return;
+    }
+
+    console.log("Auth Runs")
+    await verifyAuth(token);
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("Response Data ==>", { data: data.data });
+      // dispatch(setUser({ data: data.data}))
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("Response Error ==>", { error: error })
+      navigation("/login", { replace: true });
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    initalizeUser();
+  }, []);
+
+  return (
+    <Switch>
+      <Route element={<Dashboard />} index exact />
+      <Route element={<Login />} path="login" exact />
+      <Route element={<WardenProfile />} path="profile/:state/:id" />
+    </Switch>
+  );
+};
+
+export default Routes;

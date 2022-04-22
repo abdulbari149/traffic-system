@@ -1,37 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import styles from "../styles";
+import { Button, Text, View, Flex, Box } from "native-base";
 
-import { Button, Text, View } from 'native-base';
-
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/AntDesign";
 
 const ChallanDetailAccordian = () => {
+  const [open, isOpen] = useState(false);
 
-    const [open, isOpen] = useState(false);
+  console.log(open);
 
-    console.log(open);
+  return (
+    <View style={{ marginTop: 15 }}>
+      <View style={styles.accordinContainer}>
+        <Text style={{ fontSize: 18, color: "#444444", fontWeight: "bold" }}>
+          Offender
+        </Text>
+        <Button style={styles.accordinButton} onPress={() => isOpen(!open)}>
+          <Icon
+            name={open ? "up" : "down"}
+            size={12}
+            color="black"
+            style={{ fontWeight: "bold" }}
+          />
+        </Button>
+      </View>
+      {open && (
+        <Flex py={5} px={35} direction="row" alignItems="center" >
+          <Box style={styles.accordinLabelContainer}>
+						<Text style={styles.accordinLabel}>Name</Text>
+						<Text style={styles.accordinLabel}>CNIC</Text>
+						<Text style={styles.accordinLabel}>District</Text>
+					</Box>
+					<Box style={styles.accordinValueContainer}>
+						<Text style={styles.accordinValue}>Abdul bari</Text>
+						<Text style={styles.accordinValue}>Abdul bari</Text>
+						<Text style={styles.accordinValue}>Abdul bari</Text>
+					</Box>
+        </Flex>
+      )}
+    </View>
+  );
+};
 
-    return (<>
-        <View style={{
-            borderRadius: 60,
-            width: '100%',
-            height: 'auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            paddingVertical: 15
-        }}>
-            <Text style={{ fontSize: 14, color: '#444444', fontWeight: 'bold' }}>Offender</Text>
-            <Button style={{ backgroundColor: '#F2F2F2', borderRadius: 60, width: 35, height: 35, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                onPress={() => isOpen(!open)}
-            >
-                <Icon name={open ? "up" : "down"} size={12} color='black' />
-            </Button>
-        </View>
-        {open ? <View style={{ display: 'flex', justifyContent: 'space-between', alignContent: 'space-between', flexDirection: 'row' }}>
-            <Text fontWeight="bold">Name</Text>
-            <Text>Abdul Bari</Text>
-        </View> : null}
-    </>)
-}
-
-export default ChallanDetailAccordian
+export default ChallanDetailAccordian;

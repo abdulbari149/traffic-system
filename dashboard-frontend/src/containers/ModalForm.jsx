@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Formik } from 'formik'
 
-import Input from './Input'
+import Input from './CustomInput'
 
 import styles from '../styles/ModalForm.module.css';
 import { Button } from '@mui/material';

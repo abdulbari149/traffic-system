@@ -96,13 +96,7 @@ class AuthController {
 
       this.response.message = `${req.params.user} is authorized to access the application`;
       this.response.status = 200;
-      const data = {
-        email: doc.email,
-        _id: doc._id,
-        name: doc.name ?? `${doc.first_name} ${doc.last_name}`
-      };
-      console.log({ data })
-      console.log({ name: doc.name })
+
       const token = jwt.sign(
         {
           ...param,
@@ -166,20 +160,7 @@ class AuthController {
         break forgetPasswordBlock;
       }
 
-      this.response = {
-        message: "You can change your password",
-        data: {
-          phone_number: doc.phone_number,
-        },
-        status: 200,
-      };
-    } catch (error) {
-      this.response = {
-        message: error,
-        status: 404,
-        data: null,
-      };
-    } finally {
+
       const token = jwt.sign(
         {
           email,
@@ -190,6 +171,22 @@ class AuthController {
         }
       );
       res.setHeader("Authorization", `Bearer ${token}`);
+      this.response = {
+        message: "You can change your password",
+        data: {
+          phone_number: doc.phone_number,
+          token
+        },
+        status: 200,
+      };
+    } catch (error) {
+      this.response = {
+        message: error,
+        status: 404,
+        data: null,
+      };
+    } finally {
+     
       res.status(this.response.status).json(this.response);
     }
   };

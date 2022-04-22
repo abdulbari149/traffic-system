@@ -6,7 +6,7 @@ const { verifyAuthToken } = require("../middlewares/authTokenVerification");
 const { accessDB } = require("../middlewares/conditionalAccess");
 router.use(accessDB);
 router.post("/upload", upload, ImageController.uploadImages);
-router.get("/get/profilepic", verifyAuthToken, ImageController.getProfilePic)
-router.get("/get", verifyAuthToken, ImageController.getImages);
+router.get("/get/:id", ImageController.getImages);
+router.get("/get/profilepic/:id",ImageController.getProfilePic)
 router.get("/file/:filename", ImageController.getImageById)
 module.exports = router;

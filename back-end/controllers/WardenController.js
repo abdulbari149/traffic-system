@@ -35,7 +35,7 @@ class WardenController {
         adminId: res.locals.data.id,
         status: req?.query?.status ?? "uncheck",
       })
-        .populate("wardenId", ["first_name", "last_name", "email"])
+        .populate("wardenId", "-password")
         .lean();
 
       if (
@@ -46,6 +46,7 @@ class WardenController {
           data: wardenList?.map((warden) => ({
             ...warden.wardenId,
             status: warden.status,
+            
           })),
           status: 200,
           message: "Your Warden List is",
@@ -53,12 +54,7 @@ class WardenController {
         break approvalListBlock;
       }
 
-      const docs = await Warden.find({ authorized: false, status: "onhold" }, [
-        "first_name",
-        "last_name",
-        "email",
-        "status",
-      ])
+      const docs = await Warden.find({ authorized: false, status: "onhold" }, "-password")
         .limit(10)
         .lean();
 
@@ -88,10 +84,7 @@ class WardenController {
       }));
       const wardenApprovals = await WardenApproval.insertMany(approvalData);
       let responseData = docs.map((doc) => ({
-        first_name: doc.first_name,
-        last_name: doc.last_name,
-        email: doc.email,
-        _id: doc._id,
+        ...doc,
         status: "uncheck",
       }));
 

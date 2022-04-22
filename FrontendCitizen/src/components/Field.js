@@ -1,81 +1,52 @@
-import React, { useState, useCallback } from "react";
-import {
-  FormControl,
-  Stack,
-  Input,
-  WarningOutlineIcon,
-  Text,
-} from "native-base";
+import React from "react";
+import { FormControl, Stack, Input, Text } from "native-base";
 import { useField } from "formik";
 import { StyleSheet, TextInput, Pressable, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 
-import { useTogglePasswordVisibility } from "../hooks/useTogglePasswordVisibility";
-const Field = ({ isReadOnly, label, isLabel = true, ...props }) => {
-  const [{ name, value }, meta, helpers] = useField(props);
-  const [visible, setVisible] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
+const Field = ({
+  label,
+  password = false,
+  keyboardType = "default",
+  maxLength = 25,
+  ...props
+}) => {
+  const [field, meta, helpers] = useField(props);
+  const { passwordVisibility, handlePasswordVisibility, rightIcon } = useTogglePasswordVisibility()
 
-  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
-    useTogglePasswordVisibility();
-  const changeIsPressed = useCallback(
-    () => setIsPressed((press) => !press),
-    [isPressed]
-  );
-  const { placeholder, type } = props;
-  const passwordInput = props.type === "password" && {
-    secureTextEntry: passwordVisibility,
-  };
+  console.log({ ...meta })
 
   return (
     <FormControl>
       <Stack my="3">
-        {isLabel && (
-          <FormControl.Label style={styles.inputLabel}>
-            <Text style={styles.inputLabelText} color="#000">
-              {label}
-            </Text>
-          </FormControl.Label>
-        )}
-
+        <FormControl.Label style={styles.inputLabel}>
+          <Text style={styles.inputLabelText} color="#000">
+            {label}
+          </Text>
+        </FormControl.Label>
         <View style={[styles.inputField]}>
-          {props.type === "search" && (
-            <FeatherIcon
-              name="search"
-              size={20}
-              color="#9c9c9c"
-            />
-          )}
           <TextInput
-            name={name}
-            value={value}
             onChangeText={props.onChange}
             onBlur={props.onBlur}
-            {...passwordInput}
             style={{ flex: 1 }}
-            placeholder={placeholder ?? ""}
-            type={type !== "password" ? type : visible ? "text" : "password"}
-            editable={true}
+            placeholder={props.placeholder}
+            keyboardType={keyboardType}
             placeholderTextColor="#4444"
+            maxLength={maxLength}
+            secureTextEntry={password && passwordVisibility}
+            autoComplete="off"
           />
-          {type === "password" && (
+          {password &&
             <Pressable onPress={handlePasswordVisibility}>
-              <MaterialCommunityIcons
-                name={rightIcon}
-                size={22}
-                color="#232323"
-              />
+              <FeatherIcon name={rightIcon} size={20} />
             </Pressable>
-          )}
+          }
         </View>
-
-        {!!meta.error && meta.touched ? (
+        {!!meta.error && meta.touched && (
           <Text pl="2" pt="1" color="#ff101a" fontSize="10">
             {meta?.error}
           </Text>
-        ) : (
-          <></>
         )}
       </Stack>
     </FormControl>
@@ -114,65 +85,3 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(Field);
-
-// import React, { useState } from "react";
-
-// import { FormControl, Stack, Input, Text } from "native-base";
-// import Icon from "react-native-vector-icons/Feather";
-
-// import styles from "../styles/Auth.styles";
-
-// import { useField } from "formik";
-
-// const Field = ({ label, isLabel = true, ...props }) => {
-//   const [form, meta, field] = useField(props);
-//   const [visible, setVisible] = useState(false);
-
-//   const passwordInput =
-//     props.type === "password"
-//       ? {
-//           InputRightElement: (
-//             <Icon
-//               name={visible ? "eye-off" : "eye"}
-//               color="black"
-//               onPress={() => setVisible(!visible)}
-//               size={20}
-//               style={{ marginRight: 10 }}
-//             />
-//           ),
-//         }
-//       : {};
-//
-
-//   console.log(props.type);
-// console.log({error: meta.error })
-//   return (
-//     <FormControl isRequired={isLabel} isInvalid={meta.touched && meta.error}>
-//       <Stack my="3">
-//
-//         <Input
-//           {...field}
-//           placeholder={props?.placeholder ?? ""}
-//           type={
-//             props.type !== "password"
-//               ? props.type
-//               : visible
-//               ? "text"
-//               : "password"
-//           }
-
-//           {...passwordInput}
-//           {...searchInput}
-//           {...props.style}
-//         />
-//         {!!meta.error ? (
-//           <Text pl="2" pt="1" color="#ff101a" fontSize="10">{meta?.error}</Text>
-//         ) : (
-//           <></>
-//         )}
-//       </Stack>
-//     </FormControl>
-//   );
-// };
-
-// export default Field;

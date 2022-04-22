@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Formik } from 'formik'
 
-import Input from './Input'
+import Input from './CustomInput'
 
 import styles from '../styles/Auth.module.css';
 
@@ -38,8 +38,8 @@ const Form = ({
                 <form className={styles.form}>
                     {data.names.map((name, idx) => (
                         <Input
-                            onChange={handleChange(name)}
-                            onBlur={handleBlur(name)}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             key={name}
                             name={name}
                             value={values[name]}
