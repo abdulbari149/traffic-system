@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "name": "price",
+        "placeholder": "Rs 200",
+        "defaultValue": 0,
+        "type": "number",
+        "label": "New Price"
+    }
+]

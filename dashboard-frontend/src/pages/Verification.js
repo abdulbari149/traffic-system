@@ -3,7 +3,7 @@ import styles from '../styles/Auth.module.css';
 
 import { Box, Paper, Typography } from '@mui/material';
 
-import Form from '../containers/Form';
+import Form from '../components/Form';
 
 
 const Verfication = () => {

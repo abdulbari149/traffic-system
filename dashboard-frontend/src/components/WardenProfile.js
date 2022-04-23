@@ -106,28 +106,28 @@ const WardenProfile = ({ handleIdChange, matches, id }) => {
       </Typography>
       <br />
       <Grid item container xs={12}>
-        <Grid item xs={12} sm={7}>
+        <Grid sx={{ p: 1 }} item lg={12} xs={12} sm={7}>
           <Typography variant="h5" className={styles.boldText}>
             Email
           </Typography>
           <br />
           <Typography className={styles.text}>{warden.email}</Typography>
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid sx={{ p: 1 }} item lg={12} xs={12} sm={5}>
           <Typography variant="h5" className={styles.boldText}>
             Phone no.
           </Typography>
           <br />
           <Typography className={styles.text}>{warden.phone_number}</Typography>
         </Grid>
-        <Grid item xs={12} sm={7}>
+        <Grid sx={{ p: 1 }} item lg={12} xs={12} sm={7}>
           <Typography variant="h5" className={styles.boldText}>
             Service Id
           </Typography>
           <br />
           <Typography className={styles.text}>{warden.service_id}</Typography>
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid sx={{ p: 1 }}  item lg={12} xs={12} sm={5}>
           <Typography variant="h5" className={styles.boldText}>
             Designation
           </Typography>

@@ -28,10 +28,11 @@
 
 .buttonIconBack {
     background-color: #292A2E;
-    width: 70px;
-    height: 70px;
-    padding: 10px;
-    border-radius: 10px;
+    width: 35px;
+    height: 35px;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
 }
 
 .buttonTitle {
@@ -52,8 +53,8 @@
 }
 
 .buttonIcon {
-    width: 48px !important;
-    height: 48px !important;
+    width: 25px !important;
+    height: 25px !important;
     background-color: #292A2E;
     border-radius: 0px 20px 20px 0px;
     color: white;

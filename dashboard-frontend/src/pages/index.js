@@ -1,0 +1,6 @@
+export { default as Login } from "./Login"
+export { default as ForgotPassword } from "./ForgotPassword"
+export { default as CreateNewPassword } from "./CreateNewPassword"
+export { default as Dashboard } from "./Dashboard"
+export { default as Verification } from "./Verification"
+export { default as Register } from "./Register"

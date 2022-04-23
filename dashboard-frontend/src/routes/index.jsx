@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { Routes as Switch, Route, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Dashboard from "../components/Dashboard";
-import Login from "../components/Login";
-import ForgotPassword from "../components/ForgotPassword";
-import CreateNewPassword from "../components/CreateNewPassword";
-import Verification from "../components/Verification";
-import WardenProfile from "../containers/WardenProfile";
+import {
+  Dashboard,
+  Login,
+  ForgotPassword,
+  CreateNewPassword,
+  Verification
+} from "../pages";
+
+import WardenProfile from "../components/WardenProfile";
 import { useVerifyAuthMutation } from "../api";
 import { setUser } from "../reducers/auth";
 const Routes = () => {
@@ -14,34 +17,39 @@ const Routes = () => {
   const dispatch = useDispatch();
   const [
     verifyAuth,
-    { data, error, isLoading, isFetching, isError, isSuccess },
+    { data, error, isLoading, isFetching, isError, isSuccess }
   ] = useVerifyAuthMutation();
 
   async function initalizeUser() {
     const token = localStorage.getItem("token");
     if (!token) {
-      console.log("Token doesn't exists")
+      console.log("Token doesn't exists");
       navigation("/login", { replace: true });
       return;
     }
 
-    console.log("Auth Runs")
+    console.log("Auth Runs");
     await verifyAuth(token);
   }
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log("Response Data ==>", { data: data.data });
-      // dispatch(setUser({ data: data.data}))
-    }
-  }, [isSuccess]);
+  useEffect(
+    () => {
+      if (isSuccess) {
+        console.log("Response Data ==>", { data: data.data });
+      }
+    },
+    [isSuccess]
+  );
 
-  useEffect(() => {
-    if (isError) {
-      console.log("Response Error ==>", { error: error })
-      navigation("/login", { replace: true });
-    }
-  }, [isError]);
+  useEffect(
+    () => {
+      if (isError) {
+        console.log("Response Error ==>", { error: error });
+        navigation("/login", { replace: true });
+      }
+    },
+    [isError]
+  );
 
   useEffect(() => {
     initalizeUser();

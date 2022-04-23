@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material'
 import React from 'react'
-import Form from '../containers/Form'
+import Form from '../components/Form'
 
 import styles from '../styles/SuperAdminSignUp.module.css'
 
-const SuperAdminSignUp = () => {
+const Register = () => {
 
     const formData = {
         names: [
@@ -37,4 +37,4 @@ const SuperAdminSignUp = () => {
     </div>)
 }
 
-export default SuperAdminSignUp
+export default Register

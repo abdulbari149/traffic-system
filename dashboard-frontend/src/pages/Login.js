@@ -1,26 +1,17 @@
 import React, { useEffect } from "react";
-import styles from "../styles/Auth.module.css";
-import { Typography, Grid, CircularProgress } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import Input from "../containers/CustomInput";
+import { Typography, Grid, Button, CircularProgress } from "@mui/material";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-import { useLoginMutation } from "../api";
-import { useDispatch } from "react-redux";
-import { setUser } from "../reducers/auth";
-import * as yup from "yup";
 
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("This is a required field"),
-  password: yup
-    .string()
-    .required("This is a required field")
-    .min(8, "Password must be minimum of 8 characters long"),
-});
+import styles from "../styles/Auth.module.css";
+
+import CustomInput from "../components/CustomInput";
+import { validationSchema } from "../helpers/validators";
+import { setUser } from "../reducers/auth";
+import { useLoginMutation } from "../api";
+
 const Login = () => {
   const navigate = useNavigate();
   const [login, { data, error, isSuccess, isError, isLoading }] =
@@ -28,14 +19,15 @@ const Login = () => {
   const dispatch = useDispatch();
   const initialValues = {
     email: "",
-    password: "",
+    password: ""
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
+    console.log("Submit runni");
     let data = {
       email: values?.email,
-      password: values?.password,
+      password: values?.password
     };
 
     await login(data);
@@ -45,10 +37,10 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log({ data: data.data });
-      localStorage.setItem("token", data.data.token)
+      localStorage.setItem("token", data.data.token);
       dispatch(setUser({ data: data.data }));
       navigate("/", {
-        replace: true,
+        replace: true
       });
     }
   }, [isSuccess]);
@@ -71,18 +63,22 @@ const Login = () => {
       </Typography>
       <div className={styles.formCard}>
         <AccountCircleRoundedIcon className={styles.icon} />
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
           {(formikProps) => {
             const {
               handleChange,
               handleBlur,
               values,
               isSubmitting,
-              handleSubmit,
+              handleSubmit
             } = formikProps;
             return (
               <Grid container styles={{ width: "100%" }}>
-                <Input
+                <CustomInput
                   name="email"
                   value={values.email}
                   label="Email Address"
@@ -91,7 +87,7 @@ const Login = () => {
                   placeholder="Enter your email address"
                   type="email"
                 />
-                <Input
+                <CustomInput
                   name="password"
                   label="Password"
                   value={values.password}
@@ -100,17 +96,22 @@ const Login = () => {
                   placeholder="Enter your password"
                   type="password"
                 />
-                <LoadingButton
-                  loading={true}
+                <Button
                   onClick={handleSubmit}
-                  loadingPosition="start"
                   variant="contained"
                   className={styles.button}
                   fullWidth
-                  loadingIndicator={<CircularProgress color="white" size={20} />}
                 >
-                  <p className={styles.buttonText}>Login</p>
-                </LoadingButton>
+                  {isSubmitting ? (
+                    <CircularProgress
+                      size={25}
+                      thickness={4.5}
+                      sx={{ color: "white" }}
+                    />
+                  ) : (
+                    <p className={styles.buttonText}>Login</p>
+                  )}
+                </Button>
               </Grid>
             );
           }}
