@@ -10,12 +10,12 @@ const WardenSchema = new Schema(
     password: String,
     designation: {
       type: String,
-      enum: ["SSP", "DSP", "SHO", "Inspector", "Sub-Inspector"],
+      enum: ["SSP", "DSP", "SHO", "Inspector", "Sub-Inspector"]
     },
     traffic_sector: String,
     authorized: {
       type: Boolean,
-      default: false,
+      default: false
     },
     status: {
       type: String,
@@ -26,22 +26,43 @@ const WardenSchema = new Schema(
     images: [
       {
         type: Types.ObjectId,
-        ref: "Image",
-      },
-    ],
+        ref: "Image"
+      }
+    ]
   },
   {
     timestamps: true,
     toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
 WardenSchema.virtual("challans", {
   ref: "Challan",
   localField: "_id",
-  foreignField: "warden",
+  foreignField: "warden"
 });
+
+WardenSchema.statics.findAndModify = async function (
+  query,
+  select = null,
+  update,
+  opts,
+  cb
+) {
+  const data = await this.find(query, select, opts);
+  if(data.length === 0){
+    return data
+  }
+  const updatePromise = data.map(async item => {
+    Object.keys(update).map(u => {
+      item[u] = update[u]
+    })
+    return item.save()
+  })
+  const response = Promise.all(updatePromise)
+  return response
+};
 
 const Warden = model("Warden", WardenSchema);
 

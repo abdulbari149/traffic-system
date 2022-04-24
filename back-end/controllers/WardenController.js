@@ -28,75 +28,98 @@ class WardenController {
     res.status(this.response.status).send(this.response);
   };
 
-  getWardenListForApproval = async (req, res) => {
-    approvalListBlock: try {
-      // status --> decline, uncheck
-      const wardenList = await WardenApproval.find({
-        adminId: res.locals.data.id,
-        status: req?.query?.status ?? "uncheck",
-      })
-        .populate("wardenId", "-password")
-        .lean();
-
-      if (
-        (wardenList.length > 0 && wardenList.length <= 10) ||
-        req.query.status === "decline"
-      ) {
-        this.response = {
-          data: wardenList?.map((warden) => ({
-            ...warden.wardenId,
-            status: warden.status,
-            
-          })),
-          status: 200,
-          message: "Your Warden List is",
-        };
-        break approvalListBlock;
+  assignWardensToAdmin = async (req, res) => {
+    assignBlock: try {
+      const options = {
+        new: true,
+        limit: 10,
+        populate: {
+          path: "images",
+          transform: (data, id) => ({
+            source: `http://localhost:3000/api/image/warden/file/filename/${data?._doc?.filename}`,
+            type: data?._doc?.metadata?.imageType
+          })
+        }
       }
 
-      const docs = await Warden.find({ authorized: false, status: "onhold" }, "-password")
-        .limit(10)
-        .lean();
+      const docs = await Warden.findAndModify(
+        { authorized: false, status: "onhold" },
+        "-password",
+        { status: "uncheck" },
+        options
+      );
+      if (!docs) {
+        this.response = {
+          message:
+            "There are no further account approval requests to handle. Thanks!",
+          status: 404
+        };
+        break assignBlock;
+      }
 
-      const updateWardens = new Promise((resolve, reject) => {
-        async.eachSeries(
-          docs,
-          function updateObject(obj, done) {
-            Warden.updateOne(
-              { _id: obj._id },
-              { $set: { status: "uncheck" } },
-              done
-            );
-          },
-          function allDone(err) {
-            if (err) {
-              reject(err);
-            }
-            resolve();
-          }
-        );
-      });
-      const wardensUpdatedDoc = await updateWardens;
-      let approvalData = docs.map((doc) => ({
-        wardenId: doc._id,
+      let assignWardenToAdminData = docs.map((doc) => ({
+        wardenId: doc._doc._id,
         adminId: res.locals.data.id,
-        status: "uncheck",
+        status: "uncheck"
       }));
-      const wardenApprovals = await WardenApproval.insertMany(approvalData);
-      let responseData = docs.map((doc) => ({
-        ...doc,
-        status: "uncheck",
-      }));
+
+      const wardenApprovals = await WardenApproval.insertMany(
+        assignWardenToAdminData
+      );
 
       this.response = {
-        data: responseData,
-        status: 200,
+        data: docs,
+        status: 200
       };
     } catch (error) {
       this.response = {
-        message: "An error occurred",
+        message: error,
+        status: 404
+      };
+    }
+    res.status(this.response.status).json(this.response);
+  };
+
+  getWardenListForApproval = async (req, res) => {
+    wardenListBlock: try {
+      const docs = await WardenApproval.find({
+        adminId: res.locals.data.id,
+        status: req?.query?.status ?? "uncheck"
+      })
+        .populate({
+          path: "wardenId",
+          select: "-password",
+          populate: {
+            path: "images",
+            select: "filename metadata.imageType"
+          }
+        })
+        .lean();
+      if (docs.length === 0) {
+        this.response = {
+          message: "Warden's are not currently associated to this admin",
+          status: 404,
+          data: null
+        };
+        break wardenListBlock;
+      }
+
+      this.response = {
+        data: docs?.map((doc) => ({
+          ...doc.wardenId,
+          status: doc.status,
+          images: doc.wardenId.images.map((img) => ({
+            source: `http://localhost:5000/api/image/warden/file/${img.filename}`,
+            type: img.metadata.imageType
+          }))
+        })),
+        status: 200,
+        message: "Your Warden List is"
+      };
+    } catch (error) {
+      this.response = {
         error,
-        status: 404,
+        status: 500
       };
     }
     res.status(this.response.status).json(this.response);
@@ -110,15 +133,15 @@ class WardenController {
       this.response = {
         data: {
           ...doc._doc,
-          challans: undefined,
+          challans: undefined
         },
-        status: 200,
+        status: 200
       };
     } catch (error) {
       this.response = {
         error,
         message: "An Error Occured",
-        status: 404,
+        status: 404
       };
     }
     res.status(this.response.status).json(this.response);
@@ -130,20 +153,20 @@ class WardenController {
       const wardenApproval = await WardenApproval.findOneAndUpdate(
         { wardenId: req.body.wardenId, adminId: res.locals.data.id },
         {
-          status: "approve",
+          status: "approve"
         }
       );
       if (!wardenApproval) {
         this.response = {
           message: "Warden doesn't exists",
-          status: 404,
+          status: 404
         };
         break authorizeBlock;
       }
 
       const warden = await Warden.findByIdAndUpdate(req.body.wardenId, {
         status: "approve",
-        authorized: true,
+        authorized: true
       });
       console.log({ warden });
 
@@ -152,15 +175,15 @@ class WardenController {
           ...warden._doc,
           status: "approve",
           authorized: true,
-          password: undefined,
+          password: undefined
         },
         message: "Warden has been authorized Successfully",
-        status: 200,
+        status: 200
       };
     } catch (error) {
       this.response = {
         error,
-        status: 400,
+        status: 400
       };
     }
     res.status(this.response.status).json(this.response);
@@ -169,7 +192,7 @@ class WardenController {
     declineBlock: try {
       const updateFields = {
         status: "decline",
-        authorized: false,
+        authorized: false
       };
       const wardenDecline = await WardenApproval.findOneAndUpdate(
         { wardenId: req.body.wardenId, adminId: res.locals.data.id },
@@ -178,27 +201,27 @@ class WardenController {
       if (!wardenDecline) {
         this.response = {
           message: "Warden doesn't exists",
-          status: 404,
+          status: 404
         };
         break declineBlock;
       }
       const warden = await Warden.findByIdAndUpdate(req.body.wardenId, {
-        ...updateFields,
+        ...updateFields
       });
 
       this.response = {
         data: {
           ...warden._doc,
           ...updateFields,
-          password: undefined,
+          password: undefined
         },
         message: "Warden has been Declined",
-        status: 200,
+        status: 200
       };
     } catch (error) {
       this.response = {
         error,
-        status: 400,
+        status: 400
       };
     }
     res.status(this.response.status).json(this.response);
@@ -220,23 +243,26 @@ class WardenController {
     }
   };
 
-  deleteWarden = async(req,res) => {
-    try{
-      const result = await WardenApproval.findOneAndDelete({ wardenId: req.body.wardenId, adminId: res.locals.data.id })
-      if(!result){
-        let error = new Error()
-        error.messaage = "Not Found"
-        error.status = 404
-        throw error
+  deleteWarden = async (req, res) => {
+    try {
+      const result = await WardenApproval.findOneAndDelete({
+        wardenId: req.body.wardenId,
+        adminId: res.locals.data.id
+      });
+      if (!result) {
+        let error = new Error();
+        error.messaage = "Not Found";
+        error.status = 404;
+        throw error;
       }
-      const wardenResult = await Warden.findOneAndDelete({ _id : req.body.wardenId })
-      res.status(200).json({ result, wardenResult })
-
-    }catch(error){
-      res.status(error?.status ?? 500).json({ ...error })
+      const wardenResult = await Warden.findOneAndDelete({
+        _id: req.body.wardenId
+      });
+      res.status(200).json({ result, wardenResult });
+    } catch (error) {
+      res.status(error?.status ?? 500).json({ ...error });
     }
-
-  }
+  };
 }
 
 module.exports = new WardenController();
