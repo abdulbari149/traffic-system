@@ -39,7 +39,7 @@ const Login = () => {
       console.log({ data: data.data });
       localStorage.setItem("token", data.data.token);
       dispatch(setUser({ data: data.data }));
-      navigate("/", {
+      navigate("/dashboard/warden-approval", {
         replace: true
       });
     }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes as Switch, Route, useNavigate } from "react-router-dom";
+import { Routes as Switch, Route, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   Dashboard,
@@ -9,11 +9,15 @@ import {
   Verification
 } from "../pages";
 
-import WardenProfile from "../components/WardenProfile";
+import WardenProfile from "../pages/WardenProfile";
 import { useVerifyAuthMutation } from "../api";
 import { setUser } from "../reducers/auth";
+import WardenApproval from "../pages/WardenApproval";
+import Voilation from "../pages/Voilation";
+import WardenDecline from "../pages/WardenDecline";
 const Routes = () => {
   const navigation = useNavigate();
+  const location = useLocation()
   const dispatch = useDispatch();
   const [
     verifyAuth,
@@ -27,15 +31,13 @@ const Routes = () => {
       navigation("/login", { replace: true });
       return;
     }
-
-    console.log("Auth Runs");
     await verifyAuth(token);
   }
 
   useEffect(
     () => {
       if (isSuccess) {
-        console.log("Response Data ==>", { data: data.data });
+        navigation(location.pathname, { replace: true });
       }
     },
     [isSuccess]
@@ -44,7 +46,6 @@ const Routes = () => {
   useEffect(
     () => {
       if (isError) {
-        console.log("Response Error ==>", { error: error });
         navigation("/login", { replace: true });
       }
     },
@@ -57,9 +58,19 @@ const Routes = () => {
 
   return (
     <Switch>
-      <Route element={<Dashboard />} index exact />
+      <Route element={<Dashboard />} path="/dashboard">
+        <Route element={<WardenApproval />} index />
+        <Route element={<WardenApproval />} path="warden-approval">
+          <Route element={<WardenProfile />} path="profile" />
+        </Route>
+        <Route element={<Voilation />} path="voilation" />
+        <Route element={<WardenDecline />} path="warden-decline">
+          <Route element={<WardenProfile />} path="profile" />
+        </Route>
+        <Route element={<WardenApproval />} path="admin-register" />
+      </Route>
       <Route element={<Login />} path="login" exact />
-      <Route element={<WardenProfile />} path="profile/:state/:id" />
+      <Route element={<WardenProfile />} path="warden-profile" />
     </Switch>
   );
 };

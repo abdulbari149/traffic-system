@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./api";
 import authReducer from "./reducers/auth"
-import wardenListReducer from "./reducers/wardenList"
+import wardenReducer from "./reducers/warden"
 import voilationReducer from "./reducers/voilation"
 
 export default configureStore({
   reducer: {
     auth: authReducer,
-    wardenList: wardenListReducer,
+    warden: wardenReducer,
     voilation:voilationReducer,
     [api.reducerPath]: api.reducer,
   },

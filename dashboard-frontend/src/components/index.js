@@ -4,6 +4,7 @@ export { default as Modal } from './Modal'
 export { default as Loading } from './Loading'
 export { default as Table } from './CustomTable'
 export { default as TableFooter } from './CustomTableFooter'
+export { default as TableHeader } from './CustomTableHeader'
 export { default as Input } from './CustomInput'
 export { default as Select } from './CustomSelect'
 export { default as LoadingButton } from "./LoadingButton"

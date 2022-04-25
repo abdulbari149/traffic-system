@@ -35,7 +35,7 @@ function AddVoilationForm({ onClose }) {
     >
       {({ handleChange, handleBlur, values, handleSubmit, isSubmitting }) => (
         <>
-          <Grid container fullWidth>
+          <Grid container sx={{ width: "100%" }}>
             <Input
               name="voilation"
               value={values.voilation}

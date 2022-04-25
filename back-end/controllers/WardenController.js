@@ -226,6 +226,43 @@ class WardenController {
     }
     res.status(this.response.status).json(this.response);
   };
+
+  undoWarden = async(req , res) => {
+    undoBlock:try {
+      const updateFields = {
+        status: "uncheck",
+      };
+      const wardenUndo = await WardenApproval.findOneAndUpdate(
+        { wardenId: req.body.wardenId, adminId: res.locals.data.id },
+        { ...updateFields }
+      );
+      if (!wardenUndo) {
+        this.response = {
+          message: "Warden doesn't exists",
+          status: 404
+        };
+        break undoBlock;
+      }
+      const warden = await Warden.findByIdAndUpdate(req.body.wardenId, {
+        ...updateFields
+      }, { new: true, projection: "-password"  });
+
+      this.response = {
+        data: {
+          ...warden._doc,
+        },
+        message: "Warden has been Declined",
+        status: 200
+      };
+    } catch (error) {
+      this.response ={
+        status: 500,
+        error,
+        message: "Interal Server Error"
+      }
+    }
+    res.status(this.response.status).json(this.response)
+  }
   resetWardenStatus = async (req, res) => {
     try {
       const wardens = await Warden.updateMany(

@@ -1,24 +1,51 @@
 import { TableCell, TableRow } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styles from '../styles/Dashboard.module.css'
 
 function CustomTableHeader({
-	items,
-	renderButton = () => <></>,
-	buttonPosition = 'start'
+  items,
+  buttonPosition,
+  renderButton = () => null,
 }) {
-	// let sizes = item?.screenSizes.reduce((obj, size) => ({ ...obj, [size]: "table-cell" }), {})
+  const displayScreens = useCallback((sizeProps) => {
+    if (!sizeProps) {
+      return 'table-cell'
+    }
+    let allScreenSizes = ['xl', 'lg', 'md', 'sm', 'xs']
+    let sizes = sizeProps.reduce(
+      (obj, s) => ({ ...obj, [s]: 'table-cell' }),
+      {},
+    )
+    let hideSizes = allScreenSizes.filter((s) => !sizeProps.includes(s))
+    hideSizes = hideSizes.reduce((obj, hs) => ({ ...obj, [hs]: 'none' }), {})
+    const display = {
+      ...sizes,
+      ...hideSizes,
+    }
+    return display
+  }, [])
 
-	// key={key}
-	// className={styles.tableHeading}
-	// align={key !== 0 ? 'center' : 'left'}
-	// sx={{ display: {...sizes, ...(!("xs" in item.screenSizes) && { xs: "none" })} }}
-	return (
-		<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-			{buttonPosition === 'start' && renderButton()}
-			{items.map((item, key) => <TableCell>{item?.name}</TableCell>}
-			{buttonPosition === 'end' && renderButton()}
-		</TableRow>
-	)
+  const headerRow = items?.map((i, key) => {
+    const display = displayScreens(i?.screenSizes)
+
+    return (
+      <TableCell
+        key={key}
+        className={styles.tableHeading}
+        align={i.align ?? "left"}
+        sx={{ display }}
+      >
+        {i.name}
+      </TableCell>
+    )
+  })
+
+  return (
+    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      {buttonPosition === 'start' && renderButton()}
+      {headerRow}
+      {buttonPosition === 'end' && renderButton()}
+    </TableRow>
+  )
 }
 export default CustomTableHeader

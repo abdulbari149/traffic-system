@@ -5,6 +5,7 @@
 }
 
 .Box {
+    flex: 1;
     background-color: #131313 !important;
     height: 100vh;
     line-height: 0.3;

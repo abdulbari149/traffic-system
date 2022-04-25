@@ -39,6 +39,15 @@ router.put(
   verifyAdmin,
   WardenController.declineWarden,
 )
+router.put(
+  '/undo',
+  authorizeValidator(),
+  validationRequestSchema,
+  verifyAuthToken,
+  verifyAdmin,
+  WardenController.undoWarden,
+)
+
 
 router.delete(
   '/delete',
