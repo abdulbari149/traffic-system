@@ -15,6 +15,7 @@ export const api = createApi({
   tagTypes: [
     "Admin",
     "WardenApproval",
+    "AssignWardens",
     "ProfilePic",
     "ProfileDetails",
     "Voilations",
@@ -39,7 +40,7 @@ export const api = createApi({
           wardenId: id
         }
       }),
-      invalidatesTags: ["DeclineWarden"]
+      invalidatesTags: ["DeclineWarden", "AssignWardens"]
     }),
     undoWarden: builder.mutation({
       query: (id) => ({
@@ -102,7 +103,7 @@ export const api = createApi({
     }),
     assignWardenToAdmin: builder.query({
       query: () => `/warden/assign-approval-request`,
-      providesTags: ["WardenApproval"]
+      providesTags: ["AssignWardens"]
     }),
     verifyAuth: builder.mutation({
       query: (token) => {
@@ -110,7 +111,7 @@ export const api = createApi({
           url: "/auth/admin/verify-auth",
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`
           }
         };
       }
@@ -125,10 +126,13 @@ export const api = createApi({
       providesTag: ["Admin"]
     }),
     register: builder.mutation({
-      query: (data) => ({
-        url: "auth/admin/register",
+      query: (data, token) => ({
+        url: "auth/admin/create-admin",
         body: data,
-        method: "POST"
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
     })
   })
@@ -150,5 +154,6 @@ export const {
   useDeclineWardenMutation,
   useUndoWardenMutation,
   useDeleteWardenMutation,
-  useAssignWardenToAdminQuery
+  useAssignWardenToAdminQuery,
+  useLazyAssignWardenToAdminQuery
 } = api;

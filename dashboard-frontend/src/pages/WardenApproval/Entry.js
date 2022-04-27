@@ -31,8 +31,6 @@ const WardenApprovalEntry = ({ warden }) => {
     return wardenProfilePic.source;
   }, [warden.images]);
 
-  console.log(image);
-
   const matches = useMediaQuery(
     json2mq({
       minWidth: 1200

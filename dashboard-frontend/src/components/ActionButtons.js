@@ -86,7 +86,6 @@ const UndoButton = ({ id }) => {
   };
   useEffect(() => {
     if (isSuccess) {
-      console.log("Response Data ==>", data);
       dispatch(removeWarden({ id, action: "decline" }));
     }
   }, [isSuccess]);

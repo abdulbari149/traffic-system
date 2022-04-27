@@ -12,7 +12,7 @@ const authSlice = createSlice({
       state.token = payload.data.token
     }
   }
-
+  
 })
 
 

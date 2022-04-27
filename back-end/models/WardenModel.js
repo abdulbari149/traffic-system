@@ -51,6 +51,7 @@ WardenSchema.statics.findAndModify = async function (
   cb
 ) {
   const data = await this.find(query, select, opts);
+  console.log({ data })
   if(data.length === 0){
     return data
   }

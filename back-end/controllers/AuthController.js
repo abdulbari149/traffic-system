@@ -1,7 +1,7 @@
 const { hash, compare } = require("bcrypt");
 const { sendSMS } = require("../lib/twilioSMS");
 const jwt = require("jsonwebtoken");
-
+const { Admin } = require("../models")
 class AuthController {
   response = {
     message: "",
@@ -65,6 +65,40 @@ class AuthController {
     }
     res.status(this.response.status).json(this.response);
   };
+
+  registerAdmin = async (req, res) => {
+    try {
+      const adminData = req.body
+      const adminExists = await Admin.findOne({ email: req.body.email })
+      if(adminExists){
+        let error = new Error("Admin already exists")
+        error.status = 403
+        console.log({ error })
+        throw error
+      }
+      const hashedPassword = await hash(req.body.password, 10);
+      adminData.password = hashedPassword
+      adminData.role = "admin"
+      console.log({ adminData })
+      const admin = await Admin.create(adminData)
+      if(!admin){
+        let error = new Error("Error Creating admin")
+        error.status = 500
+        throw error
+      }
+      this.response = {
+        status: 201,
+        message: "Warden Created Successfully"
+      }
+    }catch(error){
+      this.response = {
+        message: error.message,
+        status: error?.status ?? 500
+      }
+    }finally{
+      res.status(this.response.status).json(this.response)
+    }
+  }
 
   login = async (req, res) => {
     const { password, ...param } = req.body;

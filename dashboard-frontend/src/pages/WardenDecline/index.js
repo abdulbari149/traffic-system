@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/heading-has-content */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/Dashboard.module.css";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { Table, TableHeader, Header } from "../../components";
 import { useGetWardenDeclineListQuery } from "../../api";
 import Entry from "./Entry";
@@ -12,24 +12,33 @@ const DeclineWarden = ({ matches, handleIdChange }) => {
   const { decline: wardens } = useSelector((state) => state.warden);
 
   const {
-    currentData: data,
+    data,
     error,
     isError,
     isSuccess,
-    isLoading
+    isLoading,
+    isUninitialized,
+    isFetching,
+    refetch
   } = useGetWardenDeclineListQuery();
   const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     if (isSuccess) {
-      console.log({ data });
+      console.log("Query was successful", { data });
       dispatch(setWardenDeclineList({ data: data?.data }));
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      console.log({ error });
+      if (error.status === 404) {
+        setErrorMessage({
+          title: "OOPs Not Avaliable",
+          body: error?.data?.message
+        });
+      }
     }
   }, [isError]);
 
@@ -38,17 +47,32 @@ const DeclineWarden = ({ matches, handleIdChange }) => {
       <Grid item container sx={{ flex: 1 }}>
         <Box className={styles.Box}>
           <Header title="Warden Account's Declined" />
-          <Table
-            headerRow={[
-              { id: 1, name: "Name", screenSizes: ["xl", "lg"] },
-              { id: 2, name: "Email", screenSizes: ["xl", "lg"] }
-            ]}
-            data={wardens.length > 0 ? wardens : data?.data}
-            loading={isLoading}
-            renderTableBody={(item) => <Entry warden={item} key={item._id} />}
-            renderTableHeader={(items) => <TableHeader items={items} />}
-          />
+          {(isLoading || isSuccess) && (
+            <Table
+              headerRow={[
+                { id: 1, name: "Name", screenSizes: ["xl", "lg"] },
+                { id: 2, name: "Email", screenSizes: ["xl", "lg"] }
+              ]}
+              data={wardens}
+              loading={isLoading}
+              renderTableBody={(item) => <Entry warden={item} key={item._id} />}
+              renderTableHeader={(items) => <TableHeader items={items} />}
+            />
+          )}
+          {isError && (
+          <Grid item container offset={2} direction='column' style={{ flex: 1 }} >
+            <Grid xs={1} item >
+              <Typography style={{ color: "#939090", textAlign: "center" }} variant="h6">
+                {errorMessage?.title}
+              </Typography>
+            </Grid>
+            <Grid xs={2} item>
+              <Typography style={{ color: "#939090", textAlign: "center" }}>{errorMessage?.body}</Typography>
+            </Grid>
+          </Grid>
+        )}
         </Box>
+        
       </Grid>
       <Outlet />
     </>

@@ -14,21 +14,7 @@ import Register from "./Register";
 
 const Dashboard = () => {
   const [nav, setNav] = useState(0);
-  const [id, setId] = useState(0);
   const [sideBarOpen, setSideBarOpen] = useState(false);
-
-  const matches = useMediaQuery(
-    json2mq({
-      minWidth: 1200
-    })
-  );
-
-  console.log({ matches });
-
-  const handleIdChange = useCallback((newId) => {
-    setId(newId);
-  }, []);
-
   return (
     // 1.5 + 7.5 +
     <Grid container spacing={0} style={{ backgroundColor: "#0f0f0f" }}>

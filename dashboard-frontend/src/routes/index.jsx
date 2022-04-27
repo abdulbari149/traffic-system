@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes as Switch, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes as Switch, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   Dashboard,
@@ -15,6 +15,7 @@ import { setUser } from "../reducers/auth";
 import WardenApproval from "../pages/WardenApproval";
 import Voilation from "../pages/Voilation";
 import WardenDecline from "../pages/WardenDecline";
+import Register from "../pages/Register";
 const Routes = () => {
   const navigation = useNavigate();
   const location = useLocation()
@@ -26,6 +27,7 @@ const Routes = () => {
 
   async function initalizeUser() {
     const token = localStorage.getItem("token");
+    console.log({ token })
     if (!token) {
       console.log("Token doesn't exists");
       navigation("/login", { replace: true });
@@ -37,6 +39,7 @@ const Routes = () => {
   useEffect(
     () => {
       if (isSuccess) {
+        dispatch(setUser({ data: data?.data }))
         navigation(location.pathname, { replace: true });
       }
     },
@@ -53,13 +56,14 @@ const Routes = () => {
   );
 
   useEffect(() => {
+    console.log("Verifying user")
     initalizeUser();
   }, []);
 
   return (
     <Switch>
       <Route element={<Dashboard />} path="/dashboard">
-        <Route element={<WardenApproval />} index />
+        <Route element={<Navigate to="/dashboard/warden-approval" />} index />
         <Route element={<WardenApproval />} path="warden-approval">
           <Route element={<WardenProfile />} path="profile" />
         </Route>
@@ -67,10 +71,11 @@ const Routes = () => {
         <Route element={<WardenDecline />} path="warden-decline">
           <Route element={<WardenProfile />} path="profile" />
         </Route>
-        <Route element={<WardenApproval />} path="admin-register" />
+        <Route element={<Register />} path="admin-register" />
       </Route>
       <Route element={<Login />} path="login" exact />
       <Route element={<WardenProfile />} path="warden-profile" />
+      <Route  index exact element={<Navigate to="/dashboard" />} />
     </Switch>
   );
 };
