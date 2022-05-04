@@ -12,7 +12,6 @@ import { setAuthToken } from "utils/async-storage";
 
 const VerificationCode = ({ navigation, route }) => {
   const accessToken = useSelector(state => state.auth.accessToken)
-  console.log({ accessToken })
   const dispatch = useDispatch()
   const { phone_number, screen } = route.params;
   const triesRef = useRef(0);

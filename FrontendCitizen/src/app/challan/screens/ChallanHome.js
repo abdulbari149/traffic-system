@@ -6,49 +6,28 @@ import ZeroChallan from "../components/ZeroChallan";
 import ChallanCard from "../components/ChallanCard";
 import * as routes from "routes";
 import { useGetChallanRecordsQuery } from "api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setChallans } from "../slice";
+import { Alert } from "react-native";
+
 const ChallanHome = ({ navigation }) => {
   const { data, error, isSuccess, isError, isLoading } =
     useGetChallanRecordsQuery();
-  // Success Handler
-  const [challans, setChallans] = useState([]);
+
+  const { challans } = useSelector((state) => state.challan);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (isSuccess) {
-      console.log("Response data ==> ", data);
-      const challanData = JSON.parse(JSON.stringify([...data?.data]))
-      setChallans(challanData.sort((c, nC) => !c.paid));
+      const dupData = JSON.parse(JSON.stringify([...data?.data]));
+      dispatch(setChallans({ data: dupData }));
     }
   }, [isSuccess]);
 
-  //Error Handler
   useEffect(() => {
     if (isError) {
-      console.log("Response Error ==> ", error);
+      Alert.alert("Server Error Occured", "Try again Later.");
     }
   }, [isError]);
-  const dummyData = [
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-  ];
 
   async function searchChallan() {}
 
@@ -58,22 +37,25 @@ const ChallanHome = ({ navigation }) => {
       <HeaderText title={"C H A L L A N 'S"} />
       <Box px="4" flex="1">
         {isLoading && <Loader size={60} />}
-        {isSuccess &&
-          challans.length > 0 &&
-          data?.data?.map((challan, idx) => (
-            <ChallanCard
-              onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
-              onDetailButtonPress={() =>
-                navigation.navigate(routes.CHALLAN_DETAILS, {
-                  id: challan._id,
-                  challan,
-                })
-              }
-              challan={challan}
-              key={idx}
-            />
+        {!isLoading &&
+          isSuccess &&
+          (data?.data.length ? (
+            data?.data?.map((challan, idx) => (
+              <ChallanCard
+                onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
+                onDetailButtonPress={() => {
+                  navigation.navigate(routes.CHALLAN_DETAILS, {
+                    cid: challan._id,
+                    paid: challan.paid
+                  });
+                }}
+                challan={challan}
+                key={idx}
+              />
+            ))
+          ) : (
+            <ZeroChallan />
           ))}
-        {!isLoading && isSuccess && challans.length === 0 && <ZeroChallan />}
       </Box>
     </ScrollView>
   );

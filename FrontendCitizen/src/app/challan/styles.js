@@ -10,16 +10,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 15,
     elevation: 5,
-    marginBottom: 14,
+    marginBottom: 14
   },
   challanContainer: {
-    padding: 15,
+    padding: 15
   },
   challanDetailText: {
     textDecorationLine: "underline",
     color: "#000",
     fontSize: 16,
-    padding: 0,
+    padding: 0
   },
   fineText: {
     backgroundColor: "#FBAAAA",
@@ -27,19 +27,20 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: "center",
     alignSelf: "flex-end",
-    color: "#0C0C0C",
+    color: "#0C0C0C"
   },
   detailsContainer: {
-    paddingTop: 20,
+    paddingTop: 15,
     paddingHorizontal: 15,
     backgroundColor: "white",
+    minHeight: "100%"
   },
   detailsTop: {
     display: "flex",
     justifyContent: "space-between",
-    flexDirection: "row",
+    flexDirection: "row"
   },
-  accordinContainer: {
+  accordionContainer: {
     width: "100%",
     height: "auto",
     display: "flex",
@@ -48,32 +49,54 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderBottomColor: "#afafaf",
     borderBottomStyle: "solid",
-    borderBottomWidth: 2,
+    borderBottomWidth: 2
   },
-  accordinButton: {
+  accordionButton: {
     backgroundColor: "#F2F2F2",
     borderRadius: 60,
     width: 35,
     height: 35,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
-  accordin: {
+  accordion: {
     display: "flex",
     justifyContent: "space-between",
-    alignContent: "space-between",
-    flexDirection: "row",
+    alignContent: "space-between"
   },
-	accordinLabelContainer: {
-		width: "40%"
-	},
-	accordinValueContainer: {},
-	accordinValue: {
-		paddingVertical: 6,
-		fontSize: 15
-	},
-  accordinLabel: { fontWeight: "bold", fontSize: 17, paddingVertical: 6 },
+  accordionItem: {
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "#f2f2f2",
+    elevation: 3,
+    width: "100%",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+  },
+  accordionValue: {
+    fontSize: 14,
+    width: "60%"
+  },
+  accordionLabel: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#383838",
+    width: "40%",
+    letterSpacing: .4,
+  },
+  headerStatus: {
+    padding: 6,
+    paddingHorizontal: 12,
+    color: "white",
+    borderRadius: 12,
+    width: 100,
+    alignItems: "center",
+    position: "absolute", 
+    right: -20,
+  },
+  headerStatusText: { color: "white", width: "100%", textAlign: "center" }
 });
 
 export default styles;

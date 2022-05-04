@@ -12,6 +12,7 @@ const ZeroChallan = () => {
         size={180}
         width={260}
         marginTop={5}
+        alt="Zero Challan"
       />
       <Text fontSize="2xl" alignSelf="center" paddingTop={5}>
         Zero Challan

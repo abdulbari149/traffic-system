@@ -4,16 +4,19 @@ import { Text, View, Button } from "native-base";
 import styles from "../styles";
 import _ from "lodash";
 import { CHALLAN_DETAILS, PAYMENT_METHOD } from "../../../routes";
+import NumberFormat from "react-number-format";
+
+
 const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
   const getDate = (date) => {
-    const newDate = new Date(date)
-    return newDate.toDateString()
-  }
+    const newDate = new Date(date);
+    return newDate.toDateString();
+  };
 
   let details = {
     psid_no: challan.psid_no,
     vehicle_no: challan.vehicle_registration_no,
-    date: getDate(challan.createdAt),
+    date: getDate(challan.createdAt)
   };
 
   const navigation = useNavigation();
@@ -38,13 +41,18 @@ const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
           }
           disabled={challan.paid}
         >
-          { challan.paid ?  "Already Paid!" : "Pay" }
+          {challan.paid ? "Already Paid!" : "Pay"}
         </Button>
       </View>
       <View style={{ flex: 1, alignItems: "flex-end" }}>
-        <Text color="black" fontSize={23} fontWeight="bold">
-          Rs {challan.fine_imposed}
-        </Text>
+        <NumberFormat
+          value={challan.fine_imposed}
+          style={{ fontSize: 22, paddingTop: 8 }}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"Rs."}
+          renderText={(value, props) => <Text {...props}>{value}</Text>}
+        />
         <Text color="#555151" fontSize={16}>
           Fine
         </Text>
@@ -53,7 +61,7 @@ const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
           padding={0}
           marginTop="auto"
           _text={{
-            style: styles.challanDetailText,
+            style: styles.challanDetailText
           }}
           onPress={() =>
             navigation.navigate(CHALLAN_DETAILS, { id: challan._id })

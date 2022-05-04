@@ -25,6 +25,7 @@
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^9.1.0",
+    "react-number-format": "^4.9.3",
     "react-redux": "^7.2.6",
     "tiny-warning": "^1.0.3",
     "yup": "^0.32.11"

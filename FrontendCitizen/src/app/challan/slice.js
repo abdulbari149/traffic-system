@@ -1,16 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
-
 const challanSlice = createSlice({
   name: "challanSlice",
-  initialState,
+  initialState: {
+    challans: [],
+    detailsAccordion: {
+      name: "offender"
+    }
+  },
   reducers: {
-    setChallan(state, { payload }) {
-      state = payload.data;
+    setChallans(state, { payload }) {
+      state.challans = payload.data.sort((c, nC) => !c.paid);
     },
+    openDetailsAccordion(state, { payload }){
+      state.detailsAccordion.name = payload.name
+    }
   },
 });
-export const { setChallan } = challanSlice.actions;
+export const { setChallans, openDetailsAccordion } = challanSlice.actions;
 
 export default challanSlice.reducer;
