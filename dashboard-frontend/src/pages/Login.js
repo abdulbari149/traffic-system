@@ -9,7 +9,7 @@ import styles from "../styles/Auth.module.css";
 
 import CustomInput from "../components/CustomInput";
 import { validationSchema } from "../helpers/validators";
-import { setUser } from "../reducers/auth";
+import { setUser, setToken } from "../reducers/auth";
 import { useLoginMutation } from "../api";
 
 const Login = () => {
@@ -38,7 +38,8 @@ const Login = () => {
     if (isSuccess) {
       console.log({ data: data.data });
       localStorage.setItem("token", data.data.token);
-      dispatch(setUser({ data: data.data }));
+      dispatch(setToken({ data: data?.data?.token }))
+      dispatch(setUser({ data: {...data?.data, token: undefined} }));
       navigate("/dashboard/warden-approval", {
         replace: true
       });

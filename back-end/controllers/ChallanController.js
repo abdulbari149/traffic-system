@@ -103,7 +103,7 @@ class ChallanController {
       const data = await Challan.findById(id)
         .populate({
           path: "citizen",
-          select: "first_name last_name images",
+          select: "first_name last_name images cnic_no",
           populate: { path: "images", model: "Image", select: "filename" },
         })
         .populate("voilation")

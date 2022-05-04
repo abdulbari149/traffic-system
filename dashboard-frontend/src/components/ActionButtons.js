@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, IconButton } from "@mui/material";
+import { Button, Grid, IconButton } from "@mui/material";
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 import UndoSharpIcon from "@mui/icons-material/UndoSharp";
 import styles from "../styles/Dashboard.module.css";
@@ -9,8 +9,9 @@ import {
   useDeleteWardenMutation,
   useUndoWardenMutation
 } from "../api";
-import { removeWarden } from "../reducers/warden";
+import { removeWarden, setWardenId } from "../reducers/warden";
 import { useDispatch, useSelector } from "react-redux";
+import { api } from "../api";
 const ApproveButton = ({ id }) => {
   const dispatch = useDispatch();
   const [approveWarden, { data, error, isSuccess, isError }] =
@@ -53,7 +54,7 @@ const DeclineButton = ({ id }) => {
   };
   useEffect(() => {
     if (isSuccess) {
-      console.log("Response Data ==>", data);
+      console.log("Response Data ==>", data);*
       dispatch(removeWarden({ id, action: "approve" }));
     }
   }, [isSuccess]);
@@ -109,16 +110,18 @@ const UndoButton = ({ id }) => {
     </Button>
   );
 };
-const DeleteButton = ({ id }) => {
+const DeleteButton = ({ id, action }) => {
   const dispatch = useDispatch();
   const [deleteWarden, { data, error, isSuccess, isError }] =
     useDeleteWardenMutation();
   const deleteButton = async () => {
+    dispatch(setWardenId({ id }))
     await deleteWarden(id);
   };
   useEffect(() => {
     if (isSuccess) {
       console.log("Response Data ==>", data);
+      dispatch(removeWarden({ id, action }));
     }
   }, [isSuccess]);
 
@@ -127,13 +130,16 @@ const DeleteButton = ({ id }) => {
       console.log(error);
       if (error.status === 404) {
         dispatch(removeWarden({ id, action: "approve" }));
+
       }
     }
   }, [isError]);
   return (
-    <IconButton onClick={deleteButton} data-action="undo">
-      <DeleteSharpIcon style={{ color: "white" }} />
-    </IconButton>
+    <Grid item container data-action="delete">
+      <IconButton onClick={deleteButton} >
+        <DeleteSharpIcon style={{ color: "white" }} />
+      </IconButton>
+    </Grid>
   );
 };
 

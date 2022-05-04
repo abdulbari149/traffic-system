@@ -32,7 +32,7 @@ const DeclinedWardenTableEntry = ({ handleIdChange, warden }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleRowClick = (e) => {
-    if (Object.keys(e.target.dataset).includes("action")) {
+    if (!!e.target.closest("[data-action]")) {
       return;
     }
     dispatch(setWardenId({ id: warden._id }));
@@ -84,7 +84,7 @@ const DeclinedWardenTableEntry = ({ handleIdChange, warden }) => {
             <UndoButton id={warden._id} />
           </TableCell>
           <TableCell align="right">
-            <DeleteButton id={warden._id} />
+            <DeleteButton id={warden._id} action="decline" />
           </TableCell>
         </>
       ) : (

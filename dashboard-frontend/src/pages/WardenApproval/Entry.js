@@ -43,6 +43,7 @@ const WardenApprovalEntry = ({ warden }) => {
   const tableCellSX = { display: { md: "table-cell", xs: "none" } };
 
   const handleRowClick = (e) => {
+    console.log({ e })
     if (Object.keys(e.target.dataset).includes("action")) {
       return;
     }
@@ -105,7 +106,7 @@ const WardenApprovalEntry = ({ warden }) => {
         <DeclineButton id={warden._id} />
       </TableCell>
       <TableCell align="right" sx={tableCellSX}>
-        <DeleteButton id={warden._id} />
+        <DeleteButton id={warden._id} action="approve" />
       </TableCell>
       <TableCell
         sx={{ display: { md: "none", xs: "table-cell" } }}

@@ -140,6 +140,9 @@ class AuthController {
             designation: doc?._doc.designation,
             traffic_sector: doc?._doc.traffic_sector,
             service_id: doc?._doc.service_id
+          }),
+          ...(req.params.user === "admin" && {
+            role: doc?._doc?.role
           })
         },
         process.env.JWTSecret,
@@ -256,7 +259,7 @@ class AuthController {
   };
 
   logout = async(req,res) => {
-
+    res.status(200).json({ message: "Successfully Logout" })
   }
 }
 

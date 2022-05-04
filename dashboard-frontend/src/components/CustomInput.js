@@ -42,7 +42,6 @@ const CustomInput = ({
     handlePasswordVisibility,
     passwordVisibility,
   } = useTogglePasswordVisibility()
-  console.log({ rightIcon, passwordVisibility })
   return (
     <FormControl fullWidth={true} sx={{ width: '100%' }}>
       <Typography variant="h5" className={styles.label}>

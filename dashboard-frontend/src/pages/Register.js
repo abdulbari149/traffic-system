@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Form from "../components/Form";
 import styles from "../styles/Auth.module.css";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import { registerValidationSchema } from "../helpers/validators";
@@ -13,6 +13,13 @@ import ActionAlerts from "../components/ActionAlerts";
 const Register = () => {
   const [createAdmin, { data, error, isSuccess, isError, isLoading }] =
     useRegisterMutation();
+  const navigate = useNavigate();
+  const { token, admin } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (admin.role !== "superadmin") {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   const initialValues = {
     first_name: "",
@@ -23,17 +30,32 @@ const Register = () => {
   const [alert, setAlert] = useState({ title: "", message: "", severity: "" });
   const [alertModalOpen, setAlertModalOpen] = useState(false);
 
-  async function handleSubmit(values, { setSubmitting }) {
+  async function handleSubmit(
+    values,
+    { setSubmitting, resetForm, submitCount }
+  ) {
     setSubmitting(true);
-    let token = localStorage.getItem("token");
-		console.log(token)
+    console.log({ token });
     let body = {
       name: `${values.first_name} ${values.last_name}`,
       email: values.email,
       password: values.password
     };
-    await createAdmin(body, token);
-    setTimeout(() => setSubmitting(false), 1000);
+    await createAdmin({ data: body, token });
+    setTimeout(() => {
+      resetForm({
+        values: initialValues,
+        error: initialValues,
+        touched: Object.keys(initialValues).reduce(
+          (obj, key) => ({ ...obj, [key]: false }),
+          {}
+        ),
+        isSubmitting: false,
+        submitCount: submitCount + 1,
+        isValidating: false
+      });
+      setSubmitting(false);
+    }, 1000);
   }
 
   useEffect(() => {

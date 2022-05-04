@@ -76,4 +76,5 @@ router.post(
   verifySuperAdmin,
   AuthController.registerAdmin
 );
+router.post("/logout", AuthController.logout)
 module.exports = router;

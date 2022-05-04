@@ -27,6 +27,14 @@ const wardenSlice = createSlice({
       } else if (payload.action === "decline") {
         state.decline = state.decline.filter((w) => w._id !== payload.id);
       }
+    },
+    resetWardenState(state){
+      state = {
+        approval: [],
+        wardenId: "",
+        declineId: "",
+        decline: []
+      }
     }
   }
 });
@@ -36,6 +44,7 @@ export const {
   setWardenDeclineList,
   setWardenId,
   removeWarden,
-  selectWardenDecline
+  selectWardenDecline,
+  resetWardenState
 } = wardenSlice.actions;
 export default wardenSlice.reducer;

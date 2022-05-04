@@ -4,7 +4,10 @@ export const api = createApi({
     baseUrl: "http://localhost:5000/api",
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = localStorage.getItem("token");
-      if (!!token && endpoint.toLowerCase().includes("warden")) {
+      if (
+        !!token &&
+        endpoint.toLowerCase().includes("warden")
+      ) {
         headers.set("Authorization", `Bearer ${token}`);
       }
 
@@ -116,7 +119,6 @@ export const api = createApi({
         };
       }
     }),
-
     login: builder.mutation({
       query: (data) => ({
         url: "/auth/admin/login",
@@ -125,13 +127,29 @@ export const api = createApi({
       }),
       providesTag: ["Admin"]
     }),
+    logout: builder.mutation({
+      query: (7) => ({
+        url: "/auth/admin/logout",
+        method: "POST",
+        body: {}
+      }),
+      invalidatesTags: [
+        "Admin",
+        "WardenApproval",
+        "AssignWardens",
+        "ProfilePic",
+        "ProfileDetails",
+        "Voilations",
+        "WardenDecline"
+      ]
+    }),
     register: builder.mutation({
-      query: (data, token) => ({
-        url: "auth/admin/create-admin",
+      query: ({ data, token }) => ({
+        url: "/auth/admin/create-admin",
         body: data,
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          authorization: `Bearer ${token}`
         }
       })
     })
@@ -140,6 +158,7 @@ export const api = createApi({
 
 export const {
   useLoginMutation,
+  useLogoutMutation,
   useRegisterMutation,
   useVerifyAuthMutation,
   useGetWardenListForApprovalQuery,

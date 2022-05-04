@@ -8,6 +8,7 @@ import LinkOffIcon from "@mui/icons-material/LinkOff";
 import ArchiveSharpIcon from "@mui/icons-material/ArchiveSharp";
 import CreateSharpIcon from "@mui/icons-material/CreateSharp";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ nav, setNav, open, setOpen }) => {
   const buttons = [
@@ -37,6 +38,8 @@ const Sidebar = ({ nav, setNav, open, setOpen }) => {
     }
   ];
 
+  const role = useSelector((state) => state.auth.admin?.role);
+
   const location = useLocation();
   const navigate = useNavigate();
   return (
@@ -55,7 +58,10 @@ const Sidebar = ({ nav, setNav, open, setOpen }) => {
           <img src={AdminImage} className={styles.image} alt="admin" />
           <Typography className={styles.heading}>Admin</Typography>
         </Grid>
-        {buttons.map(({ icon, title, active, to }, idx) => (
+        {(role !== "superadmin"
+          ? buttons.filter((btn) => btn.title !== "Register")
+          : buttons
+        ).map(({ icon, title, active, to }, idx) => (
           <div
             onClick={() => {
               setOpen(false);

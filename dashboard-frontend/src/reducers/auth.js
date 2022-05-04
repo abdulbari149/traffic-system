@@ -8,13 +8,16 @@ const authSlice = createSlice({
   },
   reducers: {
     setUser(state, { payload }) {
-      state.admin = {...payload.data, token: undefined }
-      state.token = payload.data.token
+      state.admin = payload.data
+    },
+    setToken(state, { payload }){
+      console.log({ payload })
+      state.token = payload.data
     }
-  }
+  } 
   
 })
 
 
-export const { setUser } = authSlice.actions
+export const { setUser, setToken } = authSlice.actions
 export default authSlice.reducer
