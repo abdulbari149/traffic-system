@@ -22,7 +22,6 @@ const AuthNavigation = () => {
         headerBackVisible: false,
         headerTitle: () => <></>,
         headerTransparent: true,
-        headerLeft: () => <GoBackIcon />,
       })}
     >
       <AuthStack.Screen

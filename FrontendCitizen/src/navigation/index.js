@@ -22,7 +22,6 @@ const Stack = () => {
       dispatch(setLogin(false));
       setLoading(false);
     }
-    console.log({ myToken });
     setMyToken(token);
     setLoading(true);
     await verifyAuth(token);
@@ -44,7 +43,7 @@ const Stack = () => {
 
   useEffect(() => {
     if (isError) {
-      console.log({ error });
+      dispatch(setLogin(false));
       setTimeout(() => setLoading(false), 1000);
     }
   }, [isError]);

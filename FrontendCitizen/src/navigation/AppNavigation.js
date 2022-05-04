@@ -9,7 +9,8 @@ import { GoBackIcon } from "components";
 const AppNavigation = () => {
   const ScreensStack = createNativeStackNavigator();
   const options = ({ navigation }) => ({
-    headerLeft: () => <GoBackIcon />,
+    headerTitle: () => <></>,
+    headerShadowVisible: false
   });
   return (
     <ScreensStack.Navigator>
@@ -17,7 +18,7 @@ const AppNavigation = () => {
         name={CHALLAN_HOME}
         component={ChallanHome}
         options={{
-          headerShown: false,
+          headerShown: false
         }}
       />
 
