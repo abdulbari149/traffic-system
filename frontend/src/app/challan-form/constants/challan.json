@@ -1,0 +1,45 @@
+[
+  {
+    "name": "drive_cnic",
+    "placeholder": "Enter driver CNIC",
+    "type": "numeric",
+    "defaultValue": ""
+  },
+  {
+    "name": "vehicle_no",
+    "placeholder": "Enter vehicle Registration Number",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "province",
+    "placeholder": "Province",
+    "type": "select",
+    "defaultValue": "",
+    "defaultItemLabel": "Choose A City",
+    "items": [
+      { "id": 1, "label": "Sindh", "value": "sindh" },
+      { "id": 2, "label": "Punjab", "value": "punjab" },
+      { "id": 3, "label": "Balochistan", "value": "balochistan" },
+      { "id": 4, "label": "Khyber Pakhtun Khuwa", "value": "kpk" }
+    ]
+  },
+  {
+    "name": "city",
+    "placeholder": "City",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "district",
+    "placeholder": "District",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "place_of_voilation",
+    "placeholder": "Enter the place of voilation",
+    "type": "text",
+    "defaultValue": ""
+  }
+]

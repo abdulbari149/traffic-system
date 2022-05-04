@@ -9,9 +9,9 @@ import {
   tableCellClasses,
   TableRow,
 } from '@mui/material'
-import styles from '../styles/Dashboard.module.css'
+import styles from '../../styles/Dashboard.module.css'
 
-import { Loading, TableFooter } from '.'
+import { Loading, TableFooter } from '..'
 const CustomTable = ({
   headerRow,
   renderTableHeader,

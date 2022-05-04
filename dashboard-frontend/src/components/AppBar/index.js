@@ -1,7 +1,7 @@
 import { Typography, IconButton, Grid } from "@mui/material";
 import React from "react";
-import styles from "../styles/AppBar.module.css";
-import AdminImage from "../images/admin-image.png";
+import styles from "../../styles/AppBar.module.css";
+import AdminImage from "../../images/admin-image.png";
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
