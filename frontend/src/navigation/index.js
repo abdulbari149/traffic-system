@@ -1,52 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { ChallanForm, ExtendedChallan, Voilation, RecordDetails } from "../app";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthNavigation from "./AuthNavigation";
-import AppTabNavigation from "./TabNavigation";
+import React, { useEffect, useState } from 'react'
+import { ChallanForm, ExtendedChallan, Voilation, RecordDetails } from '../app'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import AuthNavigation from './AuthNavigation'
+import AppTabNavigation from './TabNavigation'
 import {
   CHALLAN_FORM_SCREEN,
   CHALLAN_HOME_SCREEN,
   EXTENDED_CHALLAN_SCREEN,
   RECORD_DETAIL_SCREEN,
   VOILATION_SCREEN,
-} from "../routes";
-import { useDispatch, useSelector } from "react-redux";
-import { useCheckTokenMutation } from "src/api";
-import { getAuthToken } from "src/utils/async-storage";
-import { setLogin, setToken, setWardenAuth } from "src/app/auth/slice";
-import { Text, View } from "native-base";
-import { ActivityIndicator, LayoutAnimation } from "react-native";
-import { Loader } from "../components"
+} from '../routes'
+import { useDispatch, useSelector } from 'react-redux'
+import { useCheckTokenMutation } from 'src/api'
+import { getAuthToken } from 'src/utils/async-storage'
+import { setLogin, setToken, setWardenAuth } from 'src/app/auth/slice'
+import { Text, View } from 'native-base'
+import { ActivityIndicator, LayoutAnimation } from 'react-native'
+import { Loader } from '../components'
 const Routes = () => {
-  const [checkToken, { data, error, isLoading, isSuccess, isError }] =
-    useCheckTokenMutation();
-  const dispatch = useDispatch();
+  const [
+    checkToken,
+    { data, error, isLoading, isSuccess, isError },
+  ] = useCheckTokenMutation()
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
-  const [jwtToken, setJWTToken] = useState("");
+  const [jwtToken, setJWTToken] = useState('')
   const jwtAuthToken = async () => {
     setLoading(true)
-    const token = await getAuthToken("login");
+    const token = await getAuthToken('login')
     if (!token) {
-      dispatch(setLogin(false));
-      return;
+      console.log({ token })
+      dispatch(setLogin(false))
+      setLoading(false)
+      return
     }
     try {
-      setJWTToken(token);
-      await checkToken({ token });
+      setJWTToken(token)
+      await checkToken({ token })
     } catch (error) {
-      Alert.alert(error.message);
+      Alert.alert(error.message)
     }
-  };
+  }
 
   useEffect(() => {
-    jwtAuthToken();
-  }, []);
+    jwtAuthToken()
+  }, [])
 
   useEffect(() => {
     if (isSuccess) {
-
-      dispatch(setLogin(data.data.loggedIn));
-      dispatch(setToken({ data: jwtToken }));
+      setLoading(false)
+      dispatch(setLogin(data.data.loggedIn))
+      dispatch(setToken({ data: jwtToken }))
       dispatch(
         setWardenAuth({
           data: {
@@ -57,24 +61,26 @@ const Routes = () => {
             traffic_sector: data.data.traffic_sector,
             designation: data.data.designation,
           },
-        })
-      );
+        }),
+      )
       setTimeout(() => setLoading(false), 500)
     }
-  }, [isSuccess]);
+  }, [isSuccess])
 
   useEffect(() => {
     if (isError) {
-      dispatch(setLogin(false));
+      setLoading(false)
+
+      dispatch(setLogin(false))
       setTimeout(() => setLoading(false), 500)
     }
-  }, [isError]);
+  }, [isError])
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth)
 
-  const AppStack = createNativeStackNavigator();
+  const AppStack = createNativeStackNavigator()
   const config = {
-    animation: "timing",
+    animation: 'timing',
     config: {
       stiffness: 1000,
       damping: 500,
@@ -83,15 +89,13 @@ const Routes = () => {
       restDisplacementThreshold: 0.01,
       restSpeedThreshold: 0.01,
     },
-  };
+  }
 
   const headerOptions = {
     headerTitle: () => <></>,
     headerShadowVisible: false,
-    headerBackImageSource: require("../cdn/BackArrow.png"),
-  };
-
-
+    headerBackImageSource: require('../cdn/BackArrow.png'),
+  }
 
   return loading ? (
     <Loader />
@@ -105,7 +109,7 @@ const Routes = () => {
       }}
     >
       <AppStack.Screen
-        name={"tab"}
+        name={'tab'}
         component={AppTabNavigation}
         options={{ headerShown: false }}
       />
@@ -131,7 +135,9 @@ const Routes = () => {
         }}
       />
     </AppStack.Navigator>
-  ) : (<AuthNavigation />);
-};
+  ) : (
+    <AuthNavigation />
+  )
+}
 
-export default Routes;
+export default Routes

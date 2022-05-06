@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAuthToken, setAuthToken } from "src/utils/async-storage";
-import { Alert } from "react-native"
+import { Alert } from "react-native";
 export const api = createApi({
   tagTypes: ["Warden", "Citizen", "Voilations", "ChallanCount", "Records"],
   reducerPath: "authApi",
@@ -8,46 +8,46 @@ export const api = createApi({
     baseUrl: `http://192.168.1.102:5000/api`,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = getState().auth.token;
-      console.log({ token })
+      console.log({ token });
       if (!!token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
-    },
+    }
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getWardenInfo: builder.query({
-      query: () => `/warden/info`,
+      query: () => `/warden/info`
     }),
     getChallanCount: builder.query({
       query: () => `/challan/count`,
       providesTag: ["ChallanCount"]
     }),
     getChallanRecordDetails: builder.query({
-      query: ({ id }) => `/challan/warden/records/${id}`,
+      query: ({ id }) => `/challan/warden/records/${id}`
     }),
     getChalllanRecords: builder.query({
       query: ({ paid, page }) => {
         return {
           url: `/challan/warden/records?paid=${paid}`,
-          method: "GET",
+          method: "GET"
         };
       },
       providesTags: ["Records"]
     }),
     getVoilationByType: builder.query({
       query: ({ v_type }) => `/voilation?v_type=${v_type}`,
-      providesTags: ["Voilations"],
+      providesTags: ["Voilations"]
     }),
     getCitizenByCNIC: builder.query({
       query: ({ cnic }) => `/citizen/get-citizen-by-cnic?cnic=${cnic}`,
-      providesTags: ["Citizen"],
+      providesTags: ["Citizen"]
     }),
     submitChallan: builder.mutation({
-      query: (challan) => ({
+      query: challan => ({
         url: "/challan/add",
         method: "POST",
-        body: challan,
+        body: challan
       }),
       invalidatesTags: ["ChallanCount", "Records"]
     }),
@@ -58,30 +58,30 @@ export const api = createApi({
           method: "POST",
           url: "/auth/warden/check-user",
           body: {
-            email,
-          },
+            email
+          }
         };
       },
-      providesTags: ["Warden"],
+      providesTags: ["Warden"]
     }),
     checkToken: builder.mutation({
       query: ({ token }) => ({
         method: "POST",
         url: "/auth/warden/verify-auth",
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       }),
-      providesTags: ["Warden"],
+      providesTags: ["Warden"]
     }),
     signUp: builder.mutation({
-      query: (user) => {
+      query: user => {
         return {
           url: "/auth/warden/register",
           method: "POST",
-          body: user,
+          body: user
         };
-      },
+      }
     }),
     login: builder.mutation({
       query: ({ email, password }) => ({
@@ -89,10 +89,10 @@ export const api = createApi({
         method: "POST",
         body: {
           email,
-          password,
-        },
+          password
+        }
       }),
-      transformResponse: (response) => {
+      transformResponse: response => {
         return response.data;
       },
       async onQueryStarted(_, { queryFulfilled }) {
@@ -103,22 +103,22 @@ export const api = createApi({
             await setAuthToken("login", token);
           }
         } catch (error) {
-          Alert.alert("Unauthorized Error", "You are currently unauthorized")
+          Alert.alert("Unauthorized Error", "You are currently unauthorized");
         }
-      },
+      }
     }),
     forgetPassword: builder.mutation({
       query: ({ email }) => ({
         url: "/auth/warden/forget-password",
         method: "POST",
         body: {
-          email,
-        },
+          email
+        }
       }),
       transformResponse: (response, meta) => {
         return {
           ...response,
-          authToken: meta.response.headers["Authorization"],
+          authToken: meta.response.headers["Authorization"]
         };
       },
       async onQueryStarted(_, { queryFulfilled }) {
@@ -127,11 +127,10 @@ export const api = createApi({
           const token = meta.response.headers.map["authorization"];
           console.log({ token });
           await setAuthToken("password", token);
-
-        }catch(error){
-          Alert.alert("Unauthorized Error", "You are currently unauthorized")
+        } catch (error) {
+          Alert.alert("Unauthorized Error", "You are currently unauthorized");
         }
-      },
+      }
     }),
     changePassword: builder.mutation({
       query: ({ new_password, confirm_password, headers }) => ({
@@ -139,29 +138,29 @@ export const api = createApi({
         method: "PUT",
         body: {
           password: new_password,
-          confirm_password,
+          confirm_password
         },
         headers: {
-          Authorization: `Bearer ${headers.authToken}`,
-        },
-      }),
+          Authorization: `Bearer ${headers.authToken}`
+        }
+      })
     }),
     smsVerification: builder.mutation({
       query: ({ phone_number }) => ({
         url: "/auth/warden/verify-sms",
         method: "POST",
         body: {
-          phone_number,
-        },
-      }),
+          phone_number
+        }
+      })
     }),
     getProfilePic: builder.query({
-      query:(id) => ({
+      query: id => ({
         method: "GET",
-        url: `/image/warden/get/profilepic/${id}`,
-      }),
+        url: `/image/warden/get/profilepic/${id}`
+      })
     })
-  }),
+  })
 });
 
 export const {

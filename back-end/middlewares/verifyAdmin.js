@@ -4,7 +4,6 @@ exports.verifyAdmin = async (req, res, next) => {
   try {
     console.log("admin verification runs", res.locals.data.id);
     const admin = await Admin.findById(res.locals.data.id);
-    console.log({ admin });
     if (!admin) {
       let error = new Error("Admin Doesn't exists");
       error.status = 401;
@@ -19,7 +18,6 @@ exports.verifyAdmin = async (req, res, next) => {
 exports.verifySuperAdmin = async (req, res, next) => {
   try {
     const admin = await Admin.findById(res.locals.data.id);
-    console.log({ admin });
     if (!admin) {
       let error = new Error("Admin Doesn't exists");
       error.status = 401;

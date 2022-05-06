@@ -1,36 +1,48 @@
-import React from "react";
-import { CREATE_PASSWORD_SCREEN, VERIFICATION_SCREEN } from "src/routes";
-import Password from "../components/Password";
-import * as yup from "yup";
-import { useForgetPasswordMutation } from "src/api";
-import { Alert } from "react-native";
-import { forgetPasswordFormData } from "../constants"
-
+import React, { useEffect } from 'react'
+import { CREATE_PASSWORD_SCREEN, VERIFICATION_SCREEN } from 'src/routes'
+import Password from '../components/Password'
+import * as yup from 'yup'
+import { useForgetPasswordMutation } from 'src/api'
+import { Alert } from 'react-native'
+import { forgetPasswordFormData } from '../constants'
+import { errorAlert } from "src/utils/error-alert"
 const validationSchema = yup.object({
   email: yup
     .string()
-    .email("Invalid email formmat")
-    .required("This is a required field"),
-});
+    .email('Invalid email formmat')
+    .required('This is a required field'),
+})
 
 const ForgotPassword = ({ navigation, route }) => {
-  const [forgotpassword] = useForgetPasswordMutation();
-  const handleSubmit = async (value) => {
-    try {
-      const { data, error } = await forgotpassword({ email: value.email });
+  const [
+    forgotpassword,
+    { data, error, isSuccess, isError, isLoading },
+  ] = useForgetPasswordMutation()
 
-      if (data) {
-        navigation.navigate(VERIFICATION_SCREEN, {
-          next: CREATE_PASSWORD_SCREEN,
-          phone_number: data.data.phone_number,
-        });
-      } else if (error) {
-        throw new Error(error?.data.message);
-      }
-    } catch (error) {
-      Alert.alert(error.message);
+  const handleSubmit = async (value, { setSubmitting }) => {
+    setSubmitting(true)
+    await forgotpassword({ email: value.email })
+    setTimeout(() => setSubmitting(false), 2000)
+  }
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate(VERIFICATION_SCREEN, {
+        next: CREATE_PASSWORD_SCREEN,
+        phone_number: data.data.phone_number,
+      })
     }
-  };
+  }, [isSuccess])
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error)
+      const FORGOT_PASSWORD_ERROR = {
+        title: 'Server Error Occured',
+        body: error?.data?.message,
+      }
+      errorAlert(FORGOT_PASSWORD_ERROR)
+    }
+  }, [isError])
   return (
     <Password
       data={forgetPasswordFormData}
@@ -39,6 +51,6 @@ const ForgotPassword = ({ navigation, route }) => {
       handleSubmit={handleSubmit}
       route={route}
     />
-  );
-};
-export default ForgotPassword;
+  )
+}
+export default ForgotPassword

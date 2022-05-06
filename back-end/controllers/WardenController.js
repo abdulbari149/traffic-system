@@ -149,7 +149,6 @@ class WardenController {
 
   authorizeWarden = async (req, res) => {
     authorizeBlock: try {
-      console.log("runs");
       const wardenApproval = await WardenApproval.findOneAndUpdate(
         { wardenId: req.body.wardenId, adminId: res.locals.data.id },
         {
@@ -168,7 +167,6 @@ class WardenController {
         status: "approve",
         authorized: true
       });
-      console.log({ warden });
 
       this.response = {
         data: {
@@ -275,7 +273,6 @@ class WardenController {
         .status(200)
         .json({ message: "Warden Updated", wardens, wardenApprovalsDeleted });
     } catch (error) {
-      console.log({ error });
       res.status(500).json(error);
     }
   };

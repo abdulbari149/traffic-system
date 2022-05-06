@@ -7,7 +7,6 @@ class ImageController {
   };
   uploadImages = async (req, res) => {
     try {
-      console.log({ id: req.body.userId, file: req.file });
       const { DbModel } = res.locals;
       const data = await DbModel.findByIdAndUpdate(req.body.userId, {
         $push: { images: req.file.id },
@@ -31,7 +30,6 @@ class ImageController {
 
   getProfilePic = async (req, res) => {
     try {
-      console.log("Req runs");
       const { id } = req.params;
       const { DbModel } = res.locals;
       const data = await DbModel.findById(id, ["images"]).populate({
@@ -47,7 +45,6 @@ class ImageController {
   getImages = async (req, res) => {
     try {
       const { DbModel, data } = res.locals;
-      console.log({ data });
       const files = await DbModel.findById(req.params.id, ["images"])
         .populate("images")
         .lean();
@@ -60,8 +57,6 @@ class ImageController {
 
   getImageById = async (req, res) => {
     try {
-      console.log("file req runs")
-      console.log({ filename: req.params.filename })
       const gfsBucket = req.app.get("gfsBucket");
       const gfs = req.app.get("gfs");
       const file = await gfs.files.findOne({ filename: req.params.filename });

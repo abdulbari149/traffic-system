@@ -23,7 +23,6 @@ class AuthController {
           status: 200,
         };
       } else {
-        console.log({ doc });
         this.response = {
           status: 200,
           message: "You can signup",
@@ -45,7 +44,6 @@ class AuthController {
     try {
       const { DbModel } = res.locals;
       const { password, confirm_password, ...user } = req.body;
-      console.log({ user });
       const hashedPassword = await hash(password, 10);
       const data = await DbModel.create({
         ...user,
@@ -73,13 +71,11 @@ class AuthController {
       if(adminExists){
         let error = new Error("Admin already exists")
         error.status = 403
-        console.log({ error })
         throw error
       }
       const hashedPassword = await hash(req.body.password, 10);
       adminData.password = hashedPassword
       adminData.role = "admin"
-      console.log({ adminData })
       const admin = await Admin.create(adminData)
       if(!admin){
         let error = new Error("Error Creating admin")
@@ -102,7 +98,6 @@ class AuthController {
 
   login = async (req, res) => {
     const { password, ...param } = req.body;
-    console.log({ param });
     const { DbModel } = res.locals;
     loginBlock: try {
       const doc = await DbModel.findOne(param);

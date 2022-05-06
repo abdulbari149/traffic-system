@@ -8,7 +8,6 @@ const client = require("twilio")(accountSid, authToken);
 async function sendSMSVerificationCode(number) {
   try {
     const code = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)
-    console.log(code)
     const  from = process.env.TWILIO_TRIAL_PHONE_NUMBER
     const response = await client.messages.create({
       body: `Your 4-digit code is: ${code}`,

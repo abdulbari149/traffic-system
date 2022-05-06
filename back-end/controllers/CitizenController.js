@@ -8,7 +8,6 @@ class CitizenController {
   };
 
   getCitizenByCNIC = async (req, res) => {
-		console.log({ cnic: req.query.cnic })
     try {
       const doc = await Citizen.findOne({ cnic_no: req.query.cnic });
       if (!doc) {

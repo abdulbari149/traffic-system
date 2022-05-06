@@ -17,7 +17,7 @@ const ChallanFormHome = ({ navigation }) => {
     <View style={styles.challanHomeContainer}>
       <Header screenName="Challan Form" />
       <View style={styles.challanHomeMain}>
-        <Image source={require("src/cdn/challan-screen-img.png")} />
+        <Image source={require("src/cdn/challan-screen-img.png")} width={200} />
         <Text
           style={styles.challanHomeParagraph}
           minimumFontScale={12}

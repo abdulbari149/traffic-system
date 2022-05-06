@@ -157,16 +157,7 @@ const Login = ({ navigation }) => {
             );
           }}
         </Formik>
-        <Box
-          pos="fixed"
-          bottm="0"
-          w="100%"
-          bg={"#fff"}
-          flex={1}
-          alignItems="center"
-        >
-          <Dots activeScreen={2} />
-        </Box>
+
       </Flex>
     </KeyboardAwareScrollView>
   );
