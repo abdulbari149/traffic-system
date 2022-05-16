@@ -24,7 +24,7 @@ const WardenApproval = () => {
     title: "Wardens Currently Unavaliable",
     body: "There are no more request for wardens approval"
   })
-  console.log({ assign });
+  // console.log({ /assign });
   const wardenList = useGetWardenListForApprovalQuery("uncheck");
 
   const assignWardenToAdmin = useAssignWardenToAdminQuery(null, {
@@ -38,7 +38,7 @@ const WardenApproval = () => {
       wardens.length > 0 &&
       wardens.length < 4
     ) {
-      console.log("Refetching");
+      // console.log("Refetching");
       assignWardenToAdmin.refetch();
       setAssign(true);
     }
@@ -46,9 +46,9 @@ const WardenApproval = () => {
 
   useEffect(() => {
     if (assignWardenToAdmin.isFetching) {
-      console.log("Again assigning wardens to admin", {
-        isFetching: assignWardenToAdmin.isFetching
-      });
+      // console.log("Again assigning wardens to admin", {
+      //   isFetching: assignWardenToAdmin.isFetching
+      // });
     }
   }, [assignWardenToAdmin.isFetching]);
 
@@ -63,7 +63,7 @@ const WardenApproval = () => {
         setAssign(false);
         setLoading(false);
       }
-      console.log("Success Assigning", data);
+      // console.log("Success Assigning", data);
       let newWardens = wardens.concat(data);
       dispatch(setWardenApprovalList({ data: newWardens }));
       setAssign(false);

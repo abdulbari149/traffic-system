@@ -10,7 +10,7 @@ import { setWardenDeclineList } from "../../reducers/warden";
 import { Outlet } from "react-router-dom";
 const DeclineWarden = ({ matches, handleIdChange }) => {
   const { decline: wardens } = useSelector((state) => state.warden);
-
+  console.log({ wardens })
   const {
     data,
     error,

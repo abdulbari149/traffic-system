@@ -4,7 +4,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-
+import { toast } from "react-toastify";
 import styles from "../styles/Auth.module.css";
 
 import CustomInput from "../components/CustomInput";
@@ -48,7 +48,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
-      alert(JSON.stringify(error));
+      alert(error?.data?.message ?? "Error Occured")
     }
   }, [isError]);
 

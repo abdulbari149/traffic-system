@@ -51,7 +51,7 @@ const WardenApprovalEntry = ({ warden }) => {
     if (matches) {
       navigate("profile");
     } else {
-      navigate("/warden-profile", { replace: true });
+      navigate("/approval/warden-profile", { replace: true });
     }
   };
 
@@ -114,7 +114,7 @@ const WardenApprovalEntry = ({ warden }) => {
       >
         <Button
           className={styles.underlinedButton}
-          onClick={() => navigate(`/warden-profile`, { replace: true })}
+          onClick={() => navigate(`/approval/warden-profile`, { replace: true })}
         >
           View Details
         </Button>

@@ -76,7 +76,7 @@ const AppRoutes = () => {
         <Route element={<Register />} path="admin-register" />
       </Route>
       <Route element={<Login />} path="login" exact />
-      <Route element={<WardenProfile />} path="warden-profile" />
+      <Route element={<WardenProfile />} path=":status/warden-profile" />
       <Route  index exact element={<Navigate to="/dashboard" />} />
     </Routes>
   );

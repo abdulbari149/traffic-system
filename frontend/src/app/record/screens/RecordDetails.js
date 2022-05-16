@@ -16,7 +16,7 @@ const RecordDetail = ({ navigation, route }) => {
   const [image, setImage] = useState("");
   useEffect(() => {
     if (isSuccess) {
-      setImage(data.data.citizen.images[0].filename);
+      setImage(data.data.citizen?.images[0]?.filename);
     }
   }, [isSuccess]);
   useEffect(() => {
@@ -26,7 +26,7 @@ const RecordDetail = ({ navigation, route }) => {
   }, [isError]);
 
   const profilephoto = {
-    uri: `http://192.168.1.102:5000/api/image/citizen/file/${image}`,
+    uri: `http://10.0.2.2:5000/api/image/citizen/file/${image}`,
   };
 
   const coverphoto = {

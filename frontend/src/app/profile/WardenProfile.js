@@ -5,20 +5,21 @@ import { useSelector } from "react-redux";
 import styles from "./styles";
 import _ from "lodash";
 import { useGetChallanCountQuery } from "src/api";
-
+import ProfileBgImage from "src/cdn/profile-bg.png";
 const WardenProfile = () => {
   const { warden, profilePic } = useSelector((state) => state.auth);
-
+  console.log({ warden });
   const { data, currentData, error, isSuccess, isError } =
     useGetChallanCountQuery(null, {
-      pollingInterval: 1 * 60 * 60 * 100,
+      pollingInterval: 1 * 15 * 60 * 100,
       refetchOnFocus: true,
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
     });
   const profilephoto = {
-    uri: `http://192.168.1.102:5000/api/image/warden/file/${profilePic.url}`,
+    uri: `http://10.0.2.2:5000/api/image/warden/file/${profilePic?.url}`,
   };
+  console.log({ profilephoto });
   const [yearlyCount, setYearlyCount] = useState(
     currentData?.yearlyCount ?? ""
   );
@@ -33,14 +34,38 @@ const WardenProfile = () => {
     }
   }, [isSuccess]);
 
-  const coverphoto = {
-    uri: "https://res.cloudinary.com/saadfarhan/image/upload/v1644958504/sea_hqy35u.png",
-  };
-
   return (
     <ScrollView _contentContainerStyle={styles.scrollView}>
-      <Image source={coverphoto} alt="sea" style={styles.coverphoto} />
-      <Image source={profilephoto} alt="hooman" style={styles.profilepic} />
+      <Image source={ProfileBgImage} alt="sea" style={styles.coverphoto} />
+      <Text
+        style={{
+          fontSize: 24,
+          fontWeight: "bold",
+          position: "absolute",
+          top: 60,
+          height: "100%",
+          lineHeight: 45,
+          zIndex: 100,
+          textAlign: "center",
+          width: "100%",
+          color: "white",
+        }}
+      >
+        {"W A R D E N ' S    P R O F I L E"}
+      </Text>
+      <Image source={profilephoto} alt="  " style={styles.profilepic} />
+      <Text
+        style={{
+          fontSize: 25,
+          fontWeight: "bold",
+          width: "100%",
+          textAlign: "center",
+          padding: 10,
+          color: "#296BFF",
+        }}
+      >
+        {_.capitalize(warden.name)}
+      </Text>
       <View style={styles.profileBigCard}>
         <View style={styles.twoCardContainer}>
           <View style={{ ...styles.profileSmallCard, marginRight: 10 }}>
@@ -59,7 +84,9 @@ const WardenProfile = () => {
         <View style={styles.profileBigInnerCard}>
           <Text style={styles.profileKeys}>Name</Text>
           <Text fontSize="2xl" style={styles.profileValues}>
-            {_.capitalize(warden.name)}
+            {_.capitalize(
+              warden?.name ?? warden.frst_name + " " + warden?.last_name
+            )}
           </Text>
         </View>
       </View>

@@ -63,7 +63,8 @@ const SignUp = ({ navigation, route }) => {
 
   const [modalError, setModalError ] = useState()
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
     try {
       const { data, error } = await checkUserExists({ email: values.email });
       if (error && !data) {
@@ -74,13 +75,16 @@ const SignUp = ({ navigation, route }) => {
         const phone_number = values.phone_number.startsWith("+92")
           ? values.phone_number
           : values.phone_number.replace("0", "+92");
+        console.log({ phone_number })
         dispatch(addWardenInfo({ ...values, phone_number }));
         navigation.navigate(UPLOAD_PROFILE_PIC_SCREEN);
+        setSubmitting(false)
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
       Alert.alert(error.message);
+      setSubmitting(false)
     }
   };
 

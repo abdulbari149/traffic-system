@@ -54,7 +54,7 @@ const DeclineButton = ({ id }) => {
   };
   useEffect(() => {
     if (isSuccess) {
-      console.log("Response Data ==>", data);*
+      console.log("Response Data ==>", data);
       dispatch(removeWarden({ id, action: "approve" }));
     }
   }, [isSuccess]);
@@ -77,7 +77,7 @@ const DeclineButton = ({ id }) => {
     </Button>
   );
 };
-const UndoButton = ({ id }) => {
+const UndoButton = ({ id, onClick }) => {
   const dispatch = useDispatch();
   const [undoWarden, { data, error, isSuccess, isError }] =
     useUndoWardenMutation();
@@ -88,6 +88,7 @@ const UndoButton = ({ id }) => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(removeWarden({ id, action: "decline" }));
+      onClick()
     }
   }, [isSuccess]);
 

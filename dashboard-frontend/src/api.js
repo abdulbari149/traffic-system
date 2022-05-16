@@ -128,7 +128,7 @@ export const api = createApi({
       providesTag: ["Admin"]
     }),
     logout: builder.mutation({
-      query: (7) => ({
+      query: () => ({
         url: "/auth/admin/logout",
         method: "POST",
         body: {}

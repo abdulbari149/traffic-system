@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderRadius: 60,
         alignSelf: 'center',
-        marginTop: -60
+        marginTop: -70
     },
     username: {
         alignSelf: 'center',

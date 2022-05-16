@@ -39,7 +39,7 @@ const DeclinedWardenTableEntry = ({ handleIdChange, warden }) => {
     if (matches) {
       navigate("profile");
     } else {
-      navigate("/warden-profile", { replace: true });
+      navigate("/decline/warden-profile", { replace: true });
     }
   };
 
@@ -56,8 +56,8 @@ const DeclinedWardenTableEntry = ({ handleIdChange, warden }) => {
   return (
     <TableRow onClick={handleRowClick} className={styles.tableRow}>
       <TableCell className={styles.nameAndImage}>
-        {!matches && <img src={WardenImage} alt="warden" />}
-        <div style={{ paddingLeft: 15 }}>
+        {!matches && <img src={WardenImage} alt="warden" width={50} height={50}/>}
+        <div style={{ width: "100%", paddingLeft: 15 }}>
           <Typography
             variant={matches ? "h6" : "subtitle1"}
             className={styles.text}
@@ -91,7 +91,7 @@ const DeclinedWardenTableEntry = ({ handleIdChange, warden }) => {
         <TableCell align="right">
           <Button
             className={styles.underlinedButton}
-            onClick={() => navigate(`/warden-profile`, { replace: true })}
+            onClick={() => navigate(`/decline/warden-profile`, { replace: true })}
           >
             View Details
           </Button>

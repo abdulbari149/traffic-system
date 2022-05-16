@@ -44,9 +44,9 @@ function Header({ title }) {
         sx={{ display: { lg: "flex", xs: "none" } }}
         startIcon={<LogoutIcon className={styles.logoutIcon} />}
       >
-        <Link to="/" className={styles.logoutButtonText}>
+        <p className={styles.logoutButtonText}>
           Logout
-        </Link>
+        </p>
       </Button>
     </div>
   );

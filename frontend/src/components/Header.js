@@ -51,8 +51,8 @@ const Header = ({ screenName }) => {
   const { data, error, isSuccess } = useGetProfilePicQuery(wardenId);
   useEffect(() => {
     if (isSuccess) {
-      setImage(data.url);
       console.log({ data })
+      setImage(data.url);
       dispatch(setProfilePic({ data }))
     }
   }, [isSuccess]);
@@ -70,7 +70,7 @@ const Header = ({ screenName }) => {
       <Pressable onPress={handlePress} style={styles.profile}>
         {image !== "" ? <Image
           source={{
-            uri: `http://192.168.1.102:5000/api/image/warden/file/${image}`,
+            uri: `http://10.0.2.2:5000:5000/api/image/warden/file/${image}`,
             method: "GET",
           }}
           style={{ width: 50, height: 50, borderRadius: 100000 }}

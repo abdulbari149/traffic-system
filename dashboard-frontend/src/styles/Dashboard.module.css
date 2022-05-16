@@ -115,14 +115,14 @@
     font-weight: 700 !important;
     text-transform: none !important;
 }
-
-@media screen and (orientation: portrait) {
-    .nameAndImage {
-        display: flex !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-    }
+.nameAndImage {
+    width: 100%;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    
 }
+    
 
 @media screen and (min-width: 1200px) {
     .hidden{

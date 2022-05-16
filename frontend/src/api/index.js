@@ -5,7 +5,7 @@ export const api = createApi({
   tagTypes: ["Warden", "Citizen", "Voilations", "ChallanCount", "Records"],
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://192.168.1.102:5000/api`,
+    baseUrl: `http://10.0.2.2:5000/api`,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = getState().auth.token;
       console.log({ token });
