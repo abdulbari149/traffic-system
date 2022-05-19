@@ -27,6 +27,9 @@ let gfs, gridfsBucket;
     app.set("gfs", gfs)
     app.set("gfsBucket", gridfsBucket)
     app.use(express.json());
+    app.use("/", (req, res) => {
+      res.send("<h1>Traffic System :)</h1>")
+    })
     app.use("/api/warden", routes.WardenRoutes);
     app.use("/api/auth/:user", routes.AuthRoutes);
     app.use("/api/voilation", routes.VoilationRoutes);
