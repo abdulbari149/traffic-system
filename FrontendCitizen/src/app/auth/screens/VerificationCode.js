@@ -2,17 +2,23 @@ import React, { useEffect, useRef, useState } from "react";
 import { Text, View, Image, Button as NBButton } from "native-base";
 import { VerificationCodeInput, Button } from "components";
 import { useSmsVerificationMutation } from "api";
-import { INVALID_CODE, VERIFICATION_CODE_ERROR, ENOUGH_TRIES_ERROR, ACCESS_TOKEN_ERROR } from "../messages";
+import {
+  INVALID_CODE,
+  VERIFICATION_CODE_ERROR,
+  ENOUGH_TRIES_ERROR,
+  ACCESS_TOKEN_ERROR,
+} from "../messages";
 import { errorAlert } from "utils/alert";
 import { forgotPasswordFinalizer } from "../helper";
 import { CHALLAN_HOME, CREATE_NEW_PASSWORD } from "routes";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "../slice";
 import { setAuthToken } from "utils/async-storage";
+import { TextBtn } from "../../../components/Button";
 
 const VerificationCode = ({ navigation, route }) => {
-  const accessToken = useSelector(state => state.auth.accessToken)
-  const dispatch = useDispatch()
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const dispatch = useDispatch();
   const { phone_number, screen } = route.params;
   const triesRef = useRef(0);
   const [value, setValue] = useState("");
@@ -22,6 +28,7 @@ const VerificationCode = ({ navigation, route }) => {
   const sendCode = async () => {
     await sendSMS(phone_number);
   };
+  const ref = useRef(0);
 
   useEffect(() => {
     sendCode();
@@ -31,7 +38,7 @@ const VerificationCode = ({ navigation, route }) => {
     if (triesRef.current === 5) {
       sendCode();
       triesRef.current = 0;
-      errorAlert(ENOUGH_TRIES_ERROR)
+      errorAlert(ENOUGH_TRIES_ERROR);
     }
   }, [triesRef.current]);
 
@@ -44,32 +51,28 @@ const VerificationCode = ({ navigation, route }) => {
   }, [isError]);
 
   const handlePinCode = async () => {
-    if (value.length !== 4) return
-    triesRef.current++
+    if (value.length !== 4) return;
+    triesRef.current++;
     if (value !== serverCode) {
-      errorAlert(INVALID_CODE)
-      return
+      errorAlert(INVALID_CODE);
+      return;
     }
-    console.log("Running")
     switch (screen) {
       case "forgotpassword":
         navigation.navigate(CREATE_NEW_PASSWORD);
         return;
       case "login":
         try {
-          await setAuthToken("access", accessToken)
-          console.log("login running")
-          dispatch(setLogin(true))
-          navigation.navigate(CHALLAN_HOME)
+          await setAuthToken("access", accessToken);
+          dispatch(setLogin(true));
+          navigation.navigate(CHALLAN_HOME);
         } catch (error) {
-          console.log({ error })
-          errorAlert(ACCESS_TOKEN_ERROR)
+          errorAlert(ACCESS_TOKEN_ERROR);
         } finally {
-          return
+          return;
         }
-      default: 
-        console.log("Hello")
-        return
+      default:
+        return;
     }
   };
 
@@ -90,18 +93,24 @@ const VerificationCode = ({ navigation, route }) => {
           Please enter the 4 digit code sent to {phone_number}
         </Text>
         <VerificationCodeInput value={value} setValue={setValue} />
-        <NBButton style={{ backgroundColor: "transparent" }} onPress={sendCode}>
-          <Text
-            style={{
-              color: "white",
-              textDecorationLine: "underline",
+        <NBButton
+          style={{
+            width: 120,
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: 20,
+            backgroundColor: "transparent",
+          }}
+          _text={{
+            style: {
               fontSize: 16,
-              fontWeight: "bold",
-              paddingTop: 20,
-            }}
-          >
-            Resend Code
-          </Text>
+              paddingBottom: 2,
+              textDecorationLine: "underline",
+            },
+          }}
+          onPress={sendCode}
+        >
+          Resend Code
         </NBButton>
         <Button
           title="Confirm"
@@ -110,6 +119,7 @@ const VerificationCode = ({ navigation, route }) => {
             btn: {
               width: 200,
               alignSelf: "center",
+              marginTop: 10,
             },
           }}
           onPress={handlePinCode}

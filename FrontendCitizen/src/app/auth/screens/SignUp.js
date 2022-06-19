@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, Text, View } from "native-base";
+import { Button, ScrollView, Text, View } from "native-base";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-
 import styles from "../styles";
 import { LOGIN_SCREEN, VERIFICATION_SCREEN } from "routes";
 import { useSignupMutation } from "api/index";
-import { Field, Modal } from "components/index";
+import { Field, LoadingButton,  Modal } from "components/index";
 import { signupInitialValues } from "../constants";
 import transformPhoneNumber from "utils/transformPhoneNumber";
-import { REGISTRATION_COMPLETED } from "../messages";
+import { REGISTRATION_COMPLETED, SIGNUP_ERROR  } from "../messages";
 import { signupValidationSchema } from "../validators";
 import { errorAlert } from "utils/alert";
 
@@ -20,9 +19,10 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
+    const phoneNo = transformPhoneNumber(values.phone_number)
     let data = {
       ...values,
-      phone_number: transformPhoneNumber(phone_number),
+      phone_number: phoneNo,
     };
     await signup(data);
     setTimeout(() => setSubmitting(false), 1000);
@@ -34,8 +34,8 @@ const SignUpScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (isError) {
-      SIGNUP_ERROR.body = error?.data?.message ?? ""
-      errorAlert(SIGNUP_ERROR)
+      SIGNUP_ERROR.body = error?.data?.message ?? "";
+      errorAlert(SIGNUP_ERROR);
     }
   }, [isError]);
 
@@ -51,7 +51,7 @@ const SignUpScreen = ({ navigation }) => {
         onSubmit={handleSubmit}
         validationSchema={signupValidationSchema}
       >
-        {({ values, handleChange, handleBlur, errors }) => {
+        {({ values, handleChange, handleBlur, errors, handleSubmit, isSubmitting }) => {
           return (
             <View style={styles.loginContainer}>
               <Field
@@ -119,6 +119,11 @@ const SignUpScreen = ({ navigation }) => {
                 label="Confirm Password"
                 password={true}
               />
+              <LoadingButton
+                onPress={handleSubmit}
+                disabled={isSubmitting}
+                text="Continue"
+              />
             </View>
           );
         }}
@@ -130,13 +135,13 @@ const SignUpScreen = ({ navigation }) => {
       >
         Already have account? Login
       </Text>
-      {/* <Modal
+      <Modal
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
         {...REGISTRATION_COMPLETED}
         onConfirm={toLogin}
         btnText="Login"
-      /> */}
+      />
     </ScrollView>
   );
 };

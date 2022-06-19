@@ -14,7 +14,7 @@ const CreateNewPassword = ({ navigation }) => {
   
   const [modalVisible, setModalVisible] = useState(false);
   const [changePassword, { data, error, isError, isSuccess, isLoading }] =
-    useChangePasswordMutation();
+    useChangePasswordMutation();  
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -33,6 +33,9 @@ const CreateNewPassword = ({ navigation }) => {
 
   useEffect(() => {
     if (isError) {
+      if(error.data.message){
+        NEW_PASSWORD_ERROR.body = error.data.message
+      }
       errorAlert(NEW_PASSWORD_ERROR);
     }
   }, [isError]);

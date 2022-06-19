@@ -33,7 +33,6 @@ const Stack = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log({ myToken });
       dispatch(setUser({ data: { ...data.data, loggedIn: undefined } }));
       dispatch(setAccessToken({ data: myToken }));
       dispatch(setLogin(data?.data?.loggedIn));

@@ -84,7 +84,6 @@ const ForgotPassword = ({ navigation }) => {
             />
             <LoadingButton
               onPress={() => {
-                console.log("Form Submitting");
                 submitHandler();
               }}
               disabled={isSubmitting}

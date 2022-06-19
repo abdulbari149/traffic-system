@@ -14,9 +14,6 @@ const Field = ({
 }) => {
   const [field, meta, helpers] = useField(props);
   const { passwordVisibility, handlePasswordVisibility, rightIcon } = useTogglePasswordVisibility()
-
-  console.log({ ...meta })
-
   return (
     <FormControl>
       <Stack my="3">

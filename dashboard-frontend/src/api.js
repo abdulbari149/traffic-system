@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api",
+    baseUrl: "https://traffic-system-api.herokuapp.com/api",
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = localStorage.getItem("token");
       if (

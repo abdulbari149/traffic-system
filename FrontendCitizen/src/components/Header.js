@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { View, Image, StyleSheet, Text, Pressable } from "react-native";
 import { Box, Button } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,13 +21,17 @@ const Header = () => {
   }, [challans]);
   const handleLogout = async () => {
     setLoading(true);
-    // await setAuthToken("access", "");
-    // dispatch(setUser({ data: {} }));
-    // dispatch(setAccessToken({ data: "" }));
-    // dispatch(setLogin(false));
-    // setLoading(false);
-    setTimeout(() => setLoading(false), 200);
+    await setAuthToken("access", "");
+    dispatch(setUser({ data: {} }));
+    dispatch(setAccessToken({ data: "" }));
+    dispatch(setLogin(false));
   };
+
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+    }
+  }, [])
   return (
     <>
       <View style={styles.headerContainer}>

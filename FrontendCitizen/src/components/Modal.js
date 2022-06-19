@@ -19,7 +19,7 @@ const Modal = (props) => {
     body,
     modalVisible,
     setModalVisible,
-    image,
+    image = null,
     onConfirm,
     onClose,
     btnText = "Next",
@@ -35,7 +35,7 @@ const Modal = (props) => {
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView} alt="modal-image">
-          <Image width={180} source={image} alt="image" />
+          {image ? <Image width={180} source={image} alt="image" /> : null}
           <Text fontSize="2xl" style={{ color: "white" }}>
             {title}
           </Text>

@@ -24,11 +24,7 @@ const Login = ({ navigation }) => {
   });
 
   const handleSubmit = async (values) => {
-    let data = {
-      cnic_no: values.cnicNo,
-      password: values.password,
-    };
-    await login(data);
+    await login(values);
   };
 
   useEffect(() => {

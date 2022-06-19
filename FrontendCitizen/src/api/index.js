@@ -1,31 +1,49 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.1.102:5000/api/",
+    baseUrl: "https://traffic-system-api.herokuapp.com/api/",
     prepareHeaders: (headers, { getState, endpoint }) => {
       const { passwordToken, accessToken } = getState()?.auth;
       if (endpoint === "changePassword") {
         headers.set("Authorization", `Bearer ${passwordToken}`);
-      }else if(accessToken && endpoint.toLowerCase().includes("challan")){
-        console.log({ accessToken })
-        headers.set("Authorization", `Bearer ${accessToken}`)
+      } else if (accessToken && endpoint.toLowerCase().includes("challan")) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
       }
       return headers;
     },
   }),
   tagTypes: ["Citizen", "ChallanRecords"],
   endpoints: (builder) => ({
+    payChallan: builder.mutation({
+      query: ({ id }) => ({
+        url: "challan/pay",
+        body: {
+          challanId: id,
+        },
+        method: "POST",
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "ChallanRecords", id: arg.id },
+        { type: "ChallanRecords", id: "LIST" },
+      ],
+    }),
     getChallanById: builder.query({
       query: (id) => `challan/citizen/records/${id}`,
+      providesTags: (result, error, arg) => ({
+        type: "ChallanRecords",
+        id: arg,
+      }),
     }),
     getChallanRecords: builder.query({
       query: () => `challan/citizen/records`,
-      providesTags: ["ChallanRecords"],
+      providesTags: (result, error, arg) => {
+        return [{ type: "ChallanRecords", id: "LIST" }];
+      },
     }),
     login: builder.mutation({
-      query: (body) => ({
+      query: (data) => ({
         url: "auth/citizen/login",
-        body,
+        body: data,
         method: "POST",
       }),
     }),
@@ -54,7 +72,6 @@ export const api = createApi({
     }),
     smsVerification: builder.mutation({
       query: (phone_number) => {
-        console.log({ phone_number });
         return {
           url: "auth/citizen/verify-sms",
           method: "POST",
@@ -84,5 +101,6 @@ export const {
   useForgetPasswordMutation,
   useSignupMutation,
   useGetChallanByIdQuery,
+  usePayChallanMutation,
   useGetChallanRecordsQuery,
 } = api;
