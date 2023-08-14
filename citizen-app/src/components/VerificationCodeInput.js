@@ -10,7 +10,9 @@ import {
 } from "react-native-confirmation-code-field";
 
 import styles from "../styles/Auth.styles";
-import { useState } from "react";
+
+const CELL_COUNT = 4;
+
 
 const VerificationCodeInput = ({ value, setValue }) => {
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -19,14 +21,10 @@ const VerificationCodeInput = ({ value, setValue }) => {
     setValue,
   });
 
-  const CELL_COUNT = 4;
-
   return (
-    <>
       <CodeField
         ref={ref}
         {...props}
-        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
         value={value}
         onChangeText={setValue}
         cellCount={CELL_COUNT}
@@ -43,7 +41,6 @@ const VerificationCodeInput = ({ value, setValue }) => {
           </Text>
 			)}
       />
-    </>
   );
 };
 
