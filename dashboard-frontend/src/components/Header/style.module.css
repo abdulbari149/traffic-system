@@ -1,0 +1,53 @@
+.heading {
+	font-family: 'Raleway', sans-serif !important;
+	font-weight: 500 !important;
+	color: white;
+	font-size: 1.8em;
+}
+
+.logoutButton {
+	background-color: black !important;
+	width: 135px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+}
+
+.logoutIcon {
+	color: white !important;
+}
+
+.logoutButtonText {
+	color: white;
+	margin: 4px;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700;
+	text-transform: none;
+	text-decoration: none;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 25px;
+	margin-block: 20px;
+	padding-inline: 40px;
+}
+
+@media screen and (max-width: 1200px) {
+	.hidden {
+		display: none !important;
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	.heading {
+		font-size: 2.2em;
+		text-align: center;
+		text-transform: uppercase;
+		width: 100%;
+	}
+}

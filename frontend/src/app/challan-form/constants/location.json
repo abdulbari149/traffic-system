@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "division": "muzaffarabad",
+    "province": "azad jammu and kashmir",
+    "districts": [
+      "muzaffarabad",
+      "hattian bala",
+      "neelum"
+    ]
+  },
+  {
+    "id": 2,
+    "division": "mirpur",
+    "province": "azad jammu and kashmir",
+    "districts": [
+      "mirpur",
+      "bhimber",
+      "kotii"
+    ]
+  },
+  {
+    "id": 3,
+    "division": "poonch",
+    "province": "azad jammu and kashmir",
+    "districts": ["poonch", "bagh", "haveli", "sudhnati"]
+  },
+  {
+    "id": 4,
+    "division": "kalat",
+    "province": "balochistan",
+    "districts": ["awaran", "kalat", "khuzdar", "lasbela", "mastung", "shaheed sikandarabad", "ziarat"]
+
+  },
+  {
+    "id": 5,
+    "division": "loralai",
+    "province": "balochistan",
+    "districts": ["barkhan", "duki", "loralai", "musakhel"]
+  },
+  {
+    "id": 6,
+    "division": "rakhshan",
+    "province": "balochistan",
+    "districts": ["chagai", "kharan", "nushki", "washuk"]
+  },
+  {
+    "id": 7,
+    "division": "quetta",
+    "province": "balochistan",
+    "districts": ["chaman", "pishin", "quetta", "qila abdullah"]
+  },
+  {
+    "id": 8,
+    "division": "sibi",
+    "province": "balochistan",
+    "districts": ["dera bugti", "harnai", "kohlu", "sibi"]
+  },
+  {
+    "id": 9,
+    "division": "makran",
+    "province": "balochistan",
+    "districts": ["gawadar", "kech", "panjgur"]
+  },
+  {
+    "id": 10,
+    "division": "nasirabad",
+    "province": "balochistan",
+    "districts": ["nasirabad", "jafarabad", "jhal magsi", "kachhi", "sohbat pur"]
+  },
+  {
+    "id": 11,
+    "division": "zhob",
+    "province": "balochistan",
+    "districts": ["zhob", "qila saifullah", "sherani"]
+  },
+  {
+    "id": 12,
+    "division": "baltistan",
+    "province": "gilgit baltistan",
+    "districts": ["ghanche", "skardu", "kharmang", "shigar", "roundu"]
+  },
+  {
+    "id": 13,
+    "division": "diamer",
+    "province": "gilgit baltistan",
+    "districts": ["astore", "diamer", "tangir", "darel"]
+  },
+  {
+    "id": 14,
+    "division": "gilgit",
+    "province": "gilgit baltistan",
+    "districts": ["ghizer", "gilgit", "hunza", "nagar", "gupis-yasin"]
+  },
+  {
+    "id": 15,
+    "division": "bannu",
+    "province": "khyber pakhtun khuwa",
+    "districts": ["lakki marwat", "north waziristan", "bannu"]
+  },
+  {
+    "id": 16,
+    "division": "dera ismail khan",
+    "province": "khyber pakhtun khuwa",
+    "districts": ["dera ismail khan", "south waziristan", "tank"]
+  },
+  {
+    "id": 17,
+    "division": "hazara",
+    "province": "khyber pakhtun khuwa",
+    "districts": ["abbottabad", "battagram", "haripur", "kolai palas", "lower kohistan", "mansehra", "torghar", "upper kohistan"]
+  },{
+    "id": 18,
+    "division": "kohat","province": "khyber pakhtun khuwa","districts": ["hangu", "karak", "kohat", "kurram", "orakzai"]
+  }
+]

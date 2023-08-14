@@ -1,0 +1,38 @@
+[
+  {
+    "name": "psid_no"
+  },
+  {
+    "name": "offender_cnic"
+  },
+  {
+    "name": "offender_name"
+  },
+  {
+    "name": "province"
+  },
+  {
+    "name": "division"
+  },
+  {
+    "name": "district"
+  },
+  {
+    "name": "vehicle_registration_no"
+  },
+  {
+    "name": "voilation_code"
+  },
+  {
+    "name": "voilation"
+  },
+  {
+    "name": "issuing_officer"
+  },
+  {
+    "name": "traffic_sector"
+  },
+  {
+    "name": "fine_imposed"
+  }
+]

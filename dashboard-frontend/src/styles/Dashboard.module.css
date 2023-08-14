@@ -1,0 +1,133 @@
+.heading {
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    color: white;
+}
+
+.Box {
+    flex: 1;
+    background-color: #131313 !important;
+    height: 100vh;
+    line-height: 0.3;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-inline: 10px;
+    justify-content: flex-start;
+}
+
+.logoutButton {
+    background-color: black !important;
+    width: 135px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.logoutIcon {
+    color: white !important;
+}
+
+.logoutButtonText {
+    color: white;
+    margin: 4px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    text-decoration: none;
+}
+
+.firstContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    margin-block: 20px;
+    margin-right: 40px
+}
+
+
+.tableHeading {
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+}
+
+
+.text {
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 400;
+    font-size: medium !important;
+}
+
+
+
+.blueButton {
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
+    background-color: #0729A1 !important;
+    color: white !important;
+    font-size: 13px;
+    border: none;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+}
+
+.violationButton {
+    color: white !important;
+    font-family: 'Raleway', sans-serif !important;
+    text-transform: none !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+}
+
+.addIcon {
+    margin: 5px;
+}
+
+.underlinedButton {
+    text-transform: none !important;
+    text-decoration: underline !important;
+    font-weight: 700 !important;
+    font-family: 'Raleway', sans-serif !important;
+    border: none !important;
+    color: #0729A1 !important;
+}
+
+.tableRow:hover {
+    background-color: #000000 !important;
+    box-shadow: 0px 10px 40px 0px #00000080 !important;
+}
+
+.redButton {
+    padding-inline: 30px !important;
+    padding-block: 10px !important;
+    background-color: red !important;
+    color: white !important;
+    font-size: 13px;
+    border: none;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+}
+.nameAndImage {
+    width: 100%;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    
+}
+    
+
+@media screen and (min-width: 1200px) {
+    .hidden{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+}
