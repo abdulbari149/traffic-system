@@ -59,7 +59,6 @@ class VoilationController {
   updateVoiationPrice = async (req, res) => {
     try {
       const { new_price, id } = req.body;
-      console.log("Updating the price", { new_price, id });
       const voilation = await Voilation.findByIdAndUpdate(id, {
         price: new_price,
       });

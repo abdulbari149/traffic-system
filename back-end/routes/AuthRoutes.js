@@ -10,14 +10,15 @@ const {
   changePasswordValidator,
   registerValidator,
   citizenRegisterValidator,
-  wardenRegisterValidator
+  wardenRegisterValidator,
+  createAdminValidator
 } = require("../helpers/validators");
 const { verifyAuthToken } = require("../middlewares/authTokenVerification");
 const { accessDB } = require("../middlewares/conditionalAccess");
 const {
-  validationRequestSchema,
+  validationRequestSchema
 } = require("../middlewares/validationRequestSchema");
-
+const { verifySuperAdmin } = require("../middlewares/verifyAdmin");
 
 router.use(accessDB);
 
@@ -55,7 +56,7 @@ router.post("/verify-auth", verifyAuthToken, (req, res) => {
   res.send({
     message: "you can access the application",
     data: { loggedIn: true, ...res.locals.data },
-    status: 200,
+    status: 200
   });
 });
 
@@ -67,4 +68,13 @@ router.put(
   AuthController.changePassword
 );
 
+router.post(
+  "/create-admin",
+  createAdminValidator(),
+  validationRequestSchema,
+  verifyAuthToken,
+  verifySuperAdmin,
+  AuthController.registerAdmin
+);
+router.post("/logout", AuthController.logout)
 module.exports = router;

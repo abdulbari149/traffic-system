@@ -5,6 +5,7 @@
 }
 
 .Box {
+    flex: 1;
     background-color: #131313 !important;
     height: 100vh;
     line-height: 0.3;
@@ -114,17 +115,19 @@
     font-weight: 700 !important;
     text-transform: none !important;
 }
-
 .nameAndImage {
+    width: 100%;
     display: flex !important;
     justify-content: flex-start !important;
     align-items: center !important;
+    
 }
+    
 
-@media screen and (orientation: portrait) {
-    .nameAndImage {
-        display: flex !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
+@media screen and (min-width: 1200px) {
+    .hidden{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
     }
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "first_name",
+    "placeholder": "Enter your First name",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "last_name",
+    "placeholder": "Enter your last name",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "email",
+    "placeholder": "Enter your email",
+    "type": "email",
+    "defaultValue": ""
+  },
+  {
+    "name": "phone_number",
+    "placeholder": "Enter your phone number e.g 03122304798",
+    "type": "numeric",
+    "defaultValue": ""
+  },
+  {
+    "name": "password",
+    "placeholder": "Enter password must be atleast 8 characters",
+    "type": "password",
+    "defaultValue": ""
+  },
+  {
+    "name": "confirm_password",
+    "placeholder": "Enter password must be atleast 8 characters",
+    "type": "password",
+    "defaultValue": ""
+  },
+  {
+    "name": "service_id",
+    "placeholder": "Enter your id",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "traffic_sector",
+    "placeholder": "Enter the Police Station of your belonging",
+    "type": "text",
+    "defaultValue": ""
+  },
+  {
+    "name": "designation",
+    "placeholder": "Select the Designation",
+    "type": "select",
+    "defaultValue": "",
+    "defaultItemLabel": "Choose A Designation",
+    "items": [
+      { "id": 1, "label": "SSP", "value": "SSP" },
+      { "id": 2, "label": "DSP", "value": "DSP" },
+      { "id": 3, "label": "SHO", "value": "SHO" }
+    ]
+  }
+]

@@ -1,78 +1,61 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Flex, View, Box, ScrollView } from "native-base";
-
-import Header from "../../../components/Header";
-import HeaderText from "../../../components/HeaderText";
+import { Header, HeaderText, Loader } from "components";
 import SearchBar from "../components/SearchBar";
 import ZeroChallan from "../components/ZeroChallan";
 import ChallanCard from "../components/ChallanCard";
-import * as routes from "../../../routes";
-import { useGetChallanRecordsQuery } from "../../../api"
+import * as routes from "routes";
+import { useGetChallanRecordsQuery } from "api";
+import { useDispatch, useSelector } from "react-redux";
+import { setChallans } from "../slice";
+import { Alert } from "react-native";
+
 const ChallanHome = ({ navigation }) => {
-  const challansExists = true;
-  const { data, error, isSuccess, isError, isLoading } = useGetChallanRecordsQuery()
-// Success Handler
+  const { data, error, isSuccess, isError, isLoading } =
+    useGetChallanRecordsQuery();
+
+  const { challans } = useSelector((state) => state.challan);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if(isSuccess){
-      console.log("Response data ==> ", data)
-
+    if (isSuccess) {
+      const dupData = JSON.parse(JSON.stringify([...data?.data]));
+      dispatch(setChallans({ data: dupData }));
     }
-  }, [isSuccess]) 
+  }, [isSuccess]);
 
-  //Error Handler
   useEffect(() => {
-    if(isError){
-      console.log("Response Error ==> ", error)
+    if (isError) {
+      Alert.alert("Server Error Occured", "Try again Later.");
     }
-  }, [isError]) 
-  const dummyData = [
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-    {
-      psid_no: "12317148313245671",
-      vehicle_registration_no: "KHB-4561",
-      date: "11-04-2022",
-      fine_imposed: 200,
-      _id: 2131423,
-    },
-  ];
+  }, [isError]);
 
-  async function searchChallan (){
-    
-  }
+  async function searchChallan() {}
 
   return (
     <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
       <Header />
-      <SearchBar onSearch={searchChallan}/>
       <HeaderText title={"C H A L L A N 'S"} />
-      <Box px="4">
-        {!data.data ? (
-          dummyData.map((challan) => (
-            <ChallanCard
-              onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
-              onDetailButtonPress={() =>
-                navigation.navigate(routes.CHALLAN_DETAILS)
-              }
-              challan={challan}
-            />
-          ))
-        ) : (
-          <ZeroChallan />
-        )}
+      <Box px="4" flex="1">
+        {isLoading && <Loader size={60} />}
+        {!isLoading &&
+          isSuccess &&
+          (data?.data.length ? (
+            data?.data?.map((challan, idx) => (
+              <ChallanCard
+                onPayment={() => navigation.navigate(routes.PAYMENT_METHOD)}
+                onDetailButtonPress={() => {
+                  navigation.navigate(routes.CHALLAN_DETAILS, {
+                    cid: challan._id,
+                    paid: challan.paid
+                  });
+                }}
+                challan={challan}
+                key={idx}
+              />
+            ))
+          ) : (
+            <ZeroChallan />
+          ))}
       </Box>
     </ScrollView>
   );

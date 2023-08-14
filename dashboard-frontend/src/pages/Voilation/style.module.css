@@ -1,0 +1,55 @@
+.line{
+    position: relative;
+}
+.line::after{
+    content: "";
+    position:absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 0;
+
+    border-top: 2px solid white;
+}
+
+.button {
+    background-color: #0729A1 !important;
+    color: white !important;
+    padding-inline: 40px !important;
+    padding-block: 15px !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+
+    /* color: white !important;
+    height: 50px !important;
+    background-color: #0729A1 !important;
+    border: none !important;
+    text-transform: none !important;
+    padding-inline: 57px !important;
+    font-weight: 700 !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-size: 20px !important;
+    margin-block: 20px !important; */
+}
+
+.ghostButton {
+    border-width: 3px !important;
+    background-color: black !important;
+    color: white !important;
+    padding-inline: 34px !important;
+    padding-block: 12px !important;
+    height: 50px !important;
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    gap: 2em;
+}

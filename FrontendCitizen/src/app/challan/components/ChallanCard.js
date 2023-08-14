@@ -4,11 +4,19 @@ import { Text, View, Button } from "native-base";
 import styles from "../styles";
 import _ from "lodash";
 import { CHALLAN_DETAILS, PAYMENT_METHOD } from "../../../routes";
+import NumberFormat from "react-number-format";
+
+
 const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
+  const getDate = (date) => {
+    const newDate = new Date(date);
+    return newDate.toDateString();
+  };
+
   let details = {
     psid_no: challan.psid_no,
     vehicle_no: challan.vehicle_registration_no,
-    date: challan.date,
+    date: getDate(challan.createdAt)
   };
 
   const navigation = useNavigation();
@@ -17,7 +25,7 @@ const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
     <View style={styles.challanCard}>
       <View style={{ flex: 1.5 }}>
         {Object.keys(details).map((key) => (
-          <View style={{ flexDirection: "row", paddingVertical: 4 }}>
+          <View key={key} style={{ flexDirection: "row", paddingVertical: 4 }}>
             <Text fontWeight="bold">
               {_.capitalize(key.replace(/_/g, " "))}:{" "}
             </Text>
@@ -26,19 +34,25 @@ const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
         ))}
         <Button
           marginTop="auto"
-          bg="#B21B1B"
+          bg={challan.paid ? "#400606" : "#B21B1B"}
           style={{ width: 150 }}
           onPress={() =>
             navigation.navigate(PAYMENT_METHOD, { id: challan._id })
           }
+          disabled={challan.paid}
         >
-          Pay
+          {challan.paid ? "Already Paid!" : "Pay"}
         </Button>
       </View>
       <View style={{ flex: 1, alignItems: "flex-end" }}>
-        <Text color="black" fontSize={23} fontWeight="bold">
-          Rs {challan.fine_imposed}
-        </Text>
+        <NumberFormat
+          value={challan.fine_imposed}
+          style={{ fontSize: 22, paddingTop: 8 }}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"Rs."}
+          renderText={(value, props) => <Text {...props}>{value}</Text>}
+        />
         <Text color="#555151" fontSize={16}>
           Fine
         </Text>
@@ -47,7 +61,7 @@ const ChallanCard = ({ challan, onPayment, onDetailButtonPress }) => {
           padding={0}
           marginTop="auto"
           _text={{
-            style: styles.challanDetailText,
+            style: styles.challanDetailText
           }}
           onPress={() =>
             navigation.navigate(CHALLAN_DETAILS, { id: challan._id })

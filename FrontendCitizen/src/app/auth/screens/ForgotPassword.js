@@ -1,23 +1,14 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator } from "react-native";
-import { Image, Text, Box, ScrollView, VStack, Button, View } from "native-base";
-import Form from "../../../components/Form";
-import styles from "../../../styles/Auth.styles";
-import { CREATE_NEW_PASSWORD, VERIFICATION_SCREEN } from "../../../routes";
-import * as yup from "yup";
-import { useForgetPasswordMutation } from "../../../api";
-import { Alert } from "react-native";
+import { Image, Text, Box, ScrollView, VStack } from "native-base";
+import styles from "../styles";
+import { LoadingButton, Field } from "components/index";
+import { CREATE_NEW_PASSWORD, VERIFICATION_SCREEN } from "routes";
+import { useForgetPasswordMutation } from "api";
 import { useDispatch } from "react-redux";
 import { setPasswordToken } from "../slice";
 import { Formik } from "formik";
-import Field from "../../../components/Field";
-
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email formmat")
-    .required("This is a required field"),
-});
+import { forgotPasswordValidationSchema } from "../validators";
+import { errorAlert } from "utils/alert";
 
 const ForgotPassword = ({ navigation }) => {
   const [forgotpassword, { isSuccess, isError, error, data }] =
@@ -25,25 +16,31 @@ const ForgotPassword = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (value, { setSubmitting }) => {
-    // console.log("Handle Submitting")
+  const successParams = (data) => ({
+    phone_number: data?.data?.phone_number,
+    screen: "forgotpassword",
+  });
+
+  const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
-    await forgotpassword(value.email);
+    await forgotpassword(values.email);
     setTimeout(() => setSubmitting(false), 2000);
   };
 
-  // Success Handler
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setPasswordToken({ data: data.authToken }));
-      // navigation.navigate(VERIFICATION_SCREEN);
+      dispatch(setPasswordToken({ data: data?.data?.token }));
+      navigation.navigate(VERIFICATION_SCREEN, successParams(data));
     }
   }, [isSuccess]);
 
-  // Error Handler
   useEffect(() => {
     if (isError) {
-      Alert.alert("Error Occured", JSON.stringify(error.data, null, 1));
+      const FORGOT_PASSWORD_ERROR = {
+        title: "Server Error Occured",
+        body: error?.data?.message,
+      };
+      errorAlert(FORGOT_PASSWORD_ERROR);
     }
   }, [isError]);
 
@@ -54,7 +51,7 @@ const ForgotPassword = ({ navigation }) => {
           style={styles.forgotPasswordImage}
           alt="hooman"
           size={120}
-          source={require("../../../assets/images/human.png")}
+          source={require("assets/images/human.png")}
         />
         <Text style={styles.forgotPasswordHeading}>Forgot Password?</Text>
         <Text style={styles.forgotPasswordSubTitle}>
@@ -64,37 +61,34 @@ const ForgotPassword = ({ navigation }) => {
       <Formik
         initialValues={{ email: "" }}
         onSubmit={handleSubmit}
-        validationSchema={validationSchema}
+        validationSchema={forgotPasswordValidationSchema}
       >
-        {({ values, handleChange, handleBlur, handleSubmit:formikSubmit, isSubmitting }) => (
+        {({
+          values,
+          handleChange,
+          errors,
+          handleBlur,
+          handleSubmit: submitHandler,
+          isSubmitting,
+        }) => (
           <VStack px={14}>
             <Field
-              name="email"
               value={values.email}
               onChange={handleChange("email")}
               onBlur={handleBlur("email")}
-              placeholder="Enter your email address"
+              placeholder="Enter Your Email Address"
               label="Email Address"
-              type="text"
+              keyboardType="email-address"
+              name="email"
+              maxLength={25}
             />
-            <Button
+            <LoadingButton
+              onPress={() => {
+                submitHandler();
+              }}
               disabled={isSubmitting}
-              onPress={formikSubmit}
-              style={[
-                styles.loginButton,
-                { color: isSubmitting ? "#400606" : "#B21B1B" },
-              ]}
-            >
-              
-                {isSubmitting && (
-                  <ActivityIndicator
-                    style={{ paddingRight: 20, position: "absolute", left: -25, top: -3 }}
-                    size={24}
-                    color="#fff"
-                  />
-                )}
-                <Text style={styles.loginButtonText}>Submit</Text>
-            </Button>
+              text={"Submit"}
+            />
           </VStack>
         )}
       </Formik>

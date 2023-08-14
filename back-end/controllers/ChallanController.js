@@ -9,12 +9,10 @@ class ChallanController {
   submitChallan = async (req, res) => {
     try {
       const { id: warden } = res.locals.data;
-      console.log(req.body);
       const data = await Challan.create({
         ...req.body,
         warden,
       });
-      console.log({ data });
       this.response = {
         message: "Your challan has been successfully submitted",
         status: 200,
@@ -31,7 +29,6 @@ class ChallanController {
   getChallans = async (req, res) => {
     try {
       const { email, id } = res.locals.data;
-      console.log({ id });
       const { DbModel } = res.locals;
       const data = await DbModel.findById(id).populate({
         path: "challans",
@@ -57,7 +54,6 @@ class ChallanController {
   };
 
   getChallanRecords = async (req, res) => {
-    console.log(req.query);
     try {
       const { paid } = req.query;
 
@@ -103,7 +99,7 @@ class ChallanController {
       const data = await Challan.findById(id)
         .populate({
           path: "citizen",
-          select: "first_name last_name images",
+          select: "first_name last_name images cnic_no",
           populate: { path: "images", model: "Image", select: "filename" },
         })
         .populate("voilation")

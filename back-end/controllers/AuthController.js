@@ -1,7 +1,7 @@
 const { hash, compare } = require("bcrypt");
 const { sendSMS } = require("../lib/twilioSMS");
 const jwt = require("jsonwebtoken");
-
+const { Admin } = require("../models")
 class AuthController {
   response = {
     message: "",
@@ -23,7 +23,6 @@ class AuthController {
           status: 200,
         };
       } else {
-        console.log({ doc });
         this.response = {
           status: 200,
           message: "You can signup",
@@ -45,7 +44,6 @@ class AuthController {
     try {
       const { DbModel } = res.locals;
       const { password, confirm_password, ...user } = req.body;
-      console.log({ user });
       const hashedPassword = await hash(password, 10);
       const data = await DbModel.create({
         ...user,
@@ -66,9 +64,40 @@ class AuthController {
     res.status(this.response.status).json(this.response);
   };
 
+  registerAdmin = async (req, res) => {
+    try {
+      const adminData = req.body
+      const adminExists = await Admin.findOne({ email: req.body.email })
+      if(adminExists){
+        let error = new Error("Admin already exists")
+        error.status = 403
+        throw error
+      }
+      const hashedPassword = await hash(req.body.password, 10);
+      adminData.password = hashedPassword
+      adminData.role = "admin"
+      const admin = await Admin.create(adminData)
+      if(!admin){
+        let error = new Error("Error Creating admin")
+        error.status = 500
+        throw error
+      }
+      this.response = {
+        status: 201,
+        message: "Warden Created Successfully"
+      }
+    }catch(error){
+      this.response = {
+        message: error.message,
+        status: error?.status ?? 500
+      }
+    }finally{
+      res.status(this.response.status).json(this.response)
+    }
+  }
+
   login = async (req, res) => {
     const { password, ...param } = req.body;
-    console.log({ param });
     const { DbModel } = res.locals;
     loginBlock: try {
       const doc = await DbModel.findOne(param);
@@ -96,20 +125,19 @@ class AuthController {
 
       this.response.message = `${req.params.user} is authorized to access the application`;
       this.response.status = 200;
-      const data = {
-        email: doc.email,
-        _id: doc._id,
-        name: doc.first_name + doc.last_name,
-      };
+
       const token = jwt.sign(
         {
           ...param,
           id: doc._id,
-          name: doc.first_name + " " + doc.last_name,
+          name: doc?.name ?? `${doc?.first_name} ${doc?.last_name}`,
           ...(req.params.user === "warden" && {
             designation: doc?._doc.designation,
             traffic_sector: doc?._doc.traffic_sector,
             service_id: doc?._doc.service_id
+          }),
+          ...(req.params.user === "admin" && {
+            role: doc?._doc?.role
           })
         },
         process.env.JWTSecret,
@@ -164,20 +192,7 @@ class AuthController {
         break forgetPasswordBlock;
       }
 
-      this.response = {
-        message: "You can change your password",
-        data: {
-          phone_number: doc.phone_number,
-        },
-        status: 200,
-      };
-    } catch (error) {
-      this.response = {
-        message: error,
-        status: 404,
-        data: null,
-      };
-    } finally {
+
       const token = jwt.sign(
         {
           email,
@@ -188,6 +203,22 @@ class AuthController {
         }
       );
       res.setHeader("Authorization", `Bearer ${token}`);
+      this.response = {
+        message: "You can change your password",
+        data: {
+          phone_number: doc.phone_number,
+          token
+        },
+        status: 200,
+      };
+    } catch (error) {
+      this.response = {
+        message: error,
+        status: 404,
+        data: null,
+      };
+    } finally {
+     
       res.status(this.response.status).json(this.response);
     }
   };
@@ -223,7 +254,7 @@ class AuthController {
   };
 
   logout = async(req,res) => {
-
+    res.status(200).json({ message: "Successfully Logout" })
   }
 }
 

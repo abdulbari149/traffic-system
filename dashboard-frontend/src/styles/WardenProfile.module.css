@@ -17,11 +17,23 @@
     overflow: scroll;
 }
 
+@media screen and (max-width: 1200px) {
+    /* .wardenProfile{
+        position: absolute;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+    body{
+        overflow: hidden;
+    } */
+}
+
 .wardenImage {
     border-radius: 250px;
     border: 5px white solid;
-    max-height: 130px;
-    max-width: 130px;
+    height: 120px;
+    width: 120px;
     align-self: center;
     margin-block: 20px;
 }
@@ -37,6 +49,7 @@
     color: white !important;
     font-family: 'Raleway', sans-serif !important;
     font-weight: 700 !important;
+    font-size: 18px;
 }
 
 .text {
@@ -90,6 +103,13 @@
     background-color: transparent;
     font-family: 'Raleway', sans-serif !important;
     align-self: flex-start !important;
+    display: none !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .backButton {
+        display: flex !important;
+    }
 }
 
 .goBackText {

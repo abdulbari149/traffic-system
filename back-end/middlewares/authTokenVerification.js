@@ -8,6 +8,6 @@ exports.verifyAuthToken = (req, res, next) => {
     res.locals.data = data;
     next()
   } catch (error) {
-    res.status(403).end() 
+    res.status(403).json({ error, message: "Token was invalid" }) 
   }
 };

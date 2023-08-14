@@ -1,42 +1,58 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setAuthToken } from "../utils/async-storage";
-
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.1.102:5000/api",
+    baseUrl: "https://traffic-system-api.herokuapp.com/api/",
     prepareHeaders: (headers, { getState, endpoint }) => {
-      const token = getState().auth?.token;
-      if (!!token && !endpoint.includes("auth")) {
+      const { passwordToken, accessToken } = getState()?.auth;
+      if (endpoint === "changePassword") {
+        headers.set("Authorization", `Bearer ${passwordToken}`);
+      } else if (accessToken && endpoint.toLowerCase().includes("challan")) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
       }
       return headers;
     },
   }),
   tagTypes: ["Citizen", "ChallanRecords"],
   endpoints: (builder) => ({
+    payChallan: builder.mutation({
+      query: ({ id }) => ({
+        url: "challan/pay",
+        body: {
+          challanId: id,
+        },
+        method: "POST",
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "ChallanRecords", id: arg.id },
+        { type: "ChallanRecords", id: "LIST" },
+      ],
+    }),
     getChallanById: builder.query({
-      query: ({ id }) => `challan/citizen/records/${id}`,
+      query: (id) => `challan/citizen/records/${id}`,
+      providesTags: (result, error, arg) => ({
+        type: "ChallanRecords",
+        id: arg,
+      }),
     }),
     getChallanRecords: builder.query({
       query: () => `challan/citizen/records`,
-      providesTags: ["ChallanReords"],
+      providesTags: (result, error, arg) => {
+        return [{ type: "ChallanRecords", id: "LIST" }];
+      },
     }),
     login: builder.mutation({
       query: (data) => ({
-        url: "/auth/citizen/login",
+        url: "auth/citizen/login",
         body: data,
         method: "POST",
       }),
     }),
-    register: builder.mutation({
-      query: (data) => ({
+    signup: builder.mutation({
+      query: (body) => ({
         url: "auth/citizen/register",
-        body: data,
+        body,
         method: "POST",
       }),
-      async onQueryStarted(_, { queryFulfilled }) {
-        const { data, meta } = await queryFulfilled;
-        console.log(data);
-      },
     }),
     forgetPassword: builder.mutation({
       query: (email) => ({
@@ -46,32 +62,31 @@ export const api = createApi({
           email,
         },
       }),
-      transformResponse: (response, meta) => {
-        return {
-          ...response,
-          authToken: meta.response.headers["Authorization-Token"],
-        };
-      },
     }),
     changePassword: builder.mutation({
-      query: ({ new_password, confirm_password, headers }) => ({
+      query: (body) => ({
         url: "auth/citizen/change-password",
         method: "PUT",
-        body: {
-          password: new_password,
-          confirm_password,
-        },
-        headers: {
-          "Authorization-Token": `Bearer ${headers.authToken}`,
-        },
+        body,
       }),
     }),
     smsVerification: builder.mutation({
-      query: (phone_number) => ({
-        url: "/auth/ciitzen/verify-sms",
+      query: (phone_number) => {
+        return {
+          url: "auth/citizen/verify-sms",
+          method: "POST",
+          body: {
+            phone_number,
+          },
+        };
+      },
+    }),
+    verifyAuth: builder.mutation({
+      query: (token) => ({
+        url: "auth/citizen/verify-auth",
         method: "POST",
-        body: {
-          phone_number,
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       }),
     }),
@@ -80,10 +95,12 @@ export const api = createApi({
 
 export const {
   useLoginMutation,
+  useVerifyAuthMutation,
   useChangePasswordMutation,
   useSmsVerificationMutation,
   useForgetPasswordMutation,
-  useRegisterMutation,
+  useSignupMutation,
   useGetChallanByIdQuery,
+  usePayChallanMutation,
   useGetChallanRecordsQuery,
 } = api;

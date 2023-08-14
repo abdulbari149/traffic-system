@@ -38,7 +38,7 @@ exports.registerValidator = () => [
       minLowercase: 2,
       minUppercase: 1,
       minSymbols: 1,
-      minNumbers: 1,
+      minNumbers: 1
     })
     .withMessage(
       "Password is too weak. Please add at least 1 uppercase, 2 lowercase, 1 number and 1 symbol"
@@ -57,7 +57,7 @@ exports.registerValidator = () => [
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage("Role is required")
     .isString()
-    .matches(/Admin|Editor/),
+    .matches(/superadmin|admin/),
   check("phone_number")
     .if(param("user").matches(/warden|citizen/))
     .isMobilePhone(["en-PK"], { strict: true })
@@ -69,7 +69,7 @@ exports.registerValidator = () => [
         );
       }
       return value;
-    }),
+    })
 ];
 
 exports.loginValidator = () => [
@@ -97,14 +97,14 @@ exports.loginValidator = () => [
   check("password")
     .not()
     .isEmpty()
-    .withMessage("Please provide with a valid password"),
+    .withMessage("Please provide with a valid password")
 ];
 
 exports.forgetPasswordValidator = () => [
   check("email")
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage("Please provide with an email address")
-    .isEmail(),
+    .isEmail()
 ];
 
 exports.changePasswordValidator = () => [
@@ -117,7 +117,7 @@ exports.changePasswordValidator = () => [
       minLowercase: 2,
       minUppercase: 1,
       minSymbols: 1,
-      minNumbers: 2,
+      minNumbers: 2
     })
     .withMessage(
       "Password is too weak. Please add at least 1 uppercase, 2 lowercase, 1 number and 1 symbol"
@@ -130,7 +130,7 @@ exports.changePasswordValidator = () => [
         throw new Error("Confirm pasword should be same as Password");
       }
       return value;
-    }),
+    })
 ];
 
 exports.challanValidator = () => [
@@ -146,9 +146,21 @@ exports.challanValidator = () => [
     .not()
     .isEmpty()
     .withMessage("Provide a vehicle Registration Number"),
-  check("fine_imposed").isNumeric(),
+  check("fine_imposed").isNumeric()
 ];
 
 exports.authorizeValidator = () => [
   check("wardenId").exists({ checkFalsy: true, checkNull: true }).isMongoId()
-]
+];
+exports.createAdminValidator = () => [
+  check("name").not().isEmpty().isLength({ min: 3, max: 50 }),
+  check("email")
+    .exists({ checkNull: true, checkFalsy: true })
+    .withMessage("Please provide with an email address")
+    .isEmail(),
+  check("password")
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage("Password field is required")
+    .isLength({ min: 8, max: 100 })
+    .withMessage("Password must be equal to or greater than 8 character")
+];

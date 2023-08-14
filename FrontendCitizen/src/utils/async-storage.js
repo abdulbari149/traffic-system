@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const setAuthToken = async (type, value = '') => {
-  const token = value !== '' ? value?.split(' ')[1] : ''
+  const token = value
   try {
     const value = await AsyncStorage.setItem(`@${type}_token`, token);
     return value;
